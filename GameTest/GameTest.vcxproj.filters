@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="GameTest.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="App\app.cpp">
+      <Filter>NextAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="App\main.cpp">
+      <Filter>NextAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="App\SimpleController.cpp">
+      <Filter>NextAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="App\SimpleSound.cpp">
+      <Filter>NextAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="App\SimpleSprite.cpp">
+      <Filter>NextAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image\stb_image.cpp">
+      <Filter>stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Managers\ObjectManager.cpp">
+      <Filter>CFBEngine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Object\Object.cpp">
+      <Filter>CFBEngine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Math\Vector2.cpp">
+      <Filter>CFBEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Math\Vector3.cpp">
+      <Filter>CFBEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Object\Entity.cpp">
+      <Filter>CFBEngine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Component\SpriteComponent.cpp">
+      <Filter>CFBEngine\Component</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="App\app.h">
+      <Filter>NextAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="App\AppSettings.h">
+      <Filter>NextAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="App\main.h">
+      <Filter>NextAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="App\SimpleController.h">
+      <Filter>NextAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="App\SimpleSound.h">
+      <Filter>NextAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="App\SimpleSprite.h">
+      <Filter>NextAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>NextAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image\stb_image.h">
+      <Filter>stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Managers\ObjectManager.h">
+      <Filter>CFBEngine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Object\Object.h">
+      <Filter>CFBEngine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\Component.h">
+      <Filter>CFBEngine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Math\MathOps.h">
+      <Filter>CFBEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Math\Vector2.h">
+      <Filter>CFBEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Math\Vector3.h">
+      <Filter>CFBEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\TransformComponent.h">
+      <Filter>CFBEngine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Object\Entity.h">
+      <Filter>CFBEngine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\SpriteComponent.h">
+      <Filter>CFBEngine\Component</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="NextAPI">
+      <UniqueIdentifier>{f318918d-bb9f-4402-ae1c-4f72186d16f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stb_image">
+      <UniqueIdentifier>{61cfc19b-c57e-4021-b530-bac172fcba86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine">
+      <UniqueIdentifier>{5f3dbcd1-141c-4317-8e0e-9a4c2ea9c87c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Manager">
+      <UniqueIdentifier>{7023e85e-c4d4-476d-8e12-d4cf073871f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Object">
+      <UniqueIdentifier>{cece2af3-1d52-4223-8d55-4ab6c0d75b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Component">
+      <UniqueIdentifier>{c4dcec28-1ea5-4e10-89ef-e79d097ad022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Math">
+      <UniqueIdentifier>{ef93fec6-1806-4c17-b276-cb556fb5aa57}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>NextAPI</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
