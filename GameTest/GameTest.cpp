@@ -5,8 +5,8 @@
 //------------------------------------------------------------------------
 #include <windows.h> 
 #include <math.h>  
-#include "CFB_Engine/Object/Entity.h"
-#include "CFB_Engine/Component/TransformComponent.h"
+#include "CFB_Engine/Object/Actor.h"
+#include "CFB_Engine/Component/AllComponents.h"
 #include "CFB_Engine/Managers/ObjectManager.h"
 //------------------------------------------------------------------------
 #include "app\app.h"
@@ -15,7 +15,7 @@
 //------------------------------------------------------------------------
 // Eample data....
 //------------------------------------------------------------------------
-CSimpleSprite *testSprite;
+CSprite *testSprite;
 Entity* obj;
 CTransform* transform;
 ObjectManager* objmanager;
@@ -38,25 +38,27 @@ void Init()
 	//Initialize object manager
 	objmanager = new ObjectManager();
 	//------------------------------------------------------------------------
-	// Example Sprite Code....
-	testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
-	testSprite->SetPosition(400.0f, 400.0f);
+	//// Example Sprite Code....
+	//testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
+	//testSprite->SetPosition(400.0f, 400.0f);
+	//testSprite->SetScale(1.0f);
+	//------------------------------------------------------------------------
+	//CFB
+	//TEST 1
+	obj = objmanager->CreateEntity<Actor>();
+
+	transform = obj->GetComponentOfClass<CTransform>();
+	transform->SetPosition(Vector2(50.f));
+
+	testSprite = obj->CreateComponent<CSprite>();
+	testSprite->GenerateSprite(".\\TestData\\Test.bmp", 8, 4);
+
 	float speed = 1.0f / 15.0f;
 	testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
 	testSprite->CreateAnimation(ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
 	testSprite->CreateAnimation(ANIM_RIGHT, speed, { 16,17,18,19,20,21,22,23 });
 	testSprite->CreateAnimation(ANIM_FORWARDS, speed, { 24,25,26,27,28,29,30,31 });
-	testSprite->SetScale(1.0f);
-	//------------------------------------------------------------------------
-	//CFB
-	//TEST 1
-	obj = objmanager->CreateEntity<Entity>();
-	objmanager->CreateEntity<Entity>();
-	objmanager->CreateEntity<Entity>();
-	objmanager->CreateEntity<Entity>();
 	
-	transform = obj->CreateComponent<CTransform>();
-	testSprite->GetPosition(transform->Position.x, transform->Position.y);
 	
 
 }
@@ -73,7 +75,7 @@ void Update(float deltaTime)
 	if (App::GetController().GetLeftThumbStickX() > 0.5f)
 	{
 		testSprite->SetAnimation(ANIM_RIGHT);
-		transform->Position.x += 1.0f;
+		if (obj->GetComponentOfClass<CTransform>()) obj->GetComponentOfClass<CTransform>()->AddPosition(Vector2(1.f, 0.f));
 
 
 		
@@ -103,11 +105,11 @@ void Update(float deltaTime)
 	}
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_DPAD_LEFT, false))
 	{
-		testSprite->SetAngle(testSprite->GetAngle() + 0.1f);
+		testSprite->SetRotation((testSprite->GetRotation() + 0.1f));
 	}
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_DPAD_RIGHT, false))
 	{
-		testSprite->SetAngle(testSprite->GetAngle() - 0.1f);
+		testSprite->SetRotation(testSprite->GetRotation() - 0.1f);
 	}
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
 	{
@@ -115,7 +117,7 @@ void Update(float deltaTime)
 	}
 
 	//Update position
-	testSprite->SetPosition(transform->Position.x, transform->Position.y);
+	testSprite->SetPosition(transform->GetPosition());
 
 	//------------------------------------------------------------------------
 	// Sample Sound.
@@ -170,8 +172,5 @@ void Shutdown()
 {	
 	//Delete object manager
 	delete objmanager;
-	//------------------------------------------------------------------------
-	// Example Sprite Code....
-	delete testSprite;
-	//------------------------------------------------------------------------
+
 }

@@ -16,10 +16,12 @@ public:
 
 	//Constructor with optional ownership
 	Component(Entity* InOwner = nullptr) : Owner(InOwner) {};
+	
+	//Virtual Destructor
+	virtual ~Component();
 
 	//Owner
 	Entity* Owner = nullptr;
 	
-
 
 };

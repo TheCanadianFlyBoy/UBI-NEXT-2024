@@ -12,47 +12,140 @@
 
 #include "Object.h"
 #include "../Component/Component.h"
+#include "../Managers/ObjectManager.h"
+#include "../Math/Vector2.h"
 
+class ObjectManager;
 
 class Entity : public Object
 {
 public: //Setup/Common
-	//Constructor
-	Entity() {};
-
-	~Entity();
-
-	//Components - vector to allow for adding, removal at runtime
-	std::vector<std::unique_ptr<Component>> Components;
 
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
 	inline static const char* GetStaticClassName() { return "Entity"; }
 
+	//Constructor with optional params
+	Entity(ObjectManager* InWorld = nullptr) : World(InWorld) {};
+	//Destructor
+	~Entity();
+
+public: //Common Gameplay Methods
+	//Vector2 GetPosition()
+	
+public: //Getters
+
+	//World
+	inline ObjectManager* GetWorld() { return World; };
+
+	//Components
+	template <class Type>
+	Type* GetComponentOfClass();
+
+
+
+
 
 public: //Adders
 
-	/// <summary>
-	/// Creates a component of the given type, and returns a pointer to it (or null if unable to create)
-	/// </summary>
-	/// <typeparam name="Type">Class of Component to Create</typeparam>
-	/// <returns>Pointer to the Component, null if unable to create</returns>
+	//Utilizes world factory to create a component of given type
 	template <class Type> 
 	Type* CreateComponent();
+
+protected: //Members
+
+	//World Reference
+	ObjectManager* World = nullptr;
+
+	//Components - vector to allow for adding, removal at runtime
+	std::vector<Component*> Components;
+
+protected: //Helper Functions
+
+	//Gets the index of a given component
+	int GetIndexOfComponent(Component* InComponent);
+
+	//Gets the first index of a type of component
+	template <class Type>
+	int GetIndexOfComponentClass();
 
 };
 
 
-//TEMPLATE DEFINITIONS
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+
+/// <summary>
+/// Creates a component of the given type, and returns a pointer to it (or null if unable to create)
+/// </summary>
+/// <typeparam name="Type">Class of Component to Create</typeparam>
+/// <returns>Pointer to the Component, null if unable to create</returns>
 template<class Type>
 inline Type* Entity::CreateComponent()
 {
 	//THIS MUST BE A COMPONENT
 	assert((std::is_base_of < Component, Type>()));
 
-	//Add to vector
-	Components.push_back(std::unique_ptr<Type>(new Type(this))); //Instantiate with a reference to self
+	//Create a new component with this as owner
+	Type* NewComponent = World->CreateComponent<Type>(this);
+	//Save it for reference
+	Components.push_back(NewComponent);
 
-	//Return ptr to ptr
-	return static_cast<Type*>(Components.back().get());
+	return NewComponent;
+
+}
+
+/// <summary>
+/// Gets the first component of the given class type, and returns a pointer to it
+/// </summary>
+/// <typeparam name="Type">Component Class</typeparam>
+/// <returns>Pointer to component, null if not present</returns>
+template<class Type>
+Type* Entity::GetComponentOfClass()
+{
+	//Ensure that we have a component class passed in
+	assert((std::is_base_of < Component, Type>()));
+
+	//Check for an index
+	int index = GetIndexOfComponentClass<Type>();
+
+	//We have one!
+	if (index >= 0)
+	{
+		return static_cast<Type*>(Components[index]);
+	}
+
+	//Nothing found, return null
+	return nullptr;
+}
+
+/// <summary>
+/// Gets the first index of a given component class
+/// </summary>
+/// <typeparam name="Type">Component Class</typeparam>
+/// <returns>Index of component, or -1 if not present</returns>
+template<class Type>
+int Entity::GetIndexOfComponentClass()
+{
+	//Ensure that we have a component class passed in
+	assert((std::is_base_of < Component, Type>()));
+
+	//Now we search or our components
+	for (int i = 0; i < Components.size(); i++)
+	{
+		//Current Component Variable
+		Component* CurrentComponent = Components[i];
+
+		//Check if it is the correct type
+		if (CurrentComponent->GetObjectClassName() == Type::GetStaticClassName())
+		{
+			//Return index
+			return i;
+		}
+
+	}
+
+	//Failure, return -1
+	return -1;
 }
