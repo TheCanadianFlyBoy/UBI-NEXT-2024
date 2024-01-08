@@ -21,7 +21,7 @@ namespace MathOps {
 
 	inline float radiansToDegrees(const float radians)
 	{
-		return (float)radians / PI * 180.f;
+		return (float)(radians / PI * 180.f);
 	}
 
 	inline float flerp(float a, float b, float delta)

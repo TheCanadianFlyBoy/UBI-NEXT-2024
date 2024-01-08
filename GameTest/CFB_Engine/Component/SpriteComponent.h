@@ -22,10 +22,10 @@ public:
 	inline static const char* GetStaticClassName() { return "CSprite"; }
 
 	//CONSTRUCTORS
-	//Empty sprite component
-	CSprite(Entity* InOwner = nullptr) { Owner = InOwner; };
-	//Sprite instantiation constructor 
-	CSprite(Entity* InOwner, const char* fileName, unsigned int columns = 1U, unsigned int rows = 1U);
+	//Empty sprite component creation with optional args
+	CSprite(Entity* InOwner = nullptr, std::shared_ptr<CSimpleSprite> InSprite = nullptr) { Owner = InOwner; Sprite = InSprite; };
+	//Standard Constructor
+	CSprite(Entity* InOwner, std::string InSpriteName);
 
 	//Update call
 	inline void Update(float DeltaTime) { Sprite->Update(DeltaTime); };
@@ -34,7 +34,8 @@ public:
 
 public: //Methods
 	//Setters
-	inline void GenerateSprite(const char* fileName, unsigned int columns = 1U, unsigned int rows = 1U) { Sprite = std::unique_ptr<CSimpleSprite>(new CSimpleSprite(fileName, columns, rows)); };
+	inline void SetSprite(std::shared_ptr<CSimpleSprite> InSprite) { Sprite = InSprite; };
+	//inline void GenerateSprite(const char* fileName, unsigned int columns = 1U, unsigned int rows = 1U) { Sprite = std::unique_ptr<CSimpleSprite>(new CSimpleSprite(fileName, columns, rows)); };
 
 	//Animation wrappers
 	inline void CreateAnimation(unsigned int AnimationID, float AnimationSpeed, const std::vector<int>& Frames) { Sprite->CreateAnimation(AnimationID, AnimationSpeed, Frames); };
@@ -52,7 +53,7 @@ public: //Methods
 	
 
 protected:
-	std::unique_ptr<CSimpleSprite> Sprite;
+	std::shared_ptr<CSimpleSprite> Sprite;
 
 protected: //Methods
 	inline void SetSpritePosition(Vector2 &InVector) { Sprite->SetPosition(InVector.x, InVector.y); };

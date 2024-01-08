@@ -8,6 +8,9 @@
 #include "CFB_Engine/Object/Actor.h"
 #include "CFB_Engine/Component/AllComponents.h"
 #include "CFB_Engine/Managers/ObjectManager.h"
+#include "CFB_Engine/Managers/SpriteManager.h"
+#include "CFB_Engine/World/World.h"
+#include "CFB_Engine/Event/Event.h"
 //------------------------------------------------------------------------
 #include "app\app.h"
 //------------------------------------------------------------------------
@@ -15,10 +18,13 @@
 //------------------------------------------------------------------------
 // Eample data....
 //------------------------------------------------------------------------
+
+World* world;
 CSprite *testSprite;
 Entity* obj;
 CTransform* transform;
-ObjectManager* objmanager;
+//ObjectManager* objmanager;
+SpriteManager* sprmanager;
 
 
 enum
@@ -35,8 +41,21 @@ enum
 //------------------------------------------------------------------------
 void Init()
 {
+	//Create world
+	world = new World(); 
+
 	//Initialize object manager
-	objmanager = new ObjectManager();
+	sprmanager = new SpriteManager();
+	world->SetSpriteManager(sprmanager);
+
+	//Register sprite
+	sprmanager->RegisterNewSprite("spr_player", ".\\TestData\\Test.bmp", 8, 4, 2);
+	float speed = 1.0f / 15.0f;
+	sprmanager->RegisterAnimation("spr_player", ANIM_BACKWARDS, speed, {0,1,2,3,4,5,6,7});
+	sprmanager->RegisterAnimation("spr_player", ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
+	sprmanager->RegisterAnimation("spr_player", ANIM_RIGHT, speed, { 16,17,18,19,20,21,22,23 });
+	sprmanager->RegisterAnimation("spr_player", ANIM_FORWARDS, speed, { 24,25,26,27,28,29,30,31 });
+
 	//------------------------------------------------------------------------
 	//// Example Sprite Code....
 	//testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
@@ -45,21 +64,25 @@ void Init()
 	//------------------------------------------------------------------------
 	//CFB
 	//TEST 1
-	obj = objmanager->CreateEntity<Actor>();
+	obj = world->CreateEntity<Actor>();
+	Entity* dummy = world->CreateEntity<Actor>();
+	dummy->GetComponentOfClass<CTransform>()->SetPosition(Vector2(500.f));
+	dummy->CreateComponent<CSprite>();
+	dummy->GetComponentOfClass<CSprite>()->SetSprite(sprmanager->GetSprite("spr_player"));
 
 	transform = obj->GetComponentOfClass<CTransform>();
 	transform->SetPosition(Vector2(50.f));
 
 	testSprite = obj->CreateComponent<CSprite>();
-	testSprite->GenerateSprite(".\\TestData\\Test.bmp", 8, 4);
+	testSprite->SetSprite(sprmanager->GetSprite("spr_player"));
+	//testSprite->GenerateSprite(".\\TestData\\Test.bmp", 8, 4);
 
-	float speed = 1.0f / 15.0f;
-	testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
-	testSprite->CreateAnimation(ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
-	testSprite->CreateAnimation(ANIM_RIGHT, speed, { 16,17,18,19,20,21,22,23 });
-	testSprite->CreateAnimation(ANIM_FORWARDS, speed, { 24,25,26,27,28,29,30,31 });
+	//testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
+	//testSprite->CreateAnimation(ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
+	//testSprite->CreateAnimation(ANIM_RIGHT, speed, { 16,17,18,19,20,21,22,23 });
+	//testSprite->CreateAnimation(ANIM_FORWARDS, speed, { 24,25,26,27,28,29,30,31 });
 	
-	
+	bool END = true;
 
 }
 
@@ -69,6 +92,10 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
+
+	world->Update(deltaTime);
+	
+
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
 	testSprite->Update(deltaTime);
@@ -114,6 +141,7 @@ void Update(float deltaTime)
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
 	{
 		testSprite->SetAnimation(-1);
+		world->GetWorldEventManager()->AddEvent(new TestEvent());
 	}
 
 	//Update position
@@ -136,7 +164,8 @@ void Render()
 {	
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	testSprite->Draw();
+	//testSprite->Draw();
+	world->Draw();
 	//------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------
@@ -171,6 +200,10 @@ void Render()
 void Shutdown()
 {	
 	//Delete object manager
-	delete objmanager;
+	//delete objmanager;
+	delete world;
+	delete sprmanager;
+
+	bool shutdown = true;
 
 }

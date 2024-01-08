@@ -45,6 +45,18 @@
     <ClCompile Include="CFB_Engine\Component\Component.cpp">
       <Filter>CFBEngine\Component</Filter>
     </ClCompile>
+    <ClCompile Include="CFB_Engine\Managers\SpriteManager.cpp">
+      <Filter>CFBEngine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Resource\SpriteResource.cpp">
+      <Filter>CFBEngine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Managers\EventManager.cpp">
+      <Filter>CFBEngine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\State\GameState.cpp">
+      <Filter>CFBEngine\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -105,6 +117,21 @@
     <ClInclude Include="CFB_Engine\Object\Actor.h">
       <Filter>CFBEngine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="CFB_Engine\Managers\SpriteManager.h">
+      <Filter>CFBEngine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Resource\SpriteResource.h">
+      <Filter>CFBEngine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Managers\EventManager.h">
+      <Filter>CFBEngine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Event\Event.h">
+      <Filter>CFBEngine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\State\GameState.h">
+      <Filter>CFBEngine\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -130,6 +157,15 @@
     </Filter>
     <Filter Include="CFBEngine\World">
       <UniqueIdentifier>{effe5214-e671-4a53-85e3-c11a67f7d15d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Resource">
+      <UniqueIdentifier>{810d7bc1-0662-4da7-a99d-c87ad14540bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Event">
+      <UniqueIdentifier>{85768bb7-b538-4ac5-a648-91a2aa536090}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\State">
+      <UniqueIdentifier>{b8e68c6a-d654-4eda-a2f4-3997a5256427}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

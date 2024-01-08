@@ -6,9 +6,14 @@
 */
 
 #include "../Object/Object.h"
-#include <memory>
-
+#include "../State/GameState.h"
+#include "../Managers/EventManager.h" //TODO figure this out why it's needed?
+#include "../Managers/ObjectManager.h"
 class ObjectManager;
+class Entity;
+class SpriteManager;
+
+#include <memory>
 
 class World : public Object
 {
@@ -24,10 +29,51 @@ public:
 	virtual void Update(float DeltaTime);
 	virtual void Draw(); //TODO camera
 
-protected:
+public: // Game State Methods
+	inline GameState* GetWorldGameState() { return WorldGameState.get(); };
+public: // Event Handler Methods
+	inline EventManager* GetWorldEventManager() { return WorldEventManager.get(); };
 
+public: // Object Managment Methods
+	//Getter
+	inline ObjectManager* GetWorldObjectManager() { return WorldObjectManager.get(); }
+	//Creation Wrappers
+	template <class Type>
+	Type* CreateEntity();
+
+	template <class Type>
+	Type* CreateComponent(Entity* InEntity = nullptr);
+
+public: // Sprite Manager
+	inline void SetSpriteManager(SpriteManager* InSpriteManager) { EngineSpriteManager = InSpriteManager; };
+	inline SpriteManager* GetEngineSpriteManager() { return EngineSpriteManager; };
+
+protected: // Methods / Members
+	
+	//Game State
+	std::unique_ptr<GameState> WorldGameState;
+	//Event Manager
+	std::unique_ptr<EventManager> WorldEventManager;
 	//Object Manager
-	std::unique_ptr<ObjectManager> pObjectManager;
+	std::unique_ptr<ObjectManager> WorldObjectManager;
+	//Sprite Manager
+	SpriteManager* EngineSpriteManager = nullptr;
+
+
+
 
 
 };
+
+// TEMPLATES
+template<class Type>
+inline Type* World::CreateEntity()
+{
+	return WorldObjectManager->CreateEntity<Type>();
+}
+
+template<class Type>
+inline Type* World::CreateComponent(Entity* InEntity)
+{
+	return WorldObjectManager->CreateComponent<Type>(InEntity);
+}

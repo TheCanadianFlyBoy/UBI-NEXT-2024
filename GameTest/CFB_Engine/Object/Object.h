@@ -20,4 +20,7 @@ public:
 	// Class Name
 	inline virtual const char* GetObjectClassName() = 0;
 
+	//Active flag
+	bool Active = true;
+
 };

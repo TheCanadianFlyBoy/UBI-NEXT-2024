@@ -12,17 +12,19 @@
 
 #include "../Object/Entity.h"
 
-class Object;
-class Entity;
 class CSimpleSprite;
+class World;
 
 
-class ObjectManager {
+class ObjectManager : public Entity {
 
 public: 
+	//Class Name
+	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
+	inline static const char* GetStaticClassName() { return "ObjectManager"; }
 
 	//Constructor
-	ObjectManager() {};
+	ObjectManager(World* InWorld = nullptr) : Entity(InWorld) {};
 	
 	//Destructor
 	~ObjectManager();
@@ -70,7 +72,7 @@ inline Type* ObjectManager::CreateEntity()
 	assert((std::is_base_of < Entity, Type>()));
 
 	//Create a unique pointer for mem mgmt
-	Entities[Type::GetStaticClassName()].push_back(std::make_unique<Type>(this));
+	Entities[Type::GetStaticClassName()].push_back(std::make_unique<Type>(ThisWorld));
 
 	//Return ptr to new object
 	return static_cast<Type*>(Entities[Type::GetStaticClassName()].back().get());

@@ -2,15 +2,9 @@
 #include "SpriteComponent.h"
 #include "../Object/Entity.h"
 
-
-//Sprite Instantiation Constructor
-CSprite::CSprite(Entity* InOwner, const char* fileName, unsigned int columns, unsigned int rows)
-	: CTransform(Owner)
-{
-	//Create new unique pointer to sprite
-	Sprite = std::unique_ptr<CSimpleSprite>(new CSimpleSprite(fileName, columns, rows));
-}
-
+/// <summary>
+/// Handles draw call for sprite
+/// </summary>
 void CSprite::Draw()
 {
 	//Create variables for draw position and rotation

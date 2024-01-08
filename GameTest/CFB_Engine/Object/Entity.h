@@ -12,10 +12,10 @@
 
 #include "Object.h"
 #include "../Component/Component.h"
-#include "../Managers/ObjectManager.h"
 #include "../Math/Vector2.h"
 
 class ObjectManager;
+class World;
 
 class Entity : public Object
 {
@@ -26,7 +26,7 @@ public: //Setup/Common
 	inline static const char* GetStaticClassName() { return "Entity"; }
 
 	//Constructor with optional params
-	Entity(ObjectManager* InWorld = nullptr) : World(InWorld) {};
+	Entity(World* InWorld = nullptr) : ThisWorld(InWorld) {};
 	//Destructor
 	~Entity();
 
@@ -36,14 +36,11 @@ public: //Common Gameplay Methods
 public: //Getters
 
 	//World
-	inline ObjectManager* GetWorld() { return World; };
+	inline World* GetWorld() { return ThisWorld; };
 
 	//Components
 	template <class Type>
 	Type* GetComponentOfClass();
-
-
-
 
 
 public: //Adders
@@ -55,7 +52,7 @@ public: //Adders
 protected: //Members
 
 	//World Reference
-	ObjectManager* World = nullptr;
+	World* ThisWorld = nullptr; //TODO refactor to be the world
 
 	//Components - vector to allow for adding, removal at runtime
 	std::vector<Component*> Components;
@@ -88,7 +85,7 @@ inline Type* Entity::CreateComponent()
 	assert((std::is_base_of < Component, Type>()));
 
 	//Create a new component with this as owner
-	Type* NewComponent = World->CreateComponent<Type>(this);
+	Type* NewComponent = ThisWorld->CreateComponent<Type>(this);
 	//Save it for reference
 	Components.push_back(NewComponent);
 

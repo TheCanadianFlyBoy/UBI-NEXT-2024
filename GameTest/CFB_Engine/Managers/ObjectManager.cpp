@@ -26,7 +26,8 @@ void ObjectManager::Draw()
 	//Draw all sprite components!
 	for (auto &UniqueSpriteComponent : Components["CSprite"])
 	{
-		//SpriteComponent.get()
+		//We know this is a sprite, so we cast it!
+		static_cast<CSprite*>(UniqueSpriteComponent.get())->Draw();
 
 	}
 }
