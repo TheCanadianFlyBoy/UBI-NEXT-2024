@@ -26,10 +26,12 @@ public:
     virtual void Draw();
 
 public: // Methods
-    //Widget Manipulation
+    //Widget Factory
     template <class Type>
     Type* AddWidget();
 
+    //Widget Removal
+    void RemoveWidget(UIWidget* InWidget);
 
 
 protected: // Methods

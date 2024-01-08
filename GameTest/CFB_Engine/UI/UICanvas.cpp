@@ -18,6 +18,32 @@ void UICanvas::Draw()
 
 
 /// <summary>
+/// Removes a given widget from the canvas
+/// </summary>
+/// <param name="InWidget"></param>
+void UICanvas::RemoveWidget(UIWidget* InWidget)
+{
+    //Size check
+    if (Widgets.size() > 0)
+    {
+        //Iterate
+        for (int i = 0; i < Widgets.size(); i++)
+        {
+            //Get the current widget
+            UIWidget* CurrentWidget = Widgets[i].get();
+
+            //Check if we have a match
+            if (CurrentWidget == InWidget)
+            {
+                //match, remove
+                Widgets.erase(Widgets.begin() + i); //TODO erase remove?
+            }
+
+        }
+    }
+}
+
+/// <summary>
 /// Gets the index of an existing widget or returns -1
 /// </summary>
 /// <param name="InWidget">Pointer to Widget</param>
