@@ -6,11 +6,11 @@
 */
 
 #include "../Object/Object.h"
+#include "UIWidget.h"
 
 #include <vector>
 #include <memory>
 
-class UIWidget;
 
 class UICanvas : public Object
 {
@@ -25,6 +25,10 @@ public:
     //Draw Call
     virtual void Draw();
 
+public: // Methods
+    //Widget Manipulation
+    template <class Type>
+    Type* AddWidget();
 
 
 
@@ -37,9 +41,23 @@ protected: // Methods
 	int GetIndexOfWidgetClass();
 
 protected: // Members
-	std::vector<UIWidget*> Widgets; //TODO make a priority queue
+	std::vector<std::unique_ptr<UIWidget>> Widgets; //TODO make a priority queue
 
 };
+
+
+template<class Type>
+inline Type* UICanvas::AddWidget()
+{
+    //Check we have actually passed in a widget, otherwise this code will be broken
+    assert((std::is_base_of <UIWidget, Type>()));
+
+    //Create a unique pointer for mem mgmt
+    Widgets.push_back(std::make_unique<Type>());
+
+    //Return ptr to new object (we've already asserted so static cast is safe)
+    return static_cast<Type*>(Widgets.back().get());
+}
 
 template<class Type>
 inline int UICanvas::GetIndexOfWidgetClass()

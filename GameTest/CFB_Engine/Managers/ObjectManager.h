@@ -68,7 +68,7 @@ protected: //Members
 	std::map<std::string, std::vector<std::unique_ptr<Component>>> Components; //TODO CONVERT TO RAW POINTERS
 	//World List
 	//UI List
-	std::map<std::string, std::vector<std::unique_ptr<UICanvas>>> Canvases; //TODO CONVERT TO RAW POINTERS
+	std::vector<std::unique_ptr<UICanvas>> Canvases; //TODO z order
 
 
 
@@ -126,10 +126,8 @@ inline Type* ObjectManager::CreateWidget(UICanvas* InCanvas)
 	assert((std::is_base_of <UIWidget, Type>()));
 
 	//Create a unique pointer for mem mgmt
-	Canvases[Type::GetStaticClassName()].push_back(std::make_unique<Type>(InCanvas));
+	return InCanvas->AddWidget<Type>();
 
-	//Return ptr to new object (we've already asserted so static cast is safe)
-	return static_cast<Type*>(Canvases[Type::GetStaticClassName()].back().get());
 }
 
 
@@ -145,9 +143,9 @@ inline Type* ObjectManager::CreateCanvas()
 	assert((std::is_base_of <UICanvas, Type>()));
 
 	//Create a unique pointer for mem mgmt
-	Canvases[Type::GetStaticClassName()].push_back(std::make_unique<Type>());
+	Canvases.push_back(std::make_unique<Type>());
 
 	//Return ptr to new object (we've already asserted so static cast is safe)
-	return static_cast<Type*>(Canvases[Type::GetStaticClassName()].back().get());
+	return static_cast<Type*>(Canvases.back().get());
 }
 ;

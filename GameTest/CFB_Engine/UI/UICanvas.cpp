@@ -8,13 +8,14 @@
 void UICanvas::Draw()
 {
     //Iterate
-    for (UIWidget* Widget : Widgets)
+    for (auto &Widget : Widgets)
     {
         //Pass draw call
         Widget->Draw();
     }
 
 }
+
 
 /// <summary>
 /// Gets the index of an existing widget or returns -1
@@ -27,7 +28,7 @@ int UICanvas::GetIndexOfWidget(UIWidget* InWidget)
     for (int i = 0; i < Widgets.size(); i++)
     {
         //Compare
-        if (Widgets[i] == InWidget)
+        if (Widgets[i].get() == InWidget)
         {
             //Return value
             return i;

@@ -5,6 +5,7 @@
 *
 */
 
+#include "../App/app.h"
 #include "../Object/Object.h"
 
 class UICanvas;
@@ -36,5 +37,10 @@ protected:
 /// </summary>
 class UIText : public UIWidget
 {
+public:
+	virtual void Draw() override {
 
+		App::Print(500.f, 500.f, "GUB");
+
+	}
 };

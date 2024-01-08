@@ -11,6 +11,7 @@
 #include "World/World.h"
 
 class SpriteManager;
+class UIManager;
 
 
 class Engine
@@ -54,8 +55,9 @@ inline Type* Engine::CreateWorld()
 	assert((std::is_base_of < World, Type>()));
 
 	//Create a unique pointer for mem mgmt
-	Entities[Type::GetStaticClassName()].push_back(std::make_unique<Type>(this));
+	Worlds.push_back(std::make_unique<Type>(this));
 
 	//Return ptr to new object
-	return static_cast<Type*>(Entities[Type::GetStaticClassName()].back().get());
+	return static_cast<Type*>(Worlds.back().get());
 }
+

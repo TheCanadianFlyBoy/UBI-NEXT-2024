@@ -32,6 +32,12 @@ void ObjectManager::Draw()
 		static_cast<CSprite*>(UniqueSpriteComponent.get())->Draw();
 
 	}
+
+	//Draw all UI elements
+	for (auto& Canvas : Canvases)
+	{
+		Canvas->Draw();
+	}
 }
 
 //Removes component from the list if it matches

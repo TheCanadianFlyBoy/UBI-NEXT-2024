@@ -19,12 +19,18 @@ void Engine::DeleteWorld(World* InWorld)
 	//Size check
 	if (Worlds.size() > 0)
 	{
-		//
+		//Iterate
 		for (int i = 0; i < Worlds.size(); i ++)
 		{
-			//
+			//Get the current world
 			World* CurrentWorld = Worlds[i].get();
 
+			//Check if we have a match
+			if (CurrentWorld == InWorld)
+			{
+				//match, remove
+				Worlds.erase(Worlds.begin() + i); //TODO erase remove?
+			}
 
 		}
 	}
