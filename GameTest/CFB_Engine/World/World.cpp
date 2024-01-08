@@ -1,12 +1,16 @@
 #include "stdafx.h"
 #include "World.h"
 #include "../Managers/ObjectManager.h"
+#include "../Engine.h"
 
-World::World()
+World::World(Engine* InEngine) : WorldEngine(InEngine)
 {
 	WorldObjectManager = std::make_unique<ObjectManager>(this);
 	WorldEventManager = std::make_unique<EventManager>(this);
 	WorldGameState = std::make_unique<GameState>(this);
+	EngineSpriteManager = InEngine->GetSpriteManager();
+
+	bool g = true;
 }
 
 /// <summary>

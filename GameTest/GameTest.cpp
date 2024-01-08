@@ -11,6 +11,7 @@
 #include "CFB_Engine/Managers/SpriteManager.h"
 #include "CFB_Engine/World/World.h"
 #include "CFB_Engine/Event/Event.h"
+#include "CFB_Engine/Engine.h"
 //------------------------------------------------------------------------
 #include "app\app.h"
 //------------------------------------------------------------------------
@@ -25,7 +26,7 @@ Entity* obj;
 CTransform* transform;
 //ObjectManager* objmanager;
 SpriteManager* sprmanager;
-
+Engine* GameEngine;
 
 enum
 {
@@ -41,12 +42,15 @@ enum
 //------------------------------------------------------------------------
 void Init()
 {
+	//Instantiate Engine
+	GameEngine = new Engine();
+
 	//Create world
-	world = new World(); 
+	world = new World(GameEngine); 
+
+	sprmanager = world->GetEngineSpriteManager();
 
 	//Initialize object manager
-	sprmanager = new SpriteManager();
-	world->SetSpriteManager(sprmanager);
 
 	//Register sprite
 	sprmanager->RegisterNewSprite("spr_player", ".\\TestData\\Test.bmp", 8, 4, 2);
@@ -202,7 +206,9 @@ void Shutdown()
 	//Delete object manager
 	//delete objmanager;
 	delete world;
-	delete sprmanager;
+	//delete sprmanager;
+
+	delete GameEngine;
 
 	bool shutdown = true;
 

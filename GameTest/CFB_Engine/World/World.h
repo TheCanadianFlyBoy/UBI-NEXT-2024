@@ -12,6 +12,7 @@
 class ObjectManager;
 class Entity;
 class SpriteManager;
+class Engine;
 
 #include <memory>
 
@@ -23,7 +24,7 @@ public:
 	inline static const char* GetStaticClassName() { return "World"; }
 
 	//Constructor
-	World();
+	World(Engine* InEngine);
 
 	//Update
 	virtual void Update(float DeltaTime);
@@ -50,6 +51,9 @@ public: // Sprite Manager
 
 protected: // Methods / Members
 	
+	//Engine References
+	Engine* WorldEngine = nullptr;
+
 	//Game State
 	std::unique_ptr<GameState> WorldGameState;
 	//Event Manager

@@ -2,6 +2,8 @@
 #include "ObjectManager.h"
 
 #include "../Component/AllComponents.h"
+#include "../UI/UICanvas.h"
+#include "../UI/UIWidget.h"
 
 //Delete all the objects
 ObjectManager::~ObjectManager()

@@ -57,6 +57,12 @@
     <ClCompile Include="CFB_Engine\State\GameState.cpp">
       <Filter>CFBEngine\State</Filter>
     </ClCompile>
+    <ClCompile Include="CFB_Engine\UI\UICanvas.cpp">
+      <Filter>CFBEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Engine.cpp">
+      <Filter>CFBEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -132,6 +138,15 @@
     <ClInclude Include="CFB_Engine\State\GameState.h">
       <Filter>CFBEngine\State</Filter>
     </ClInclude>
+    <ClInclude Include="CFB_Engine\UI\UICanvas.h">
+      <Filter>CFBEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\UI\UIWidget.h">
+      <Filter>CFBEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Engine.h">
+      <Filter>CFBEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -166,6 +181,9 @@
     </Filter>
     <Filter Include="CFBEngine\State">
       <UniqueIdentifier>{b8e68c6a-d654-4eda-a2f4-3997a5256427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\UI">
+      <UniqueIdentifier>{f654ce7e-4da0-4c60-9ce6-ed49af4b4c21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

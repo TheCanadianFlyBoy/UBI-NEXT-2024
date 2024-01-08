@@ -185,6 +185,7 @@
     <ClInclude Include="CFB_Engine\Component\Component.h" />
     <ClInclude Include="CFB_Engine\Component\SpriteComponent.h" />
     <ClInclude Include="CFB_Engine\Component\TransformComponent.h" />
+    <ClInclude Include="CFB_Engine\Engine.h" />
     <ClInclude Include="CFB_Engine\Event\Event.h" />
     <ClInclude Include="CFB_Engine\Managers\EventManager.h" />
     <ClInclude Include="CFB_Engine\Managers\ObjectManager.h" />
@@ -197,6 +198,8 @@
     <ClInclude Include="CFB_Engine\Object\Object.h" />
     <ClInclude Include="CFB_Engine\Resource\SpriteResource.h" />
     <ClInclude Include="CFB_Engine\State\GameState.h" />
+    <ClInclude Include="CFB_Engine\UI\UICanvas.h" />
+    <ClInclude Include="CFB_Engine\UI\UIWidget.h" />
     <ClInclude Include="CFB_Engine\World\World.h" />
     <ClInclude Include="stb_image\stb_image.h" />
     <ClInclude Include="stdafx.h" />
@@ -210,6 +213,7 @@
     <ClCompile Include="App\SimpleSprite.cpp" />
     <ClCompile Include="CFB_Engine\Component\Component.cpp" />
     <ClCompile Include="CFB_Engine\Component\SpriteComponent.cpp" />
+    <ClCompile Include="CFB_Engine\Engine.cpp" />
     <ClCompile Include="CFB_Engine\Managers\EventManager.cpp" />
     <ClCompile Include="CFB_Engine\Managers\ObjectManager.cpp" />
     <ClCompile Include="CFB_Engine\Managers\SpriteManager.cpp" />
@@ -219,6 +223,7 @@
     <ClCompile Include="CFB_Engine\Object\Object.cpp" />
     <ClCompile Include="CFB_Engine\Resource\SpriteResource.cpp" />
     <ClCompile Include="CFB_Engine\State\GameState.cpp" />
+    <ClCompile Include="CFB_Engine\UI\UICanvas.cpp" />
     <ClCompile Include="CFB_Engine\World\World.cpp" />
     <ClCompile Include="GameTest.cpp" />
     <ClCompile Include="stb_image\stb_image.cpp" />

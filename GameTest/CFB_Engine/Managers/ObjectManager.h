@@ -11,9 +11,12 @@
 #include <string>	//Key for map
 
 #include "../Object/Entity.h"
+#include "../UI/UICanvas.h"
 
 class CSimpleSprite;
 class World;
+class UICanvas;
+class UIWidget;
 
 
 class ObjectManager : public Entity {
@@ -34,8 +37,13 @@ public: //Methods
 	virtual void Update(float DeltaTime);
 	virtual void Draw();
 
+
 public: //Add/Removal
 	void DestroyComponent(Component* InComponent);
+
+public: //Factory Getters
+	//template <class Type>
+	//Type* GetEntity();
 
 public: //Factory Constructors
 
@@ -45,6 +53,12 @@ public: //Factory Constructors
 	template <class Type>
 	Type* CreateComponent(Entity* InEntity = nullptr);
 
+	template <class Type>
+	Type* CreateWidget(UICanvas* InCanvas = nullptr);
+
+	template <class Type>
+	Type* CreateCanvas();
+
 
 protected: //Members
 
@@ -53,7 +67,8 @@ protected: //Members
 	//Component List - Shared ownership with entities
 	std::map<std::string, std::vector<std::unique_ptr<Component>>> Components; //TODO CONVERT TO RAW POINTERS
 	//World List
-	//TODO
+	//UI List
+	std::map<std::string, std::vector<std::unique_ptr<UICanvas>>> Canvases; //TODO CONVERT TO RAW POINTERS
 
 
 
@@ -79,6 +94,12 @@ inline Type* ObjectManager::CreateEntity()
 };
 
 
+/// <summary>
+/// Creates a component within the object manager and returned a non-managed pointer (raw)
+/// </summary>
+/// <typeparam name="Type"></typeparam>
+/// <param name="InEntity"></param>
+/// <returns></returns>
 template<class Type>
 inline Type* ObjectManager::CreateComponent(Entity* InEntity)
 {
@@ -90,4 +111,43 @@ inline Type* ObjectManager::CreateComponent(Entity* InEntity)
 
 	//Return ptr to new object (we've already asserted so static cast is safe)
 	return static_cast<Type*>( Components[Type::GetStaticClassName()].back().get());
-};
+}
+
+/// <summary>
+/// Creates a widget
+/// </summary>
+/// <typeparam name="Type"></typeparam>							 //TODO fix these descs
+/// <param name="InCanvas"></param>
+/// <returns></returns>
+template<class Type>
+inline Type* ObjectManager::CreateWidget(UICanvas* InCanvas)
+{
+	//Check we have actually passed in an entity, otherwise this code will be broken
+	assert((std::is_base_of <UIWidget, Type>()));
+
+	//Create a unique pointer for mem mgmt
+	Canvases[Type::GetStaticClassName()].push_back(std::make_unique<Type>(InCanvas));
+
+	//Return ptr to new object (we've already asserted so static cast is safe)
+	return static_cast<Type*>(Canvases[Type::GetStaticClassName()].back().get());
+}
+
+
+/// <summary>
+/// Creates a canvas 
+/// </summary>
+/// <typeparam name="Type"></typeparam>
+/// <returns></returns>
+template<class Type>
+inline Type* ObjectManager::CreateCanvas()
+{
+	//Check we have actually passed in an entity, otherwise this code will be broken
+	assert((std::is_base_of <UICanvas, Type>()));
+
+	//Create a unique pointer for mem mgmt
+	Canvases[Type::GetStaticClassName()].push_back(std::make_unique<Type>());
+
+	//Return ptr to new object (we've already asserted so static cast is safe)
+	return static_cast<Type*>(Canvases[Type::GetStaticClassName()].back().get());
+}
+;
