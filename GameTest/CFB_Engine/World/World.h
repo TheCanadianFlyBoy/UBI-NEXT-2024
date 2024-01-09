@@ -13,6 +13,7 @@ class ObjectManager;
 class Entity;
 class SpriteManager;
 class Engine;
+class CCamera;
 
 #include <memory>
 
@@ -28,12 +29,14 @@ public:
 
 	//Update
 	virtual void Update(float DeltaTime);
-	virtual void Draw(); //TODO camera
+	virtual void Draw();
 
 public: // Game State Methods
 	inline GameState* GetWorldGameState() { return WorldGameState.get(); };
 public: // Event Handler Methods
 	inline EventManager* GetWorldEventManager() { return WorldEventManager.get(); };
+public: // Camera Methods
+	inline void SetActiveCamera(CCamera* InCamera) { ActiveCamera = InCamera; };
 
 public: // Object Managment Methods
 	//Getter
@@ -53,6 +56,9 @@ protected: // Methods / Members
 	
 	//Engine References
 	Engine* WorldEngine = nullptr;
+
+	//Camera
+	CCamera* ActiveCamera = nullptr;
 
 	//Game State
 	std::unique_ptr<GameState> WorldGameState;

@@ -182,6 +182,8 @@
     <ClInclude Include="App\SimpleController.h" />
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
+    <ClInclude Include="CFB_Engine\Component\AllComponents.h" />
+    <ClInclude Include="CFB_Engine\Component\CameraComponent.h" />
     <ClInclude Include="CFB_Engine\Component\Component.h" />
     <ClInclude Include="CFB_Engine\Component\SpriteComponent.h" />
     <ClInclude Include="CFB_Engine\Component\TransformComponent.h" />
@@ -211,6 +213,7 @@
     <ClCompile Include="App\SimpleController.cpp" />
     <ClCompile Include="App\SimpleSound.cpp" />
     <ClCompile Include="App\SimpleSprite.cpp" />
+    <ClCompile Include="CFB_Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="CFB_Engine\Component\Component.cpp" />
     <ClCompile Include="CFB_Engine\Component\SpriteComponent.cpp" />
     <ClCompile Include="CFB_Engine\Engine.cpp" />

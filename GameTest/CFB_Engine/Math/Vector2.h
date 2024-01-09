@@ -41,8 +41,8 @@ public: // ** Operators ** //
 		// ~ Negation ~ //
 	inline const Vector2 operator -() { return Vector2(-x, -y); }
 		// ~ Comparators ~ //
-	inline const bool operator ==(const Vector2& other) { return MathOps::float_equals(x, other.x) && MathOps::float_equals(y, other.y); }
-	inline const bool operator !=(const Vector2& other) { return !MathOps::float_equals(x, other.x) || !MathOps::float_equals(y, other.y); }
+	inline const bool operator ==(const Vector2& other) { return MathOps::FloatEquals(x, other.x) && MathOps::FloatEquals(y, other.y); }
+	inline const bool operator !=(const Vector2& other) { return !MathOps::FloatEquals(x, other.x) || !MathOps::FloatEquals(y, other.y); }
 	inline const bool operator <(const Vector2& other)  { return (x == other.x) ? (y < other.y) : (x < other.x); }
 	inline const bool operator >(const Vector2& other)  { return (x == other.x) ? (y > other.y) : (x > other.x); }
 		// ~ Scalar Math ~ //

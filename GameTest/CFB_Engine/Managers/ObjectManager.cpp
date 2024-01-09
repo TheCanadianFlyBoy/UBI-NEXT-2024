@@ -19,17 +19,22 @@ ObjectManager::~ObjectManager()
 //UPDATe
 void ObjectManager::Update(float DeltaTime)
 {
-	//TODO
+	//Update cameras
+	for (auto& CameraPointer : Components["CCamera"])
+	{
+		//We know this is a camera, so we cast it!
+		static_cast<CCamera*>(CameraPointer.get())->Update(DeltaTime);
+	}
 }
 
 //DRAW
-void ObjectManager::Draw()
+void ObjectManager::Draw(CCamera* InCamera)
 {
 	//Draw all sprite components!
 	for (auto &UniqueSpriteComponent : Components["CSprite"])
 	{
 		//We know this is a sprite, so we cast it!
-		static_cast<CSprite*>(UniqueSpriteComponent.get())->Draw();
+		static_cast<CSprite*>(UniqueSpriteComponent.get())->Draw(InCamera);
 
 	}
 

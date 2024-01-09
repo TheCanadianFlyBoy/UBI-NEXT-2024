@@ -63,6 +63,9 @@
     <ClCompile Include="CFB_Engine\Engine.cpp">
       <Filter>CFBEngine</Filter>
     </ClCompile>
+    <ClCompile Include="CFB_Engine\Component\CameraComponent.cpp">
+      <Filter>CFBEngine\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -146,6 +149,12 @@
     </ClInclude>
     <ClInclude Include="CFB_Engine\Engine.h">
       <Filter>CFBEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\CameraComponent.h">
+      <Filter>CFBEngine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\AllComponents.h">
+      <Filter>CFBEngine\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

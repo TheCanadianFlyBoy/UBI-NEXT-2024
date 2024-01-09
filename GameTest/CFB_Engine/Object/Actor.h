@@ -21,6 +21,9 @@ public: //Helper Methods
 	inline void SetActorLocation(Vector2 InVector) { Transform->SetPosition(InVector); };
 	inline void SetActorRotation(float InRotation) { Transform->SetRotation(InRotation); };
 
+	inline Vector2 GetActorLocation() { return Transform->GetPosition(); };
+	inline float GetActorRotation() { return Transform->GetRotation(); };
+
 protected: //Members
 	//Transform reference for easy reference/usage within the class
 	CTransform* Transform = nullptr;

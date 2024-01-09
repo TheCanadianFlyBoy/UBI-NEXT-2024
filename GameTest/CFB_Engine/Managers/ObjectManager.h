@@ -14,6 +14,7 @@
 #include "../UI/UICanvas.h"
 
 class CSimpleSprite;
+class CCamera;
 class World;
 class UICanvas;
 class UIWidget;
@@ -35,7 +36,7 @@ public:
 public: //Methods
 
 	virtual void Update(float DeltaTime);
-	virtual void Draw();
+	virtual void Draw(CCamera* InCamera = nullptr);
 
 
 public: //Add/Removal

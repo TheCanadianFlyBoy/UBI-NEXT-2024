@@ -31,5 +31,5 @@ void World::Update(float DeltaTime)
 void World::Draw()
 {
 	//Object Draw
-	WorldObjectManager->Draw();
+	WorldObjectManager->Draw(ActiveCamera);
 }

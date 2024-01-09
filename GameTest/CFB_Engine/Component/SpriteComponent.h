@@ -12,6 +12,7 @@
 #include "../../App/SimpleSprite.h"
 
 class CSimpleSprite;
+class CCamera;
 class Entity;
 
 class CSprite : public CTransform
@@ -30,7 +31,7 @@ public:
 	//Update call
 	inline void Update(float DeltaTime) { Sprite->Update(DeltaTime); };
 	//Draw call
-	void Draw();
+	void Draw(CCamera* InCamera = nullptr);
 
 public: //Methods
 	//Setters
