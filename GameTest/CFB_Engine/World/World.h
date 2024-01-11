@@ -37,6 +37,7 @@ public: // Event Handler Methods
 	inline EventManager* GetWorldEventManager() { return WorldEventManager.get(); };
 public: // Camera Methods
 	inline void SetActiveCamera(CCamera* InCamera) { ActiveCamera = InCamera; };
+	inline CCamera* GetActiveCamera() { return ActiveCamera; }
 
 public: // Object Managment Methods
 	//Getter
