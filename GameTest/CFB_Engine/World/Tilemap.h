@@ -47,7 +47,7 @@ public: //Methods
     inline int GetTileCostFromTileIndex(int TileIndex)              { return (TileData[Tiles[TileIndex]].Walkable) ? 1 : -1; };
     inline int GetTileCostFromTilemapPosition(Vector2 MapPosition)  { return GetTileCostFromTileIndex(ConvertMapToIndex(MapPosition)); };
     inline int GetTileCostFromWorldPosition(Vector2 WorldPosition)  { return GetTileCostFromTileIndex(ConvertWorldtoIndex(WorldPosition)); };
-    inline int GetTileIfWalkable(Vector2 MapPosition);
+    int GetTileIfWalkable(Vector2 MapPosition);
     //Type
     inline Tile GetTileTypeAtIndex(int Index) { return TileData[Tiles[Index]]; };
     //Preset Locations

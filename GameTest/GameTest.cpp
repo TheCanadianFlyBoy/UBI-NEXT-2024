@@ -60,27 +60,19 @@ void Init()
 	UICanvas* canvas = world->GetWorldObjectManager()->CreateCanvas<UICanvas>();
 	world->GetWorldObjectManager()->CreateWidget<UIText>(canvas);
 
-
 	sprmanager = world->GetEngineSpriteManager();
-
-	//Initialize object manager
-
 	//Register sprite
 	sprmanager->RegisterNewSprite("spr_player", ".\\TestData\\Test.bmp", 8, 4, 2);
 	float speed = 1.0f / 15.0f;
-	sprmanager->RegisterAnimation("spr_player", ANIM_BACKWARDS, speed, {0,1,2,3,4,5,6,7});
+	sprmanager->RegisterAnimation("spr_player", ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
 	sprmanager->RegisterAnimation("spr_player", ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
 	sprmanager->RegisterAnimation("spr_player", ANIM_RIGHT, speed, { 16,17,18,19,20,21,22,23 });
 	sprmanager->RegisterAnimation("spr_player", ANIM_FORWARDS, speed, { 24,25,26,27,28,29,30,31 });
 
-	//------------------------------------------------------------------------
-	//// Example Sprite Code....
-	//testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
-	//testSprite->SetPosition(400.0f, 400.0f);
-	//testSprite->SetScale(1.0f);
-	//------------------------------------------------------------------------
-	//CFB
-	//TEST 1
+	//Initialize object manager
+
+	
+
 	obj = world->CreateEntity<Actor>();
 	obj->SetActorLocation(startPos);
 
@@ -96,6 +88,8 @@ void Init()
 	
 	//Setup movement
 	movement = obj->CreateComponent<CTileMovement>();
+
+
 
 
 	bool END = true;

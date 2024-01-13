@@ -66,7 +66,7 @@ public: //Methods
 
 protected:
 	std::shared_ptr<CSimpleSprite> Sprite;
-	SpriteHeightAlignment HeightAlignment = SpriteHeightAlignment::Bottom;
+	SpriteHeightAlignment HeightAlignment = SpriteHeightAlignment::Centre;
 
 protected: //Methods
 	inline void SetSpritePosition(Vector2 &InVector) { Sprite->SetPosition(InVector.x, InVector.y); };
