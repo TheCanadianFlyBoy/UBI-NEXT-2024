@@ -12,6 +12,8 @@
 #include "CFB_Engine/World/World.h"
 #include "CFB_Engine/Event/Event.h"
 #include "CFB_Engine/Engine.h"
+#include "CFB_Engine/World/Tilemap.h"
+#include "CFB_Engine/Component/TileMovementComponent.h"
 //------------------------------------------------------------------------
 #include "app\app.h"
 //------------------------------------------------------------------------
@@ -22,11 +24,14 @@
 
 World* world;
 CSprite *testSprite;
-Entity* obj;
+Actor* obj;
 CTransform* transform;
 //ObjectManager* objmanager;
 SpriteManager* sprmanager;
 Engine* GameEngine;
+Tilemap* map;
+CTileMovement* movement;
+
 
 enum
 {
@@ -44,7 +49,10 @@ void Init()
 {
 	//Instantiate Engine
 	GameEngine = new Engine();
+	map = new Tilemap(Vector2(5.f), Vector2(50.f));
 
+	//Start pos
+	Vector2 startPos = map->ConvertMaptoWorld(Vector2(2, 2), true);
 
 	//Create world
 	world = GameEngine->CreateWorld<World>();
@@ -74,22 +82,21 @@ void Init()
 	//CFB
 	//TEST 1
 	obj = world->CreateEntity<Actor>();
+	obj->SetActorLocation(startPos);
 
 	CCamera* cam = obj->CreateComponent<CCamera>();
 
 	world->SetActiveCamera(cam);
-
-	Entity* dummy = world->CreateEntity<Actor>();
-	dummy->GetComponentOfClass<CTransform>()->SetPosition(Vector2(500.f));
-	dummy->CreateComponent<CSprite>();
-	dummy->GetComponentOfClass<CSprite>()->SetSprite(sprmanager->GetSprite("spr_player"));
-
+	//save transform
 	transform = obj->GetComponentOfClass<CTransform>();
-	transform->SetPosition(Vector2(50.f));
 
 	testSprite = obj->CreateComponent<CSprite>();
 	testSprite->SetSprite(sprmanager->GetSprite("spr_player"));
+	testSprite->SetHeightAlignment(CSprite::SpriteHeightAlignment::Centre);
 	
+	//Setup movement
+	movement = obj->CreateComponent<CTileMovement>();
+
 
 	bool END = true;
 
@@ -108,29 +115,12 @@ void Update(float deltaTime)
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
 	testSprite->Update(deltaTime);
-	if (App::GetController().GetLeftThumbStickX() > 0.5f)
-	{
-		testSprite->SetAnimation(ANIM_RIGHT);
-		if (obj->GetComponentOfClass<CTransform>()) obj->GetComponentOfClass<CTransform>()->AddPosition(Vector2(1.f, 0.f));
+	
+	//Tile based movement
+	Vector2 Input = Vector2(App::GetController().GetLeftThumbStickX(), App::GetController().GetLeftThumbStickY());
 
+	movement->MoveOnTilemap(Input, map, deltaTime);
 
-		
-	}
-	if (App::GetController().GetLeftThumbStickX() < -0.5f)
-	{
-		testSprite->SetAnimation(ANIM_LEFT);
-		transform->Position.x -= 1.0f;
-	}
-    if (App::GetController().GetLeftThumbStickY() > 0.5f)
-    {
-        testSprite->SetAnimation(ANIM_FORWARDS);
-		transform->Position.y += 1.0f;
-    }
-	if (App::GetController().GetLeftThumbStickY() < -0.5f)
-	{
-		testSprite->SetAnimation(ANIM_BACKWARDS);
-		transform->Position.y -= 1.0f;
-	}
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_DPAD_UP, false))
 	{
 		testSprite->SetScale(testSprite->GetScale() + 0.1f);
@@ -168,6 +158,9 @@ void Update(float deltaTime)
 //------------------------------------------------------------------------
 void Render()
 {	
+
+	map->Draw(world->GetActiveCamera());
+
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
 	//testSprite->Draw();
@@ -180,26 +173,7 @@ void Render()
 	App::Print(100, 100, ("PlayerX: " + std::to_string(((Actor*)(obj))->GetActorLocation().x)).c_str());
 	App::Print(100, 150, ("PlayerCamX: " + std::to_string(((Actor*)(obj))->GetComponentOfClass<CCamera>()->GetCameraOrigin().x)).c_str());
 
-
-	//------------------------------------------------------------------------
-	// Example Line Drawing.
-	//------------------------------------------------------------------------
-	//static float a = 0.0f;
-	//float r = 1.0f;
-	//float g = 1.0f;
-	//float b = 1.0f;
-	//a += 0.1f;
-	//for (int i = 0; i < 20; i++)
-	//{
-	//
-	//	float sx = 200 + sinf(a + i * 0.1f)*60.0f;
-	//	float sy = 200 + cosf(a + i * 0.1f)*60.0f;
-	//	float ex = 700 - sinf(a + i * 0.1f)*60.0f;
-	//	float ey = 700 - cosf(a + i * 0.1f)*60.0f;
-	//	g = (float)i / 20.0f;
-	//	b = (float)i / 20.0f;
-	//	App::DrawLine(sx, sy, ex, ey,r,g,b);
-	//}
+	
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.

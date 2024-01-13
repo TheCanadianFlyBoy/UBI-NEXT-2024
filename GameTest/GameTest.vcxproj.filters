@@ -36,9 +36,6 @@
     <ClCompile Include="CFB_Engine\Object\Entity.cpp">
       <Filter>CFBEngine\Object</Filter>
     </ClCompile>
-    <ClCompile Include="CFB_Engine\Component\SpriteComponent.cpp">
-      <Filter>CFBEngine\Component</Filter>
-    </ClCompile>
     <ClCompile Include="CFB_Engine\World\World.cpp">
       <Filter>CFBEngine\World</Filter>
     </ClCompile>
@@ -63,8 +60,17 @@
     <ClCompile Include="CFB_Engine\Engine.cpp">
       <Filter>CFBEngine</Filter>
     </ClCompile>
+    <ClCompile Include="CFB_Engine\World\Tilemap.cpp">
+      <Filter>CFBEngine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Component\SpriteComponent.cpp">
+      <Filter>CFBEngine\Component\Common</Filter>
+    </ClCompile>
     <ClCompile Include="CFB_Engine\Component\CameraComponent.cpp">
-      <Filter>CFBEngine\Component</Filter>
+      <Filter>CFBEngine\Component\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CFB_Engine\Component\TileMovementComponent.cpp">
+      <Filter>CFBEngine\Component\Kinetic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,14 +117,8 @@
     <ClInclude Include="CFB_Engine\Math\Vector3.h">
       <Filter>CFBEngine\Math</Filter>
     </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\TransformComponent.h">
-      <Filter>CFBEngine\Component</Filter>
-    </ClInclude>
     <ClInclude Include="CFB_Engine\Object\Entity.h">
       <Filter>CFBEngine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\SpriteComponent.h">
-      <Filter>CFBEngine\Component</Filter>
     </ClInclude>
     <ClInclude Include="CFB_Engine\World\World.h">
       <Filter>CFBEngine\World</Filter>
@@ -150,11 +150,23 @@
     <ClInclude Include="CFB_Engine\Engine.h">
       <Filter>CFBEngine</Filter>
     </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\CameraComponent.h">
-      <Filter>CFBEngine\Component</Filter>
-    </ClInclude>
     <ClInclude Include="CFB_Engine\Component\AllComponents.h">
       <Filter>CFBEngine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\World\Tilemap.h">
+      <Filter>CFBEngine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\TransformComponent.h">
+      <Filter>CFBEngine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\SpriteComponent.h">
+      <Filter>CFBEngine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\CameraComponent.h">
+      <Filter>CFBEngine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\TileMovementComponent.h">
+      <Filter>CFBEngine\Component\Kinetic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +205,12 @@
     </Filter>
     <Filter Include="CFBEngine\UI">
       <UniqueIdentifier>{f654ce7e-4da0-4c60-9ce6-ed49af4b4c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Component\Common">
+      <UniqueIdentifier>{26660a56-9f73-43d3-b3d1-ea0f14965bb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Component\Kinetic">
+      <UniqueIdentifier>{01353fd9-0739-44c6-8c59-6912d1eb70a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

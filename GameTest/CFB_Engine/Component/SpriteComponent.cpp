@@ -40,6 +40,17 @@ void CSprite::Draw(CCamera* InCamera)
 		DrawPosition -= InCamera->GetCameraOrigin();
 	}
 
+	//Height alignment TODO move to resource?
+	switch (HeightAlignment)
+	{
+	case SpriteHeightAlignment::Bottom:
+		DrawPosition += Vector2(0, GetSpriteHeight() / 2);
+		break;
+	case SpriteHeightAlignment::Top:
+		DrawPosition -= Vector2(0, GetSpriteHeight() / 2);
+		break;
+	}
+
 	//Update position
 	UpdateSpriteLocation(DrawPosition, DrawRotation);
 

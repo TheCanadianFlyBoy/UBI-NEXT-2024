@@ -28,6 +28,7 @@ public: //Methods
 	//Math
 	///Handles addition
 	inline void AddPosition(Vector2 &InPosition)				{ Position += InPosition; };
+	inline void AddRotation(float& InRotation) { Rotation += InRotation; };
 	///Handles straight scalar multiplication
 	inline void ScalarMultiplyPosition(float &Multiplier)	{ Position *= Multiplier; };
 	///Handles scalar multiplication with separate axes

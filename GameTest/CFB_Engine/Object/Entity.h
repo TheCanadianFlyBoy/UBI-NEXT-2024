@@ -31,7 +31,6 @@ public: //Setup/Common
 	~Entity();
 
 public: //Common Gameplay Methods
-	//Vector2 GetPosition()
 	
 public: //Getters
 
@@ -146,3 +145,4 @@ int Entity::GetIndexOfComponentClass()
 	//Failure, return -1
 	return -1;
 }
+

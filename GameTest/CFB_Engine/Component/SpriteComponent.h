@@ -17,6 +17,14 @@ class Entity;
 
 class CSprite : public CTransform
 {
+public:
+	enum class SpriteHeightAlignment
+	{
+		Bottom,
+		Centre,
+		Top
+	};
+
 public: 
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
@@ -51,10 +59,14 @@ public: //Methods
 	//Colour
 	inline void SetSpriteColour(float r, float g, float b) { Sprite->SetColor(r, g, b); };
 
+	//Alignment
+	inline void SetHeightAlignment(SpriteHeightAlignment Alignment) { HeightAlignment = Alignment; };
+	inline SpriteHeightAlignment GetHeightAlignment() { return HeightAlignment; };
 	
 
 protected:
 	std::shared_ptr<CSimpleSprite> Sprite;
+	SpriteHeightAlignment HeightAlignment = SpriteHeightAlignment::Bottom;
 
 protected: //Methods
 	inline void SetSpritePosition(Vector2 &InVector) { Sprite->SetPosition(InVector.x, InVector.y); };

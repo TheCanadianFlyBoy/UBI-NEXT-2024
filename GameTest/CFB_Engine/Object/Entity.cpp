@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "../Component/Component.h"
+#include "../World/World.h"
 
 //Delete all components
 Entity::~Entity()

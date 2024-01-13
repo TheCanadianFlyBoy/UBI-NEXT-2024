@@ -5,6 +5,7 @@
 #include "../Object/Actor.h" // ''
 #include "../Component/SpriteComponent.h" // ''
 #include "../Managers/SpriteManager.h" //''
+#include "../Component/AllComponents.h"
 
 /// <summary>
 /// Handles current update functionality
@@ -51,8 +52,8 @@ void GameState::TestEventHandler(Event* InEvent, float DeltaTime)
 {
 	if (InEvent->GetEventType() == "TestEvent")
 	{
-		Actor* gub = ThisWorld->CreateEntity<Actor>();
-		CSprite* spr = gub->CreateComponent<CSprite>();
-		spr->SetSprite(ThisWorld->GetEngineSpriteManager()->GetSprite("spr_player"));
+		//Actor* gub = ThisWorld->CreateEntity<Actor>();
+		//CSprite* spr = gub->CreateComponent<CSprite>();
+		//spr->SetSprite(ThisWorld->GetEngineSpriteManager()->GetSprite("spr_player"));
 	}
 }
