@@ -185,6 +185,7 @@
     <ClInclude Include="CFB_Engine\Component\AllComponents.h" />
     <ClInclude Include="CFB_Engine\Component\CameraComponent.h" />
     <ClInclude Include="CFB_Engine\Component\Component.h" />
+    <ClInclude Include="CFB_Engine\Component\RigidBodyComponent.h" />
     <ClInclude Include="CFB_Engine\Component\SpriteComponent.h" />
     <ClInclude Include="CFB_Engine\Component\TileMovementComponent.h" />
     <ClInclude Include="CFB_Engine\Component\TransformComponent.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="App\SimpleSprite.cpp" />
     <ClCompile Include="CFB_Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="CFB_Engine\Component\Component.cpp" />
+    <ClCompile Include="CFB_Engine\Component\RigidBodyComponent.cpp" />
     <ClCompile Include="CFB_Engine\Component\SpriteComponent.cpp" />
     <ClCompile Include="CFB_Engine\Component\TileMovementComponent.cpp" />
     <ClCompile Include="CFB_Engine\Engine.cpp" />

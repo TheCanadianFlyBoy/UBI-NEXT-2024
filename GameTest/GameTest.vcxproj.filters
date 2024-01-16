@@ -75,6 +75,9 @@
     <ClCompile Include="CFB_Engine\World\Pathfinder.cpp">
       <Filter>CFBEngine\World</Filter>
     </ClCompile>
+    <ClCompile Include="CFB_Engine\Component\RigidBodyComponent.cpp">
+      <Filter>CFBEngine\Component\Kinetic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -173,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="CFB_Engine\World\Pathfinder.h">
       <Filter>CFBEngine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Component\RigidBodyComponent.h">
+      <Filter>CFBEngine\Component\Kinetic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

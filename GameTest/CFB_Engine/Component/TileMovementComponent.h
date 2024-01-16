@@ -1,7 +1,7 @@
 #pragma once
 /*
-*	CFB Engine - Component
-*	The archetype for all components in within the ECS.
+*	CFB Engine - Tile Movement Component
+*	A movement component that take in input at attempts to move on a tilemap
 *
 */
 
