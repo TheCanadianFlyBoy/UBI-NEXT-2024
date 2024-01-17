@@ -21,8 +21,10 @@ public: // ** Methods ** //
 	inline const float Length()			{ return sqrtf(x * x + y * y); }
 	inline const float LengthSquared()  { return x * x + y * y; }
 		// ~ Distance calculations ~ //
-	inline const float DistanceFrom(const Vector2 other)		{ return sqrtf((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y)); }
-	inline const float DistanceFromSquared(const Vector2 other) { return ((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y)); }
+	static inline float Distance(const Vector2& FirstVector, const Vector2& SecondVector) 
+		{ return sqrtf((FirstVector.x - SecondVector.x) * (FirstVector.x - SecondVector.x) + (FirstVector.y - SecondVector.y) * (FirstVector.y - SecondVector.y)); }
+	inline float DistanceFrom(Vector2& other)		{ return sqrtf((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y)); }
+	inline float DistanceFromSquared( Vector2& other) { return ((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y)); }
 		// ~ Normalization calculations ~ //
 	inline Vector2 GetNormalized() {
 		float out_x = x != 0.f ? x / fabsf(Length()) : 0.f;
