@@ -194,6 +194,7 @@
     <ClInclude Include="CFB_Engine\Managers\EventManager.h" />
     <ClInclude Include="CFB_Engine\Managers\ObjectManager.h" />
     <ClInclude Include="CFB_Engine\Managers\SpriteManager.h" />
+    <ClInclude Include="CFB_Engine\Math\Collision.h" />
     <ClInclude Include="CFB_Engine\Math\MathOps.h" />
     <ClInclude Include="CFB_Engine\Math\Vector2.h" />
     <ClInclude Include="CFB_Engine\Math\Vector3.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="CFB_Engine\Managers\EventManager.cpp" />
     <ClCompile Include="CFB_Engine\Managers\ObjectManager.cpp" />
     <ClCompile Include="CFB_Engine\Managers\SpriteManager.cpp" />
+    <ClCompile Include="CFB_Engine\Math\Collision.cpp" />
     <ClCompile Include="CFB_Engine\Math\Vector2.cpp" />
     <ClCompile Include="CFB_Engine\Math\Vector3.cpp" />
     <ClCompile Include="CFB_Engine\Object\Entity.cpp" />

@@ -37,7 +37,7 @@ public:
 	CSprite(Entity* InOwner, std::string InSpriteName);
 
 	//Update call
-	inline void Update(float DeltaTime) { Sprite->Update(DeltaTime); };
+	virtual void Update(float DeltaTime) override { Sprite->Update(DeltaTime); };
 	//Draw call
 	void Draw(CCamera* InCamera = nullptr);
 

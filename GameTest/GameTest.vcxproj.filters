@@ -78,6 +78,9 @@
     <ClCompile Include="CFB_Engine\Component\RigidBodyComponent.cpp">
       <Filter>CFBEngine\Component\Kinetic</Filter>
     </ClCompile>
+    <ClCompile Include="CFB_Engine\Math\Collision.cpp">
+      <Filter>CFBEngine\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -179,6 +182,9 @@
     </ClInclude>
     <ClInclude Include="CFB_Engine\Component\RigidBodyComponent.h">
       <Filter>CFBEngine\Component\Kinetic</Filter>
+    </ClInclude>
+    <ClInclude Include="CFB_Engine\Math\Collision.h">
+      <Filter>CFBEngine\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

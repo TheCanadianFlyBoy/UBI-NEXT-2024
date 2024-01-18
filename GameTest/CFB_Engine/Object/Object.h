@@ -19,6 +19,12 @@ public:
 
 	// Class Name
 	inline virtual const char* GetObjectClassName() = 0;
+	
+	//Common Methods
+	virtual void OnBegin() {};
+	virtual void Update(float DeltaTime) {};
+	virtual void LateUpdate(float DeltaTime) {};
+	virtual void Shutdown() {};
 
 	//Active flag
 	bool Active = true;

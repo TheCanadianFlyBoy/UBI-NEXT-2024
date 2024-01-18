@@ -14,6 +14,8 @@
 #include "CFB_Engine/Engine.h"
 #include "CFB_Engine/World/Tilemap.h"
 #include "CFB_Engine/Component/TileMovementComponent.h"
+#include "CFB_Engine/Component/RigidBodyComponent.h"
+#include "CFB_Engine/Math/Collision.h"
 //------------------------------------------------------------------------
 #include "app\app.h"
 //------------------------------------------------------------------------
@@ -31,6 +33,8 @@ SpriteManager* sprmanager;
 Engine* GameEngine;
 Tilemap* map;
 CTileMovement* movement;
+CRigidBody* playerbody;
+CRigidBody* otherbody;
 
 
 enum
@@ -89,7 +93,16 @@ void Init()
 	//Setup movement
 	movement = obj->CreateComponent<CTileMovement>();
 
+	CollisionUnitTest();
 
+	playerbody = obj->CreateComponent<CRigidBody>();
+	playerbody->MakeCollisionBox(Vector2(0.f), Vector2(20.f));
+
+	Actor* Other = world->CreateEntity<Actor>();
+	Other->SetActorLocation(80.f);
+
+	otherbody = Other->CreateComponent<CRigidBody>();
+	otherbody->MakeCollisionBox(Vector2(0.f), Vector2(20.f));
 
 
 	bool END = true;
@@ -104,7 +117,10 @@ void Update(float deltaTime)
 {
 
 	world->Update(deltaTime);
-	
+
+	playerbody->Update(deltaTime);
+	otherbody->Update(deltaTime);
+
 
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
