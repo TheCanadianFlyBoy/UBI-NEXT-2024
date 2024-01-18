@@ -19,7 +19,7 @@ struct QuadNode {
 	QuadPoint Position;
 	//Points to child or first element
 	int Data;
-	//Number of elements or -1 if not a leaf
+	//Number of elements or -1 if not a leaf //TODO add data, splitting features
 	//int Count;
 
 	QuadNode(QuadPoint InPosition, int InData = 0) : Position(InPosition), Data(InData) {};
@@ -28,10 +28,9 @@ struct QuadNode {
 
 };
 
-
-class QuadBranch {
+class QuadTree {
 public://Common
-	QuadBranch(QuadPoint TopLeftPoint = QuadPoint(), QuadPoint BottomRightPoint = QuadPoint()) {}
+	QuadTree(QuadPoint TopLeftPoint = QuadPoint(), QuadPoint BottomRightPoint = QuadPoint()) : TopLeft(TopLeftPoint), BottomRight(BottomRightPoint) {}
 
 	int MaxLeaves = 8;
 
@@ -44,10 +43,10 @@ protected: //Members
 	std::shared_ptr<QuadNode> Node = nullptr;
 
 	//Pointer to links
-	std::shared_ptr<QuadBranch> TopLeftTree = nullptr;
-	std::shared_ptr<QuadBranch> TopRightTree = nullptr;
-	std::shared_ptr<QuadBranch> BottomLeftTree = nullptr;
-	std::shared_ptr<QuadBranch> BottomRightTree = nullptr;
+	std::shared_ptr<QuadTree> TopLeftTree = nullptr;
+	std::shared_ptr<QuadTree> TopRightTree = nullptr;
+	std::shared_ptr<QuadTree> BottomLeftTree = nullptr;
+	std::shared_ptr<QuadTree> BottomRightTree = nullptr;
 
 public: // Methods
 
@@ -62,3 +61,5 @@ public: // Methods
 
 
 };
+
+void QuadTreeUnitTest();

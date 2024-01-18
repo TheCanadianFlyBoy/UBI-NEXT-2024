@@ -5,7 +5,7 @@
 /// Inserts a given node into the quad tree
 /// </summary>
 /// <param name="InNode">Node to insert</param>
-void QuadBranch::InsertNode(std::shared_ptr<QuadNode> InNode)
+void QuadTree::InsertNode(std::shared_ptr<QuadNode> InNode)
 {
 	//Null / boundary check
 	if (!InNode || !IsInBoundary(InNode->Position)) return;
@@ -31,7 +31,7 @@ void QuadBranch::InsertNode(std::shared_ptr<QuadNode> InNode)
 			if (TopLeftTree == nullptr)
 			{
 				//Top left sector
-				TopLeftTree = std::make_shared<QuadBranch>(
+				TopLeftTree = std::make_shared<QuadTree>(
 					QuadPoint(TopLeft.x, TopLeft.y),
 					QuadPoint(MidX, MidY));
 				//Recurse
@@ -42,7 +42,7 @@ void QuadBranch::InsertNode(std::shared_ptr<QuadNode> InNode)
 			if (BottomLeftTree == nullptr)
 			{
 				//Bottom left sector
-				BottomLeftTree = std::make_shared<QuadBranch>(
+				BottomLeftTree = std::make_shared<QuadTree>(
 					QuadPoint(TopLeft.x, MidY),
 					QuadPoint(MidX, BottomRight.y));
 				//Recurse
@@ -59,7 +59,7 @@ void QuadBranch::InsertNode(std::shared_ptr<QuadNode> InNode)
 			if (TopRightTree == nullptr)
 			{
 				//Top Right sector
-				TopRightTree = std::make_shared<QuadBranch>(
+				TopRightTree = std::make_shared<QuadTree>(
 					QuadPoint(MidX, TopLeft.y),
 					QuadPoint(BottomRight.x, MidY));
 				//Recurse
@@ -72,7 +72,7 @@ void QuadBranch::InsertNode(std::shared_ptr<QuadNode> InNode)
 			if (BottomRightTree == nullptr)
 			{
 				//Bottom left sector
-				BottomRightTree = std::make_shared<QuadBranch>(
+				BottomRightTree = std::make_shared<QuadTree>(
 					QuadPoint(MidX, MidY),
 					QuadPoint(BottomRight.x, BottomRight.y));
 				//Recurse
@@ -83,7 +83,7 @@ void QuadBranch::InsertNode(std::shared_ptr<QuadNode> InNode)
 
 }
 
-std::shared_ptr<QuadNode> QuadBranch::FindNodeAtPoint(QuadPoint InPoint)
+std::shared_ptr<QuadNode> QuadTree::FindNodeAtPoint(QuadPoint InPoint)
 {
 	// Null / boundary check
 	if (!IsInBoundary(InPoint)) return nullptr;
@@ -125,7 +125,30 @@ std::shared_ptr<QuadNode> QuadBranch::FindNodeAtPoint(QuadPoint InPoint)
 	}
 }
 
-bool QuadBranch::IsInBoundary(QuadPoint InPoint)
+bool QuadTree::IsInBoundary(QuadPoint InPoint)
 {
 	return InPoint.x >= TopLeft.x && InPoint.x <= BottomRight.x && InPoint.y >= TopLeft.y && InPoint.y <= BottomRight.y;
+}
+
+void QuadTreeUnitTest()
+{
+
+	//Create a tree
+	std::shared_ptr<QuadTree> Root = std::make_shared<QuadTree>(QuadPoint(0, 0), QuadPoint(40, 40));
+	std::shared_ptr<QuadNode> g;
+
+	//Insertion test
+	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(4, 4), 1));
+	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(5, 4), 2));
+	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(10, 14), 3));
+	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(40, 48), 4));
+
+	//Search Test
+	g = Root->FindNodeAtPoint(QuadPoint(4, 4));
+	g = Root->FindNodeAtPoint(QuadPoint(5, 5));
+	g = Root->FindNodeAtPoint(QuadPoint(30, 30));
+	g = Root->FindNodeAtPoint(QuadPoint(50, 50));
+
+
+
 }

@@ -16,6 +16,7 @@
 #include "CFB_Engine/Component/TileMovementComponent.h"
 #include "CFB_Engine/Component/RigidBodyComponent.h"
 #include "CFB_Engine/Math/Collision.h"
+#include "CFB_Engine/Managers/Quadtree.h"
 //------------------------------------------------------------------------
 #include "app\app.h"
 //------------------------------------------------------------------------
@@ -104,6 +105,7 @@ void Init()
 	otherbody = Other->CreateComponent<CRigidBody>();
 	otherbody->MakeCollisionBox(Vector2(0.f), Vector2(20.f));
 
+	QuadTreeUnitTest();
 
 	bool END = true;
 
