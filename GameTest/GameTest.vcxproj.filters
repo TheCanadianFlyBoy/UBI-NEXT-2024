@@ -81,6 +81,9 @@
     <ClCompile Include="CFB_Engine\Math\Collision.cpp">
       <Filter>CFBEngine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="CFB_Engine\Managers\Quadtree.cpp">
+      <Filter>CFBEngine\Manager\Quadtree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -186,6 +189,9 @@
     <ClInclude Include="CFB_Engine\Math\Collision.h">
       <Filter>CFBEngine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="CFB_Engine\Managers\Quadtree.h">
+      <Filter>CFBEngine\Manager\Quadtree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -229,6 +235,9 @@
     </Filter>
     <Filter Include="CFBEngine\Component\Kinetic">
       <UniqueIdentifier>{01353fd9-0739-44c6-8c59-6912d1eb70a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFBEngine\Manager\Quadtree">
+      <UniqueIdentifier>{ee73d3e6-a894-4343-b12c-92eac6cc386e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
