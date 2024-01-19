@@ -6,41 +6,44 @@
 */
 
 #include <memory>
+#include "../Math/Vector2.h"
 
-struct QuadPoint {
-	int x;
-	int y;
+#define QUAD_MAX_CHILDREN 8
 
-	QuadPoint(int inX = 0, int inY = 0) : x(inX), y(inY) {};
-
-};
-
-struct QuadNode {
-	QuadPoint Position;
-	//Points to child or first element
-	int Data;
-	//Number of elements or -1 if not a leaf //TODO add data, splitting features
-	//int Count;
-
-	QuadNode(QuadPoint InPosition, int InData = 0) : Position(InPosition), Data(InData) {};
-
-
-
-};
+class Actor;
 
 class QuadTree {
 public://Common
-	QuadTree(QuadPoint TopLeftPoint = QuadPoint(), QuadPoint BottomRightPoint = QuadPoint()) : TopLeft(TopLeftPoint), BottomRight(BottomRightPoint) {}
+	QuadTree(Vector2 TopLeftPoint = Vector2(0.f), Vector2 BottomRightPoint = Vector2(0.f)) : TopLeft(TopLeftPoint), BottomRight(BottomRightPoint) {
+		//Objects.reserve(QUAD_MAX_CHILDREN);
+	};
 
-	int MaxLeaves = 8;
+	~QuadTree();
+
+	//Unit test data
+	//int Data;
+
+	//Points to child or first element
+	std::vector<std::shared_ptr<Actor>> Objects;
+
+	//Return if this is a leaf
+	inline bool IsLeaf() { return !TopLeftTree && !TopRightTree && !BottomLeftTree && !BottomRightTree; }
+
+	//Insertion
+	void InsertNode(Vector2 InPosition, std::shared_ptr<Actor>& InActor);
+
+	//Add object or call c
+	void AddObject(std::shared_ptr<Actor> InActor);
+
+	void Split();
 
 protected: //Members
 	//Boundaries
-	QuadPoint TopLeft = QuadPoint(0,0);
-	QuadPoint BottomRight = QuadPoint(0, 0);
+	Vector2 TopLeft = Vector2(0.f);
+	Vector2 BottomRight = Vector2(0.f);
 
 	//Pointer to data
-	std::shared_ptr<QuadNode> Node = nullptr;
+	//std::shared_ptr<QuadNode> Node = nullptr;
 
 	//Pointer to links
 	std::shared_ptr<QuadTree> TopLeftTree = nullptr;
@@ -48,16 +51,17 @@ protected: //Members
 	std::shared_ptr<QuadTree> BottomLeftTree = nullptr;
 	std::shared_ptr<QuadTree> BottomRightTree = nullptr;
 
+
 public: // Methods
 
 	//Insert a node in the tree system
-	void InsertNode(std::shared_ptr<QuadNode> InNode);
+	void InsertNode(Vector2 InPosition);
 
 	//Find a node
-	std::shared_ptr<QuadNode> FindNodeAtPoint(QuadPoint InPoint);
+	QuadTree* FindNodeAtPoint(Vector2 InPoint);
 
 	//Check if within our quad
-	bool IsInBoundary(QuadPoint InPoint);
+	bool IsInBoundary(Vector2 InPoint);
 
 
 };

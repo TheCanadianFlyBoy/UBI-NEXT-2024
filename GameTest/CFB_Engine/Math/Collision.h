@@ -6,6 +6,7 @@
 */
 #include "../Component/RigidBodyComponent.h"
 #include "../Math/Vector2.h"
+#include "../Utility/Debug.h"
 
 void CollisionUnitTest();
 
@@ -16,7 +17,7 @@ struct CollisionInfo
 {
 	//This
 	Entity* This;
-	struct CRigidBody* ThisBody;
+	class CRigidBody* ThisBody;
 
 	//Other
 	Entity* Other;
@@ -32,14 +33,19 @@ struct CollisionInfo
 
 struct CollisionPrimitive : public Object {
 	//Class Name
-	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
-	inline static const char* GetStaticClassName() { return "CollisionPrimitive"; }
+	//inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
+	//inline static const char* GetStaticClassName() { return "CollisionPrimitive"; }
 
 	//Constructor
 	CollisionPrimitive(Vector2 InPosition = Vector2(0.f)) : Position(InPosition) {};
 
+
 	//Common Properties
 	Vector2 Position = Vector2(0.f);
+
+	virtual void DebugDraw() = 0;
+	
+
 };
 
 struct CollisionBox : public CollisionPrimitive
@@ -51,9 +57,14 @@ struct CollisionBox : public CollisionPrimitive
 	//Constructor
 	CollisionBox(Vector2 InPosition, Vector2 InBounds, bool Centred = false) : CollisionPrimitive(InPosition), Bounds(InBounds), PositionCentred(Centred) {};
 
+	virtual void DebugDraw() override {};
+
 	//Properties
 	Vector2 Bounds = Vector2(0.f);
 	bool PositionCentred = false;
+
+	inline Vector2 GetCentre() { return PositionCentred ? Position : Position + Bounds / 2; }
+
 	//Methods
 	//Getters
 	inline Vector2 GetMin() const {
@@ -98,7 +109,7 @@ struct CollisionBox : public CollisionPrimitive
 			 && ThisMin.y <= OtherMax.y);
 
 	}
-	bool CircleToAABB(CollisionCircle& Circle);
+	bool CircleToAABB(CollisionCircle& Circle, CollisionLine& CircleTrajectory, CollisionInfo& OutInfo);
 	bool LineToAABB(CollisionLine& Line);
 
 };
@@ -110,9 +121,12 @@ struct CollisionCircle : public CollisionPrimitive
 	inline static const char* GetStaticClassName() { return "CollisionCircle"; }
 
 	CollisionCircle(Vector2 InPosition, float InRadius) : CollisionPrimitive(InPosition), Radius(InRadius) {};
+	
+	virtual void DebugDraw() override { Debug::DrawCircle(Position, Radius); };
 
 	//Properties
 	float Radius = 0.f;
+
 
 	//Methods
 	//Getters
@@ -128,7 +142,10 @@ struct CollisionLine : public CollisionPrimitive
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
 	inline static const char* GetStaticClassName() { return "CollisionLine"; }
 
+	//Constructor
 	CollisionLine(Vector2 InStart, Vector2 InEnd, float InCollisionAccuracy = 0.2f, Vector2 InPosition = Vector2(0.f)) : CollisionPrimitive(InPosition), Start(InStart), End(InEnd), CollisionAccuracy(InCollisionAccuracy) {};
+
+	virtual void DebugDraw() override { Debug::DrawLine(Start, End); }
 
 	//Properties
 	Vector2 Start = Vector2(0.f);
@@ -187,6 +204,18 @@ struct CollisionLine : public CollisionPrimitive
 		float B = ((GetXSlope()) * (Start.y - Other.Start.y) - (GetYSlope()) * (Start.x - Other.Start.x)) / Denominator;
 
 		return Vector2(Start.x + (A * GetXSlope()), Start.y + (A * (GetYSlope())));
+	}
+
+
+	/// <summary>
+	/// Gets the reflection vector of a collision
+	/// </summary>
+	/// <returns></returns>
+	inline Vector2 GetReflection(Vector2 IncidentVector, Vector2 HitVector) 
+	{
+		//Get the normal to the hit vector
+		//HitVector.
+
 	}
 
 };

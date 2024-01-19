@@ -29,8 +29,9 @@ public: //Properties
 
 	//Update
 	virtual void Update(float DeltaTime);
+	virtual void Render();
 
-public: //Factory
+public: //Methods
 
 	//Collision Makers
 	void MakeCollisionCircle(Vector2 InPosition, float InRadius);
@@ -39,12 +40,19 @@ public: //Factory
 	inline CollisionPrimitive* GetCollisionShape() { return CollisionShape.get(); }
 	//Gets if there is a collision between two bodies
 	virtual bool GetBodyCollision(CRigidBody* Other, CollisionInfo& OutHitInfo); 
+	virtual bool GetCollision(CollisionPrimitive& InCollisionPrimitive, CollisionInfo& OutHitInfo);
 
 	//Static check for checking two collisions TODO
-	//inline static bool CheckCollision(CRigidBody* This, CRigidBody* Other) { This->GetBodyCollision(Other); }
+	//inline static bool CheckCollision(CRigidBody* This, CRigidBody* Other) { This->GetBodyCollision(Other); 
+	
+	//Velocity
+	inline void SetVelocity(Vector2& InVector) { Velocity = InVector; }
+	inline Vector2 GetVelocity() { return Velocity; };
 
 protected: // Methods
 
+	Vector2 Velocity = Vector2(0.f);
+	float GravityScale = 1.0f;
 
 protected: // Members
 

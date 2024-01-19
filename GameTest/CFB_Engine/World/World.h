@@ -9,10 +9,10 @@
 #include "../State/GameState.h"
 #include "../Managers/EventManager.h" //TODO figure this out why it's needed?
 #include "../Managers/ObjectManager.h"
+#include "../Managers/SpriteManager.h"
 class ObjectManager;
 class Entity;
-class SpriteManager;
-class Engine;
+class EngineCore;
 class CCamera;
 
 #include <memory>
@@ -25,11 +25,11 @@ public:
 	inline static const char* GetStaticClassName() { return "World"; }
 
 	//Constructor
-	World(Engine* InEngine);
+	World(EngineCore* InEngine);
 
 	//Update
 	virtual void Update(float DeltaTime);
-	virtual void Draw();
+	virtual void Render();
 
 public: // Game State Methods
 	inline GameState* GetWorldGameState() { return WorldGameState.get(); };
@@ -50,13 +50,13 @@ public: // Object Managment Methods
 	Type* CreateComponent(Entity* InEntity = nullptr);
 
 public: // Sprite Manager
-	inline void SetSpriteManager(SpriteManager* InSpriteManager) { EngineSpriteManager = InSpriteManager; };
-	inline SpriteManager* GetEngineSpriteManager() { return EngineSpriteManager; };
+	inline void SetSpriteManager(SpriteManager* InSpriteManager) { EngineSpriteManager = InSpriteManager; }; //DEPRECATE
+	inline SpriteManager* GetEngineSpriteManager() { return EngineSpriteManager; };							//DEPRECATE
 
 protected: // Methods / Members
 	
 	//Engine References
-	Engine* WorldEngine = nullptr;
+	EngineCore* WorldEngine = nullptr; //DEPRECATE
 
 	//Camera
 	CCamera* ActiveCamera = nullptr;

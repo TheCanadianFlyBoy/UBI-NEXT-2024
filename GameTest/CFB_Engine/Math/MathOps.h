@@ -8,7 +8,10 @@
 #include <math.h>
 #include <random>
 #include <chrono>
+
 #include "../../App/app.h"
+
+class Vector2;
 
 namespace MathOps {
 
@@ -37,7 +40,7 @@ namespace MathOps {
 
 	static inline float FSign(float x)
 	{
-		return (x > 0) - (x < 0);
+		return float((x > 0.f) - (x < 0.f));
 	}
 
 	static inline float FRandom()
@@ -45,6 +48,12 @@ namespace MathOps {
 		return 0.f;
 	}
 	
+	static inline float FClamp(float Value, float Min, float Max)
+	{
+		return std::max<float>(Min, std::min<float>(Max, Value));
+	}
+
+	std::vector<Vector2> CreateCirclePoints(float Radius, int SegmentCount);
 
 }
 

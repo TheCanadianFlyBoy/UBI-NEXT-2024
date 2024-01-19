@@ -25,6 +25,7 @@ public:
 	virtual void Update(float DeltaTime) {};
 	virtual void LateUpdate(float DeltaTime) {};
 	virtual void Shutdown() {};
+	virtual void Render() {};
 
 	//Active flag
 	bool Active = true;

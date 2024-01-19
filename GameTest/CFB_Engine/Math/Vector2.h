@@ -38,6 +38,8 @@ public: // ** Methods ** //
 	inline float Dot(const Vector2& other)   { return x * other.x + y * other.y; }
 		// ~ Angle calculations   //
 	inline float Angle(Vector2& other) { return acosf(Dot(other) / (Length() * other.Length())); }
+	//Normal Calculation
+	inline static Vector2 GetNormal(Vector2 Start, Vector2 End) { return Vector2(Start.y - End.y, Start.x - End.x); }
 
 public: // ** Operators ** //
 		// ~ Negation ~ //

@@ -6,7 +6,7 @@
 void SpriteManager::RegisterNewSprite(std::string InSpriteName, const char* FileName, unsigned int Columns, unsigned int Rows, unsigned int PoolCount)
 {
     //Iterate to desired pool count
-    for (int i = 0; i < PoolCount; i++) 
+    for (unsigned int i = 0; i < PoolCount; i++) 
     {
         //Create a new shared pointer and push back to the appropriate vector
         SpriteResources[InSpriteName].push_back(std::shared_ptr<CSimpleSprite>(new CSimpleSprite(FileName, Columns, Rows)));

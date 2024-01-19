@@ -23,7 +23,8 @@ public:
 	UICanvas() {};
 
     //Draw Call
-    virtual void Draw();
+    virtual void Render();
+    virtual void Update(float DeltaTime);
 
 public: // Methods
     //Widget Factory

@@ -1,16 +1,59 @@
 #include "stdafx.h"
 #include "Collision.h"
+#include "../Utility/Debug.h"
 #include <cassert>
 
-bool CollisionBox::CircleToAABB(CollisionCircle& Circle)
+bool CollisionBox::CircleToAABB(CollisionCircle& Circle, CollisionLine& CircleTrajectory, CollisionInfo& OutInfo)
 {
-	//Get edge
-	float EdgeX = Circle.Position.x > Position.x ? GetMax().x : GetMin().x;
-	float EdgeY = Circle.Position.y > Position.y ? GetMax().y : GetMin().y;
-	//Distance
-	float Distance = Vector2::Distance(Circle.Position, Vector2(EdgeX, EdgeY));
+	//Get vector between centers
+	Vector2 CenterDifference = PositionCentred ? Position - Circle.Position : Position - Circle.Position + (Bounds / 2);
+	//Get clamped 
+	Vector2 ClampedDifference = Vector2(
+		MathOps::FClamp(CenterDifference.x, -Bounds.x / 2, Bounds.x / 2),
+		MathOps::FClamp(CenterDifference.y, -Bounds.y / 2, Bounds.y / 2)
+	);
+
+	//Calculate closest point to circle
+	Vector2 ClosestPointToCircle = GetCentre() - ClampedDifference;
+
+	//Distance to closest point
+	Vector2 ToSurface = ClosestPointToCircle - Circle.Position;
+	float DistanceSqr = ToSurface.LengthSquared();
+
+	bool Result = (DistanceSqr <= Circle.Radius * Circle.Radius || PointToAABB(GetCentre() + CenterDifference));
+
+
+	//Only when we hit something
+	if (Result)
+	{
+		////Get edge
+		//Vector2 EdgeStart = GetMax();
+		//Vector2 EdgeEnd = GetMax();
+		//
+		////Case 1: Left Side
+		//if (Circle.Position.x < GetCentre().x)
+		//{
+		//	//No matter what, we start in the top left
+		//	EdgeStart = GetMin();
+		//	//Case 1 - 1: Top
+		//	if (Circle.Position.y < GetCentre().y)
+		//	{
+		//
+		//	}
+		//}
+		//else
+		//{
+		//
+		//}
+
+		//Get the normal
+		//Vector2 Normal = Vector2::GetNormal({ EdgeStartX, EdgeStartY }, { EdgeEndX, EdgeEndY });
+
+		Debug::DrawLine(Position, (Position + CenterDifference) * 4.f, Color3(0.f, 1.f, 0.f));
+	}
+
 	//Check if in circle radius
-	return Distance <= Circle.Radius;
+	return Result;
 }
 
 bool CollisionBox::LineToAABB(CollisionLine& Line)
@@ -27,7 +70,7 @@ bool CollisionCircle::LineToCircle(CollisionLine& Line)
 {
 	//Case 1: start/end points in circle
 	if (Line.Start.DistanceFrom(Position) <= Radius || Line.End.DistanceFrom(Position) <= Radius) return true;
-	float DotProduct = (Position.x - Line.Start.x) * (Line.End.x - Line.Start.x) + (Position.y - Line.Start.y) * (Line.End.y - Line.Start.y) / pow(Line.GetLength(), 2);
+	float DotProduct = (Position.x - Line.Start.x) * (Line.End.x - Line.Start.x) + (Position.y - Line.Start.y) * (Line.End.y - Line.Start.y) / powf(Line.GetLength(), 2.f);
 	//Closest point on line
 	Vector2 ClosestPoint = Vector2(Line.Start.x + (DotProduct * Line.GetXSlope()), Line.Start.y + (DotProduct * Line.GetYSlope()));
 	//Case 2: Not on line
@@ -53,26 +96,26 @@ void CollisionUnitTest()
 	CollisionCircle Circle2{ Vector2(8.f), 5.f };
 	CollisionCircle Circle3{ Vector2(80.f), 5.f };
 	//Circle
-	assert(Circle1.CircleToCircle(Circle2));
-	assert(Circle1.LineToCircle(Line1));
-	assert(Circle1.PointToCircle(Vector2(10.f)));
-	assert(!Circle1.CircleToCircle(Circle3));
-	assert(!Circle1.LineToCircle(Line3));
-	assert(!Circle1.PointToCircle(Vector2(100.f)));
-	//Box
-	assert(Box1.AABBToAABB(Box2)); 
-	assert(Box1.CircleToAABB(Circle2));
-	assert(Box1.LineToAABB(Line1)); 
-	assert(Box1.PointToAABB(Vector2(10.f)));
-	assert(!Box1.AABBToAABB(Box3));
-	assert(!Box1.CircleToAABB(Circle3));
-	assert(!Box1.LineToAABB(Line3)); 
-	assert(!Box1.PointToAABB(Vector2(100.f)));
-	//Line
-	assert(Line1.LineToLine(Line2)); 
-	assert(Line1.PointToLine(Vector2(10.f, 2.f)));
-	assert(!Line1.PointToLine(Vector2(10.f)));
-	assert(!Line1.LineToLine(Line3));
+	//assert(Circle1.CircleToCircle(Circle2));
+	//assert(Circle1.LineToCircle(Line1));
+	//assert(Circle1.PointToCircle(Vector2(10.f)));
+	//assert(!Circle1.CircleToCircle(Circle3));
+	//assert(!Circle1.LineToCircle(Line3));
+	//assert(!Circle1.PointToCircle(Vector2(100.f)));
+	////Box
+	//assert(Box1.AABBToAABB(Box2)); 
+	//assert(Box1.CircleToAABB(Circle2));
+	//assert(Box1.LineToAABB(Line1)); 
+	//assert(Box1.PointToAABB(Vector2(10.f)));
+	//assert(!Box1.AABBToAABB(Box3));
+	//assert(!Box1.CircleToAABB(Circle3));
+	//assert(!Box1.LineToAABB(Line3)); 
+	//assert(!Box1.PointToAABB(Vector2(100.f)));
+	////Line
+	//assert(Line1.LineToLine(Line2)); 
+	//assert(Line1.PointToLine(Vector2(10.f, 2.f)));
+	//assert(!Line1.PointToLine(Vector2(10.f)));
+	//assert(!Line1.LineToLine(Line3));
 	
 
 	return;

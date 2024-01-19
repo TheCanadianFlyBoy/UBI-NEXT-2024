@@ -182,6 +182,7 @@
     <ClInclude Include="App\SimpleController.h" />
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
+    <ClInclude Include="CFB_Engine\Common.h" />
     <ClInclude Include="CFB_Engine\Component\AllComponents.h" />
     <ClInclude Include="CFB_Engine\Component\CameraComponent.h" />
     <ClInclude Include="CFB_Engine\Component\Component.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="CFB_Engine\State\GameState.h" />
     <ClInclude Include="CFB_Engine\UI\UICanvas.h" />
     <ClInclude Include="CFB_Engine\UI\UIWidget.h" />
+    <ClInclude Include="CFB_Engine\Utility\Debug.h" />
     <ClInclude Include="CFB_Engine\World\Pathfinder.h" />
     <ClInclude Include="CFB_Engine\World\Tilemap.h" />
     <ClInclude Include="CFB_Engine\World\World.h" />
@@ -230,6 +232,7 @@
     <ClCompile Include="CFB_Engine\Managers\Quadtree.cpp" />
     <ClCompile Include="CFB_Engine\Managers\SpriteManager.cpp" />
     <ClCompile Include="CFB_Engine\Math\Collision.cpp" />
+    <ClCompile Include="CFB_Engine\Math\MathOps.cpp" />
     <ClCompile Include="CFB_Engine\Math\Vector2.cpp" />
     <ClCompile Include="CFB_Engine\Math\Vector3.cpp" />
     <ClCompile Include="CFB_Engine\Object\Entity.cpp" />

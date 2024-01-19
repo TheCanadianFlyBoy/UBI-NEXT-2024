@@ -33,18 +33,11 @@ Tilemap::Tilemap(Vector2 InDimensions, Vector2 InTileSize)
             Tiles[i] = Wall;
         }
     }
-    //Generate walls
-    //GenerateWalls(0);
-    //Generate start/end
     int PlayerStartX = 0;
     int PlayerStartY = 0;
-    int DoorX = 0;
-    int DoorY = 0;
-    //do {
-    //    GenerateObjectPosition(PlayerStartX, PlayerStartY);
-    //    GenerateObjectPosition(DoorX, DoorY);
-    //} while (!TemporaryPathfinder.FindPath(PlayerStartX, PlayerStartY, DoorX, DoorY) && abs(PlayerStartX - DoorX) < 5 && abs(PlayerStartY - DoorY) < 5);
-    PlayerSpawn = Vector2(PlayerStartX, PlayerStartY);
+
+
+    PlayerSpawn = Vector2(float(PlayerStartX), float(PlayerStartY));
     //Place barrier on level end
 }
 
@@ -92,7 +85,7 @@ Vector2 Tilemap::ConvertIndextoWorld(int InIndex, bool IsCentred)
 
 Vector2 Tilemap::ConvertIndexToMap(int InIndex)
 {
-    return Vector2(InIndex % (int)floor(TilemapDimensions.x), InIndex / (int)floor(TilemapDimensions.x));
+    return Vector2(float(InIndex % (int)floor(TilemapDimensions.x)), float(InIndex / (int)floor(TilemapDimensions.x)));
 }
 
 int Tilemap::ConvertMapToIndex(Vector2 InMapPosition)

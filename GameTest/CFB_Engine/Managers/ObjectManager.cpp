@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ObjectManager.h"
 
+#include "../Engine.h"
 #include "../Component/AllComponents.h"
 #include "../UI/UICanvas.h"
 #include "../UI/UIWidget.h"
@@ -22,9 +23,16 @@ void ObjectManager::Update(float DeltaTime)
 	//Update cameras
 	for (auto& CameraPointer : Components["CCamera"])
 	{
-		//We know this is a camera, so we cast it!
-		static_cast<CCamera*>(CameraPointer.get())->Update(DeltaTime);
+		//Update
+		CameraPointer->Update(DeltaTime);
 	}
+
+	//Update Rigid Bodies
+	for (auto& RigidBody : Components["CRigidBody"])
+	{
+		RigidBody->Update(DeltaTime);
+	}
+
 }
 
 //DRAW
@@ -34,15 +42,27 @@ void ObjectManager::Draw(CCamera* InCamera)
 	for (auto &UniqueSpriteComponent : Components["CSprite"])
 	{
 		//We know this is a sprite, so we cast it!
-		static_cast<CSprite*>(UniqueSpriteComponent.get())->Draw(InCamera);
+		UniqueSpriteComponent->Render();
+
+		//static_cast<CSprite*>(UniqueSpriteComponent.get())->Draw(InCamera);
 
 	}
 
 	//Draw all UI elements
 	for (auto& Canvas : Canvases)
 	{
-		Canvas->Draw();
+		Canvas->Render();
 	}
+
+	//Debug draws
+	if (ENGINE_DEBUG_MODE) 
+	{
+		for (auto& RigidBody : Components["CRigidBody"])
+		{
+			RigidBody->Render();
+		}
+	}
+
 }
 
 //Removes component from the list if it matches

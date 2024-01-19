@@ -81,10 +81,10 @@ bool Pathfinder::FindPath(int sx, int sy, int ex, int ey)
         int node_x = OpenNodeIndex % PathMap->GetWidth();
         int node_y = OpenNodeIndex / PathMap->GetWidth();
 
-        int neighbours[4] = {   PathMap->GetTileIfWalkable(Vector2(node_x + 1, node_y )),
-                                PathMap->GetTileIfWalkable(Vector2(node_x - 1, node_y )),
-                                PathMap->GetTileIfWalkable(Vector2(node_x, node_y + 1 )),
-                                PathMap->GetTileIfWalkable(Vector2(node_x, node_y - 1 )) };
+        int neighbours[4] = {   PathMap->GetTileIfWalkable(Vector2(float(node_x + 1.f), float(node_y) )),
+                                PathMap->GetTileIfWalkable(Vector2(float(node_x - 1.f), float(node_y) )),
+                                PathMap->GetTileIfWalkable(Vector2(float(node_x), float(node_y + 1.f) )),
+                                PathMap->GetTileIfWalkable(Vector2(float(node_x), float(node_y - 1.f) )) };
         //Loop neighbours
         for (int i = 0; i < 4; i++)
         {
@@ -120,7 +120,7 @@ bool Pathfinder::FindPath(int sx, int sy, int ex, int ey)
 
 Vector2 Pathfinder::GetDimensions()
 {
-    return Vector2(PathMapWidth, PathMapHeight);
+    return Vector2(float(PathMapWidth), float(PathMapHeight));
 }
 
 std::vector<int> Pathfinder::GetPath(int ex, int ey)

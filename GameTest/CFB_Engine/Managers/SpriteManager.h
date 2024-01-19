@@ -18,12 +18,9 @@ class SpriteResource;
 
 class SpriteManager
 {
-public:
-
-	//Constructor
-	SpriteManager() {};
-
+	DECLARE_SINGLE(SpriteManager);
 public: //Sprite Manipulation
+
 
 	//Creates a brand new sprite from the ground up
 	void RegisterNewSprite(std::string InSpriteName, const char* FileName = "", unsigned int Columns = 1U, unsigned int Rows = 1U, unsigned int PoolCount = 1U);

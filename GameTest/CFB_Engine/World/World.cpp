@@ -3,7 +3,7 @@
 #include "../Managers/ObjectManager.h"
 #include "../Engine.h"
 
-World::World(Engine* InEngine) : WorldEngine(InEngine)
+World::World(EngineCore* InEngine) : WorldEngine(InEngine)
 {
 	WorldObjectManager = std::make_unique<ObjectManager>(this);
 	WorldEventManager = std::make_unique<EventManager>(this);
@@ -28,7 +28,7 @@ void World::Update(float DeltaTime)
 /// <summary>
 /// Passes draw call to appropriate managers
 /// </summary>
-void World::Draw()
+void World::Render()
 {
 	//Object Draw
 	WorldObjectManager->Draw(ActiveCamera);

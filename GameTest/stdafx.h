@@ -13,3 +13,16 @@
 
 
 // TODO: reference additional headers your program requires here
+//SINGLETON SYSTEM
+#define DECLARE_SINGLE(type)		\
+private:							\
+	type() {}						\
+	~type() {}						\
+public:								\
+	static type* GetInstance()		\
+	{								\
+		static type instance;		\
+		return &instance;			\
+	}								\
+//INSTANCE GETTER
+#define GET_SINGLE(type)	type::GetInstance()

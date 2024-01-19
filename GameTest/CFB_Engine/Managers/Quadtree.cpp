@@ -1,41 +1,94 @@
 #include "stdafx.h"
 #include "Quadtree.h"
+#include "../Object/Actor.h"
+
+void QuadTree::AddObject(std::shared_ptr<Actor> InActor) //TODO ref?
+{
+	//Case 1: Insert into vector
+	if (Objects.size() < QUAD_MAX_CHILDREN)
+	{
+		Objects.push_back(InActor);
+	}
+	else //Case 2: split leaf node
+	{
+		//Push into array
+		Objects.push_back(InActor);
+		//Now split
+		Split();
+	}
+}
+
+void QuadTree::Split()
+{
+	//Only allowed on leaves
+	assert(IsLeaf());
+
+	//Get centre point
+	Vector2 MidPoint = (TopLeft + BottomRight) / 2;
+
+	//Force child nodes
+	TopLeftTree			= std::make_shared<QuadTree>(TopLeft, MidPoint);
+	TopRightTree		= std::make_shared<QuadTree>(Vector2(MidPoint.x, TopLeft.y), Vector2(BottomRight.x, MidPoint.y));
+	BottomLeftTree		= std::make_shared<QuadTree>(Vector2(TopLeft.x, MidPoint.y), Vector2(MidPoint.x, BottomRight.y));
+	BottomRightTree		= std::make_shared<QuadTree>(MidPoint, BottomRight);
+
+	//smart pointer ref
+	for (std::shared_ptr<Actor>& Child : Objects)
+	{
+		//Reinsert everything
+		InsertNode(Child->GetActorLocation(), Child);
+	}
+
+	//Clear vector
+	Objects.clear();
+
+}
+
+QuadTree::~QuadTree()
+{
+	Objects.clear();
+
+	TopLeftTree.reset();
+	TopRightTree.reset();
+	BottomLeftTree.reset();
+	BottomRightTree.reset();
+}
 
 /// <summary>
 /// Inserts a given node into the quad tree
 /// </summary>
 /// <param name="InNode">Node to insert</param>
-void QuadTree::InsertNode(std::shared_ptr<QuadNode> InNode)
+void QuadTree::InsertNode(Vector2 InPosition, std::shared_ptr<Actor>& InActor)
 {
 	//Null / boundary check
-	if (!InNode || !IsInBoundary(InNode->Position)) return;
+	if (!IsInBoundary(InPosition)) return;
 
 	//Check for space
-	if (abs(TopLeft.x - BottomRight.x) <= 1 && (TopLeft.y - BottomRight.y) <= 1)
+	if (abs(TopLeft.x - BottomRight.x) <= 1 && (TopLeft.y - BottomRight.y) <= 1 && IsLeaf())
 	{	//Case 1, current quadrant
 		//Empty node, save
-		if (Node == nullptr)
-			Node = InNode;
+		if (IsLeaf())
+			AddObject(InActor);
 		return;
 	}
 
-	int MidX = (TopLeft.x + BottomRight.x) / 2;
-	int MidY = (TopLeft.y + BottomRight.y) / 2;
+	float MidX = (TopLeft.x + BottomRight.x) / 2;
+	float MidY = (TopLeft.y + BottomRight.y) / 2;
 
 	//Figure out which tree to use
-	if (MidX >= InNode->Position.x) // Left side
+	if (MidX >= InPosition.x) // Left side
 	{
-		if (MidY >= InNode->Position.y) // Top side
+		if (MidY >= InPosition.y) // Top side
 		{
 			//If our branch to the top left is null, make a new one
 			if (TopLeftTree == nullptr)
 			{
 				//Top left sector
 				TopLeftTree = std::make_shared<QuadTree>(
-					QuadPoint(TopLeft.x, TopLeft.y),
-					QuadPoint(MidX, MidY));
+					Vector2(TopLeft.x, TopLeft.y),
+					Vector2(MidX, MidY));
 				//Recurse
-				TopLeftTree->InsertNode(InNode);
+				TopLeftTree->InsertNode(InPosition,  InActor); //TODO make reference to save memory overhead
 			}
 		}
 		else { //Bottom side
@@ -43,27 +96,27 @@ void QuadTree::InsertNode(std::shared_ptr<QuadNode> InNode)
 			{
 				//Bottom left sector
 				BottomLeftTree = std::make_shared<QuadTree>(
-					QuadPoint(TopLeft.x, MidY),
-					QuadPoint(MidX, BottomRight.y));
+					Vector2(TopLeft.x, MidY),
+					Vector2(MidX, BottomRight.y));
 				//Recurse
-				BottomLeftTree->InsertNode(InNode);
+				BottomLeftTree->InsertNode(InPosition, InActor);
 			}
 		}
 	}
 	else //Right side
 	{
 		//Top side
-		if (MidY >= InNode->Position.y)
+		if (MidY >= InPosition.y)
 		{
 			//If our branch to the top right is null, make a new one
 			if (TopRightTree == nullptr)
 			{
 				//Top Right sector
 				TopRightTree = std::make_shared<QuadTree>(
-					QuadPoint(MidX, TopLeft.y),
-					QuadPoint(BottomRight.x, MidY));
+					Vector2(MidX, TopLeft.y),
+					Vector2(BottomRight.x, MidY));
 				//Recurse
-				TopRightTree->InsertNode(InNode);
+				TopRightTree->InsertNode(InPosition, InActor);
 			}
 		}
 		else
@@ -73,25 +126,33 @@ void QuadTree::InsertNode(std::shared_ptr<QuadNode> InNode)
 			{
 				//Bottom left sector
 				BottomRightTree = std::make_shared<QuadTree>(
-					QuadPoint(MidX, MidY),
-					QuadPoint(BottomRight.x, BottomRight.y));
+					Vector2(MidX, MidY),
+					Vector2(BottomRight.x, BottomRight.y));
 				//Recurse
-				BottomRightTree->InsertNode(InNode);
+				BottomRightTree->InsertNode(InPosition, InActor);
 			}
 		}
 	}
 
 }
 
-std::shared_ptr<QuadNode> QuadTree::FindNodeAtPoint(QuadPoint InPoint)
+void QuadTree::InsertNode(Vector2 InPosition)
+{
+}
+
+QuadTree* QuadTree::FindNodeAtPoint(Vector2 InPoint)  
 {
 	// Null / boundary check
-	if (!IsInBoundary(InPoint)) return nullptr;
+	if (!IsInBoundary(InPoint))
+	{
+		return nullptr;
+	}
 
-	if (Node) return Node;
+	//Return self
+	if (IsLeaf()) return this;
 
-	int MidX = (TopLeft.x + BottomRight.x) / 2;
-	int MidY = (TopLeft.y + BottomRight.y) / 2;
+	int MidX = int(TopLeft.x + BottomRight.x) / 2;
+	int MidY = int(TopLeft.y + BottomRight.y) / 2;
 
 	if (MidX >= InPoint.x) //Left side
 	{
@@ -125,30 +186,39 @@ std::shared_ptr<QuadNode> QuadTree::FindNodeAtPoint(QuadPoint InPoint)
 	}
 }
 
-bool QuadTree::IsInBoundary(QuadPoint InPoint)
+bool QuadTree::IsInBoundary(Vector2 InPoint)
 {
 	return InPoint.x >= TopLeft.x && InPoint.x <= BottomRight.x && InPoint.y >= TopLeft.y && InPoint.y <= BottomRight.y;
 }
+
+#include "../Engine.h"
 
 void QuadTreeUnitTest()
 {
 
 	//Create a tree
-	std::shared_ptr<QuadTree> Root = std::make_shared<QuadTree>(QuadPoint(0, 0), QuadPoint(40, 40));
-	std::shared_ptr<QuadNode> g;
+	std::shared_ptr<QuadTree> Root = std::make_shared<QuadTree>(Vector2(0, 0), Vector2(5, 5));
+	QuadTree* ReturnValue;
+
+	//Create world context
+	World* TempWorld = new World(GET_SINGLE(EngineCore));
+
+	//Actor
+	std::shared_ptr<Actor> Actor1_1 = std::make_shared<Actor>(Vector2(1.f), TempWorld);
+	std::shared_ptr<Actor> Actor4_4 = std::make_shared<Actor>(Vector2(4.f), TempWorld);
 
 	//Insertion test
-	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(4, 4), 1));
-	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(5, 4), 2));
-	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(10, 14), 3));
-	Root->InsertNode(std::make_shared<QuadNode>(QuadPoint(40, 48), 4));
-
+	Root->InsertNode(Actor1_1->GetActorLocation(), Actor1_1);
+	Root->InsertNode(Actor4_4->GetActorLocation(), Actor4_4);
+	
 	//Search Test
-	g = Root->FindNodeAtPoint(QuadPoint(4, 4));
-	g = Root->FindNodeAtPoint(QuadPoint(5, 5));
-	g = Root->FindNodeAtPoint(QuadPoint(30, 30));
-	g = Root->FindNodeAtPoint(QuadPoint(50, 50));
+	ReturnValue = Root->FindNodeAtPoint(Vector2(1, 1));
+	ReturnValue = Root->FindNodeAtPoint(Vector2(-30, 30));
+	ReturnValue = Root->FindNodeAtPoint(Vector2(4, 4));
+	ReturnValue = Root->FindNodeAtPoint(Vector2(10, 14));
 
+	bool end = true;
 
+	delete TempWorld;
 
 }

@@ -5,7 +5,7 @@
 /// <summary>
 /// Passes draw call to widgets
 /// </summary>
-void UICanvas::Draw()
+void UICanvas::Render()
 {
     //Iterate
     for (auto &Widget : Widgets)
@@ -14,6 +14,14 @@ void UICanvas::Draw()
         Widget->Draw();
     }
 
+}
+
+void UICanvas::Update(float DeltaTime)
+{
+    for (auto& Widget : Widgets)
+    {
+        Widget->Update(DeltaTime);
+    }
 }
 
 
