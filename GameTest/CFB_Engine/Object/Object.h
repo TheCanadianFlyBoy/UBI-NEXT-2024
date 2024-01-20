@@ -9,7 +9,7 @@
 #include <memory>
 
 //Forward declaration
-class Component;
+class Component; class CCamera;
 
 class Object
 {
@@ -25,7 +25,7 @@ public:
 	virtual void Update(float DeltaTime) {};
 	virtual void LateUpdate(float DeltaTime) {};
 	virtual void Shutdown() {};
-	virtual void Render() {};
+	virtual void Render(CCamera* InCamera = nullptr) {};
 
 	//Active flag
 	bool Active = true;

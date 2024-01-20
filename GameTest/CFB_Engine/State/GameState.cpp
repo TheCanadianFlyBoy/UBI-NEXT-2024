@@ -48,6 +48,20 @@ void GameState::SetState(int State)
 	//This would be where state update logic would occur (switch case)
 }
 
+
+void GameState::DefaultEventHandler(Event* InEvent, float DeltaTime)
+{
+	if (InEvent->GetEventType() == "CollisionEvent")
+	{
+		//Convert type
+		CollisionEvent* Collision = static_cast<CollisionEvent*>(InEvent);
+		
+		//Notify
+		Collision->OutHit.ThisActor->NotifyCollision(Collision->OutHit);
+		Collision->OutHit.OtherActor->NotifyCollision(Collision->OutHit);
+	}
+}
+
 void GameState::TestEventHandler(Event* InEvent, float DeltaTime)
 {
 	if (InEvent->GetEventType() == "TestEvent")

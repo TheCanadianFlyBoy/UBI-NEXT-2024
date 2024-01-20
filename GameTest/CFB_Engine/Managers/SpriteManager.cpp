@@ -3,6 +3,7 @@
 //#include "../Resource/SpriteResource.h"
 
 
+
 void SpriteManager::RegisterNewSprite(std::string InSpriteName, const char* FileName, unsigned int Columns, unsigned int Rows, unsigned int PoolCount)
 {
     //Iterate to desired pool count
@@ -148,4 +149,16 @@ float SpriteManager::GetSpriteWidth(std::string InSpriteName)
     }
     //Fail case, return 0.f
     return 0.0f;
+}
+
+Vector2 SpriteManager::GetSpriteDimensions(std::string InSpriteName)
+{
+    //Check to make sure we actually have this sprite
+    if (SpriteResources[InSpriteName].size() > 0)
+    {
+        //Return value
+        return Vector2(SpriteResources[InSpriteName][0]->GetWidth(), SpriteResources[InSpriteName][0]->GetHeight());
+    }
+    //Fail case, return 0.f
+    return Vector2(0.f);
 }

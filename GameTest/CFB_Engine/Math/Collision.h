@@ -7,8 +7,11 @@
 #include "../Component/RigidBodyComponent.h"
 #include "../Math/Vector2.h"
 #include "../Utility/Debug.h"
+#include "../Component/CameraComponent.h"
 
 void CollisionUnitTest();
+
+class Actor;
 
 /// <summary>
 /// A struct containing all the relevant info of a collision
@@ -16,16 +19,20 @@ void CollisionUnitTest();
 struct CollisionInfo
 {
 	//This
-	Entity* This;
-	class CRigidBody* ThisBody;
+	Actor* ThisActor;
+	CRigidBody* ThisBody;
 
 	//Other
-	Entity* Other;
+	Actor* OtherActor;
 	CRigidBody* OtherBody;
 
 	//Impact info
 	Vector2 ImpactPoint;
 	Vector2 Normal;
+
+	//Penetration info
+	Vector2 PenetrationVector;
+	float PenetrationDepth;
 
 
 };
@@ -43,7 +50,7 @@ struct CollisionPrimitive : public Object {
 	//Common Properties
 	Vector2 Position = Vector2(0.f);
 
-	virtual void DebugDraw() = 0;
+	virtual void DebugDraw(CCamera* InCamera) = 0;
 	
 
 };
@@ -57,7 +64,7 @@ struct CollisionBox : public CollisionPrimitive
 	//Constructor
 	CollisionBox(Vector2 InPosition, Vector2 InBounds, bool Centred = false) : CollisionPrimitive(InPosition), Bounds(InBounds), PositionCentred(Centred) {};
 
-	virtual void DebugDraw() override {};
+	virtual void DebugDraw(CCamera* InCamera) override { Debug::DrawRectangle(Position - InCamera->GetCameraOrigin(), Bounds, Color3(1.f), PositionCentred); };
 
 	//Properties
 	Vector2 Bounds = Vector2(0.f);
@@ -122,7 +129,7 @@ struct CollisionCircle : public CollisionPrimitive
 
 	CollisionCircle(Vector2 InPosition, float InRadius) : CollisionPrimitive(InPosition), Radius(InRadius) {};
 	
-	virtual void DebugDraw() override { Debug::DrawCircle(Position, Radius); };
+	virtual void DebugDraw(CCamera* InCamera) override { Debug::DrawCircle(Position - InCamera->GetCameraOrigin(), Radius); };
 
 	//Properties
 	float Radius = 0.f;
@@ -145,7 +152,7 @@ struct CollisionLine : public CollisionPrimitive
 	//Constructor
 	CollisionLine(Vector2 InStart, Vector2 InEnd, float InCollisionAccuracy = 0.2f, Vector2 InPosition = Vector2(0.f)) : CollisionPrimitive(InPosition), Start(InStart), End(InEnd), CollisionAccuracy(InCollisionAccuracy) {};
 
-	virtual void DebugDraw() override { Debug::DrawLine(Start, End); }
+	virtual void DebugDraw(CCamera* InCamera) override { Debug::DrawLine(Start - InCamera->GetCameraOrigin(), End + InCamera->GetCameraOrigin()); }
 
 	//Properties
 	Vector2 Start = Vector2(0.f);

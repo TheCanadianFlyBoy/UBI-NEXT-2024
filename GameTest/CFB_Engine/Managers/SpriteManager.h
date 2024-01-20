@@ -12,6 +12,7 @@
 #include <string>
 
 #include "../../App/SimpleSprite.h"
+#include "../Math/Vector2.h"
 
 
 class SpriteResource;
@@ -33,6 +34,7 @@ public: //Sprite Manipulation
 	//Getter Wrappers
 	float GetSpriteHeight(std::string InSpriteName);
 	float GetSpriteWidth(std::string InSpriteName);
+	Vector2 GetSpriteDimensions(std::string InSpriteName);
 
 
 protected: //Methods

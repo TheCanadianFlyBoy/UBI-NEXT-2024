@@ -30,7 +30,7 @@ public: //Methods
 
 
 protected: //Variables
-    std::queue<Event*> EventQueue;
+    std::queue<Event*> EventQueue; //TODO make shared
     //TODO state
 
 };

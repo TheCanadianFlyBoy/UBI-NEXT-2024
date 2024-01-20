@@ -58,14 +58,14 @@ protected: // Members
 	//Function pointers
 	StateUpdateFunction CurrentUpdateHandler = &GameState::DefaultUpdateHandler;
 	StateRenderFunction CurrentRenderHandler = &GameState::DefaultRenderHandler;
-	StateEventsFunction CurrentEventHandler  =  &GameState::TestEventHandler;
+	StateEventsFunction CurrentEventHandler  =  &GameState::DefaultEventHandler;
 
 
 protected: // Methods
 	//Default Handlers!
 	void virtual DefaultUpdateHandler(float DeltaTime)	{};
-	void virtual DefaultRenderHandler()					{};
-	void virtual DefaultEventHandler(Event* InEvent, float DeltaTime) { };
+	void virtual DefaultRenderHandler() {}; 
+	void virtual DefaultEventHandler(Event* InEvent, float DeltaTime); // Need to actually implement to allow easy usage of collision events
 
 	void virtual TestEventHandler(Event* InEvent, float DeltaTime);
 

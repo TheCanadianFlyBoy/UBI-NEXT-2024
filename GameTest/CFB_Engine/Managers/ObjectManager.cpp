@@ -42,9 +42,9 @@ void ObjectManager::Draw(CCamera* InCamera)
 	for (auto &UniqueSpriteComponent : Components["CSprite"])
 	{
 		//We know this is a sprite, so we cast it!
-		UniqueSpriteComponent->Render();
+		//UniqueSpriteComponent->Render(InCamera);
 
-		//static_cast<CSprite*>(UniqueSpriteComponent.get())->Draw(InCamera);
+		static_cast<CSprite*>(UniqueSpriteComponent.get())->Render(InCamera);
 
 	}
 
@@ -59,7 +59,7 @@ void ObjectManager::Draw(CCamera* InCamera)
 	{
 		for (auto& RigidBody : Components["CRigidBody"])
 		{
-			RigidBody->Render();
+			RigidBody->Render(InCamera);
 		}
 	}
 

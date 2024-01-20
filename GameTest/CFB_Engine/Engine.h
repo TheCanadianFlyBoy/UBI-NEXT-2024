@@ -56,7 +56,7 @@ protected: // Members
 	World* CurrentWorld = nullptr;
 
 	//World Vector
-	std::vector<std::unique_ptr<World>> Worlds;
+	std::vector<std::unique_ptr<World>> Worlds; // TODO MAP for saving names
 	//Persistent Canvases
 	std::vector <std::unique_ptr<UICanvas>> GlobalCanvases;
 

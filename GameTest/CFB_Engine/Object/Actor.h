@@ -11,6 +11,7 @@
 
 class Actor : public Entity
 {
+	friend class GameState;
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
@@ -33,7 +34,12 @@ public: //Helper Methods
 	inline void AddActorLocation(Vector2 InVector) { Transform->AddPosition(InVector); }
 	inline void AddActorRotation(float InRotation) { Transform->AddRotation(InRotation); };
 
+	virtual void OnActorCollision(CollisionInfo InInfo) { };
+
 protected: //Members
 	//Transform reference for easy reference/usage within the class
 	CTransform* Transform = nullptr;
+
+	inline void NotifyCollision(CollisionInfo InInfo) { OnActorCollision(InInfo); }
+
 };

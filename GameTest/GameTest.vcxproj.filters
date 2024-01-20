@@ -87,6 +87,12 @@
     <ClCompile Include="CFB_Engine\Math\MathOps.cpp">
       <Filter>Engine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Game\World\GameWorld.cpp">
+      <Filter>Game\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Environment\Water.cpp">
+      <Filter>Game\Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -201,6 +207,12 @@
     <ClInclude Include="CFB_Engine\Utility\Debug.h">
       <Filter>Engine\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Game\World\GameWorld.h">
+      <Filter>Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Environment\Water.h">
+      <Filter>Game\Environment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -250,6 +262,18 @@
     </Filter>
     <Filter Include="Engine\Utility">
       <UniqueIdentifier>{7e0ae2a5-723b-4b3e-acca-3065eb310dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{bc639abc-9aee-400e-a91f-c99d2902bdc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\World">
+      <UniqueIdentifier>{6af7361a-8abc-4d47-aa22-2984b4abfefe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Environment">
+      <UniqueIdentifier>{997995a2-f06d-4da6-a6aa-9c4387e798b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Projectile">
+      <UniqueIdentifier>{3535e2e9-c7f1-4c21-9ea4-444cfe7073f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

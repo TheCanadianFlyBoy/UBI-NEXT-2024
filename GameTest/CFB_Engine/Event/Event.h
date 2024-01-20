@@ -6,6 +6,7 @@
 */
 
 #include "../Object/Object.h"
+#include "../Math/Collision.h"
 
 class Event
 {
@@ -27,4 +28,16 @@ class TestEvent : public Event
 public:
     static const char* GetStaticEventType() { return "TestEvent"; }
     virtual const char* GetEventType() override { return GetStaticEventType(); }
+};
+
+class CollisionEvent : public Event
+{
+public:
+    static const char* GetStaticEventType() { return "CollisionEvent"; }
+    virtual const char* GetEventType() override { return GetStaticEventType(); }
+    
+    CollisionEvent(CollisionInfo Info) : OutHit(Info) {};
+
+    CollisionInfo OutHit;
+
 };

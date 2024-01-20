@@ -15,7 +15,14 @@ class Entity;
 
 struct CollisionBox; struct CollisionCircle; struct CollisionLine; struct CollisionInfo; struct CollisionPrimitive;
 
+struct BuoyancyCircle : public CTransform
+{
+	BuoyancyCircle(Entity* InEntity, Vector2 InOffset, float InRadius, float InAdjustment) : CTransform(InEntity, InOffset), Radius(InRadius), Adjustment(InAdjustment) {}
 
+	float Radius;
+	float Adjustment;
+
+};
 
 class CRigidBody : public CTransform
 {
@@ -28,8 +35,8 @@ public: //Properties
 	CRigidBody(Entity* InEntity = nullptr) : CTransform(InEntity) {};
 
 	//Update
-	virtual void Update(float DeltaTime);
-	virtual void Render();
+	virtual void Update(float DeltaTime) override;
+	virtual void Render(CCamera* InCamera) override;
 
 public: //Methods
 
@@ -39,24 +46,55 @@ public: //Methods
 
 	inline CollisionPrimitive* GetCollisionShape() { return CollisionShape.get(); }
 	//Gets if there is a collision between two bodies
-	virtual bool GetBodyCollision(CRigidBody* Other, CollisionInfo& OutHitInfo); 
+	virtual bool GetCollision(CRigidBody* Other, CollisionInfo& OutHitInfo); 
+	//Raw collision with primitive
 	virtual bool GetCollision(CollisionPrimitive& InCollisionPrimitive, CollisionInfo& OutHitInfo);
 
 	//Static check for checking two collisions TODO
-	//inline static bool CheckCollision(CRigidBody* This, CRigidBody* Other) { This->GetBodyCollision(Other); 
 	
+	//Mass
+	inline void SetMass(float InMass) { Mass = InMass; }
+	inline float GetMass() { return Mass; }
+
 	//Velocity
 	inline void SetVelocity(Vector2& InVector) { Velocity = InVector; }
 	inline Vector2 GetVelocity() { return Velocity; };
 
+	//Gravity
+	inline float GetGravityScale() { return GravityScale; }
+	inline void SetGravityScale(float InGravity) { GravityScale = InGravity; }
+
+	//Buoyancy
+	virtual void SetupBuoyancyCircles();
+	virtual void ApplyBuoyancy(float DeltaTime);
+	inline void SetBuoyancyCircleRadius(float InRadius) { BuoyancyCircleRadius = InRadius; }
+	inline float GetBuoyancyCircleRadius() { return BuoyancyCircleRadius; };
+	//Physics Damping
+	virtual void Damping(float DeltaTime);
+
+
 protected: // Methods
 
-	Vector2 Velocity = Vector2(0.f);
-	float GravityScale = 1.0f;
+	//Calculate 
+	void SetupBoxBuoyancy();
+
 
 protected: // Members
 
+	Vector2 Velocity = Vector2(0.f);
+	float VelocityDamping = 1.f;
+
+	float AngularVelocity = 0.f;
+	float AngularDamping = 0.1f;
+
+	float GravityScale = 1.f;
+	float Mass = 1.f;
+
+	float WaterLevel = 224.f;
+	float BuoyancyCircleRadius = 12;
+
 	std::unique_ptr<CollisionPrimitive> CollisionShape = nullptr;
+	std::vector<std::shared_ptr<BuoyancyCircle>> BuoyancyCircles;
 	
 	
 

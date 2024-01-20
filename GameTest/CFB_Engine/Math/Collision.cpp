@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Collision.h"
 #include "../Utility/Debug.h"
+
+#include "../Engine.h"
+
 #include <cassert>
 
 bool CollisionBox::CircleToAABB(CollisionCircle& Circle, CollisionLine& CircleTrajectory, CollisionInfo& OutInfo)
@@ -26,30 +29,42 @@ bool CollisionBox::CircleToAABB(CollisionCircle& Circle, CollisionLine& CircleTr
 	//Only when we hit something
 	if (Result)
 	{
-		////Get edge
-		//Vector2 EdgeStart = GetMax();
-		//Vector2 EdgeEnd = GetMax();
-		//
-		////Case 1: Left Side
-		//if (Circle.Position.x < GetCentre().x)
-		//{
-		//	//No matter what, we start in the top left
-		//	EdgeStart = GetMin();
-		//	//Case 1 - 1: Top
-		//	if (Circle.Position.y < GetCentre().y)
-		//	{
-		//
-		//	}
-		//}
-		//else
-		//{
-		//
-		//}
+		//Get edge
+		Vector2 EdgeStart = GetMax();
+		Vector2 EdgeEnd = GetMax();
+		
+		bool Top    = CollisionLine(GetMin(), Vector2(GetMax().x, GetMin().y)).PointToLine(ClosestPointToCircle);
+		bool Left   = CollisionLine(GetMin(), Vector2(GetMin().x, GetMax().y)).PointToLine(ClosestPointToCircle);
+		bool Right  = CollisionLine(GetMax(), Vector2(GetMax().x, GetMin().y)).PointToLine(ClosestPointToCircle);
+		bool Bottom = CollisionLine(GetMax(), Vector2(GetMin().x, GetMax().y)).PointToLine(ClosestPointToCircle);
 
-		//Get the normal
-		//Vector2 Normal = Vector2::GetNormal({ EdgeStartX, EdgeStartY }, { EdgeEndX, EdgeEndY });
+		Vector2 Normal;
 
-		Debug::DrawLine(Position, (Position + CenterDifference) * 4.f, Color3(0.f, 1.f, 0.f));
+		if (Top)
+		{
+			Normal = Vector2::GetNormal(GetMin(), Vector2(GetMax().x, GetMin().y));
+		}
+		else if (Left)
+		{
+			Normal = Vector2::GetNormal(GetMin(), Vector2(GetMin().x, GetMax().y));
+		}
+		else if (Right)
+		{
+			Normal = Vector2::GetNormal(GetMax(), Vector2(GetMax().x, GetMin().y));
+		}
+		else {
+			Normal = Vector2::GetNormal(GetMax(), Vector2(GetMin().x, GetMax().y));
+		}
+
+		//Setup outputs
+		OutInfo.ImpactPoint = ClosestPointToCircle;
+		OutInfo.PenetrationVector = ToSurface;
+		OutInfo.PenetrationDepth = ToSurface.Length();
+		OutInfo.Normal = Normal;
+
+		ENGINE->GetCurrentWorld()->GetWorldEventManager()->AddEvent(new CollisionEvent(OutInfo));
+
+		Debug::DrawLineInWorld(Position, (Position + Normal.GetNormalized()) * 40.f, ENGINE->GetCurrentWorld()->GetActiveCamera(), Color3(0.f, 1.f, 0.f));
 	}
 
 	//Check if in circle radius

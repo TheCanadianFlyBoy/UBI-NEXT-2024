@@ -9,6 +9,8 @@
 #include <random>
 #include <chrono>
 
+#include <cassert>
+
 #include "../../App/app.h"
 
 class Vector2;
@@ -54,6 +56,14 @@ namespace MathOps {
 	}
 
 	std::vector<Vector2> CreateCirclePoints(float Radius, int SegmentCount);
+
+	inline float CalculateCircleSegment(float Radius, float Height)
+	{
+		if (Radius < Height) return 0;
+		float area = Radius * Radius * acosf(1 - (Height / Radius)) - ((Radius - Height) * sqrtf(Radius * Radius - ((Radius - Height) * (Radius - Height))));
+		assert(!isnan(area));
+		return area;
+	}
 
 }
 

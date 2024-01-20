@@ -9,6 +9,8 @@
 #include "app\app.h"
 //------------------------------------------------------------------------
 #include "CFB_Engine/Common.h"
+#include "Game/World/GameWorld.h"
+
 
 enum
 {
@@ -30,26 +32,12 @@ void Init()
 {
 	EngineCore::GetInstance()->Initialize();
 
-	ENGINE->LoadWorld(ENGINE->CreateWorld<World>());
-	
-	UICanvas* TestCanvas = EngineCore::GetInstance()->CreateGlobalCanvas<UICanvas>();
+	//Register sprites
+	SpriteManager::GetInstance()->RegisterNewSprite("DefaultDude", ".\\TestData\\Test.bmp", 8, 4);
+	SpriteManager::GetInstance()->RegisterNewSprite("Destroyer", ".\\Game\\Resources\\Sprites\\CFB_SPR_Destroyer.png");
+	SpriteManager::GetInstance()->RegisterNewSprite("DestroyerHull", ".\\Game\\Resources\\Sprites\\CFB_SPR_Destroyer_CollisionArea.png");
 
-	UIText* TestText = ENGINE->CreateGlobalWidget<UIText>(TestCanvas);
-	TestText->SetPosition(Vector2(500.f));
-	TestText->SetText("TITLE");
-
-	TestText2 = ENGINE->CreateGlobalWidget<UIButton>(TestCanvas);
-	TestText2->SetPosition(Vector2(500.f, 200.f));
-	TestText2->SetText("Box");
-	TestText2->SetDimensions(Vector2(300, 100));
-	TestText2->SetColor(Color3(1.f, 0.f, 0.f));
-
-	Player = ENGINE->GetCurrentWorld()->CreateEntity<Actor>();
-	Player->SetActorLocation(Vector2(300.f));
-	Body = Player->CreateComponent<CRigidBody>();
-	Body->MakeCollisionCircle(Vector2(0.f), 50.f);
-	
-
+	ENGINE->LoadWorld(ENGINE->CreateWorld<GameWorld>());
 
 
 

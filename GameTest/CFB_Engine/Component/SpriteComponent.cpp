@@ -19,7 +19,7 @@ CSprite::CSprite(Entity* InOwner, std::string InSpriteName)
 /// <summary>
 /// Handles draw call for sprite
 /// </summary>
-void CSprite::Draw(CCamera* InCamera)
+void CSprite::Render(CCamera* InCamera)
 {
 	//Create variables for draw position and rotation
 	Vector2 DrawPosition = Position;	//Offset Position
@@ -50,6 +50,18 @@ void CSprite::Draw(CCamera* InCamera)
 		DrawPosition -= Vector2(0, GetSpriteHeight() / 2);
 		break;
 	}
+
+	//Width
+	switch (WidthAlignment)
+	{
+	case SpriteHeightAlignment::Bottom:
+		DrawPosition += Vector2(GetSpriteWidth()/ 2, 0.f);
+		break;
+	case SpriteHeightAlignment::Top:
+		DrawPosition -= Vector2(GetSpriteWidth() / 2, 0.f);
+		break;
+	}
+
 
 	//Update position
 	UpdateSpriteLocation(DrawPosition, DrawRotation);
