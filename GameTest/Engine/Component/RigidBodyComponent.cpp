@@ -47,8 +47,12 @@ void CRigidBody::Update(float DeltaTime)
 
 	}
 
+}
 
-
+void CRigidBody::LateUpdate(float DeltaTime)
+{
+	ENGINE->GetCurrentWorld()->UnRegisterCollisionEntity(this);
+	ENGINE->GetCurrentWorld()->RegisterCollisionEntity(this);
 }
 
 void CRigidBody::Render(CCamera* InCamera)
@@ -56,7 +60,7 @@ void CRigidBody::Render(CCamera* InCamera)
 	if (ENGINE_DEBUG_MODE)
 	{
 		if (CollisionShape)
-			CollisionShape->DebugDraw(InCamera);
+			CollisionShape->DebugDraw(InCamera, OverlappingBodies.size() > 0 ? Color3(1.f, 0.f, 0.f) : Color3(1.f));
 
 		if (!BuoyancyCircles.empty())
 		{
@@ -80,10 +84,19 @@ void CRigidBody::Render(CCamera* InCamera)
 
 void CRigidBody::Shutdown()
 {
+	CTransform::Shutdown();
+
 	if (Actor* ActorOwner = dynamic_cast<Actor*>(Owner))
 	{
 		ActorOwner->GetWorld()->UnRegisterCollisionEntity(this);
 	}
+
+	Velocity = 0.f;
+}
+
+void CRigidBody::OnBegin()
+{
+	CTransform::OnBegin();
 }
 
 void CRigidBody::MakeCollisionCircle(Vector2 InOffset, float InRadius)
@@ -106,16 +119,34 @@ void CRigidBody::MakeCollisionBox(Vector2 InOffset, Vector2 InBounds)
 	CollisionShape = std::make_unique<CollisionBox>(InOffset, InBounds, true);
 }
 
-bool CRigidBody::GetCollision(CRigidBody* Other, CollisionInfo& OutHitInfo)
+bool CRigidBody::GetCollision(CRigidBody* Other, CollisionInfo& Info)
 {
 	//Fill out partial hit info
-	CollisionInfo Info;
 	Info.ThisActor = dynamic_cast<Actor*>(Owner);
 	Info.ThisBody = this;
-	Info.OtherActor = dynamic_cast<Actor*>(Owner);
+	Info.OtherActor = dynamic_cast<Actor*>(Other->Owner);
 	Info.OtherBody = Other;
 
-	return GetCollision(*Info.OtherBody->GetCollisionShape(), Info);
+	//Get result
+	bool Result = GetCollision(*Info.OtherBody->GetCollisionShape(), Info);
+
+	//If hit, do overlapping
+	if (Result) 
+	{
+		//If this is our first hit, send it
+		if (!IsOverlappingBody(Info.OtherBody))
+			ENGINE->GetCurrentWorld()->GetWorldEventManager()->AddEvent(new CollisionEvent(Info));
+		//Add
+		Info.ThisBody->RegisterOverlappingBody(Info.OtherBody);
+		Info.OtherBody->RegisterOverlappingBody(Info.ThisBody);
+		//If
+	}
+	else {
+		Info.ThisBody->RemoveOverlappingBody(Info.OtherBody);
+		Info.OtherBody->RemoveOverlappingBody(Info.ThisBody);
+	}
+
+	return Result;
 
 }
 
@@ -247,6 +278,56 @@ void CRigidBody::Damping(float DeltaTime)
 	Velocity.x = MathOps::FLerp(Velocity.x, 0, DeltaTime * VelocityDamping);
 	Velocity.y = MathOps::FLerp(Velocity.y, 0, DeltaTime * VelocityDamping);
 
+}
+
+/// <summary>
+/// Registers another body as overlapping for debouncing purposes
+/// </summary>
+/// <param name="InBody">Overlapping body</param>
+void CRigidBody::RegisterOverlappingBody(CRigidBody* InBody)
+{
+	//Check if it's already contained before we start
+	if (!IsOverlappingBody(InBody))
+	{
+		OverlappingBodies.push_back(InBody);
+	}
+}
+
+void CRigidBody::RemoveOverlappingBody(CRigidBody* InBody)
+{
+	//Iterator
+	std::vector<CRigidBody*>::iterator itr;
+
+	itr = OverlappingBodies.begin();
+
+	while (itr != OverlappingBodies.end())
+	{
+		if (*itr == InBody)
+		{
+			OverlappingBodies.erase(itr);
+			return;
+		}
+		else 
+		{
+			itr++;
+		}
+
+	}
+}
+
+/// <summary>
+/// Finds if a given body is already overlapping
+/// </summary>
+/// <param name="InBody">Overlapping body to search</param>
+bool CRigidBody::IsOverlappingBody(CRigidBody* InBody)
+{
+	//Iterate
+	for (auto& Body : OverlappingBodies)
+	{
+		if (Body == InBody) return true;
+	}
+
+	return false;
 }
 
 /// <summary>

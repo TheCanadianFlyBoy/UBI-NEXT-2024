@@ -29,7 +29,15 @@ public:
 
 	//Setters
 	inline void SetCameraDimensions(Vector2 InVector) { Dimensions = InVector; };
+	//Target
+	inline void SetTarget(Actor* InTarget) { TargetActor = InTarget; };
+	inline Actor* GetTarget() { return TargetActor; }
+	//Lag
+	inline void SetCameraLag(float InLag) { CameraLag = InLag; }
+	inline float GetCameraLag() { return CameraLag; }
 
+	//Determines if there is a hard camera bound
+	bool bCameraIsBound = false;
 
 protected: // Members
 	//Camera Origin - Centre point
@@ -39,7 +47,7 @@ protected: // Members
 	//Speed of interpolation
 	float CameraLag = 0.03f;
 	//Hard bound for camera to keep player in view
-	float CameraMaxDistance = 150.f;
+	float CameraMaxDistance = 300.f;
 	//Target for looking elsewhere
 	Actor* TargetActor = nullptr;
 

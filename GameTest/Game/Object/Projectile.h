@@ -6,27 +6,22 @@
 */
 
 #include "../../Engine/Common.h"
-#include "HealthComponent.h"
 
 
 class Projectile : public Actor
 {
 public:
+	//Class Name
+	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
+	inline static const char* GetStaticClassName() { return "Projectile"; }
+
 	Projectile(World* InWorld);
 
 	CRigidBody* ProjectileBody;
 
-	virtual void OnActorCollision(CollisionInfo Info) override {
-		if (Info.OtherActor && Info.OtherActor)
-		{
-			//Check health
-			if (CHealth* HealthComponent = Info.OtherActor->GetComponentOfClass<CHealth>())
-			{
-				//Take damage
-				HealthComponent->TakeDamage(Damage);
-			}
-		}
-	}
+	virtual void OnBegin() override;
+
+	virtual void OnActorCollision(CollisionInfo Info) override;
 
 	Entity* Owner = nullptr;
 

@@ -8,7 +8,7 @@
 #include <memory>
 #include "../Math/Vector2.h"
 
-#define QUAD_MAX_CHILDREN 8
+#define QUAD_MAX_CHILDREN 12
 
 class Actor; class CRigidBody;
 
@@ -75,10 +75,14 @@ public: // Methods
 
 
 	//Shorthand for self query at root
-	inline void StartQuery() { Query(this); }
+	inline void StartQuery() { Query(); }
 
 	//Queries the tree for collisions
-	void Query(QuadTree* InTree);
+	void Query();
+
+	void QueryOther(QuadTree* InTree);
+
+
 
 	//Check if within our quad
 	bool IsInBoundary(Vector2 InPoint);

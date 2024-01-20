@@ -5,10 +5,35 @@
 #include "../World/World.h"
 
 /// <summary>
+/// Reactivation or first activation
+/// </summary>
+void Entity::OnBegin()
+{
+	Object::OnBegin();
+
+	for (auto& ThisComponent : Components)
+	{
+		ThisComponent->OnBegin();
+	}
+}
+
+/// <summary>
 /// On level end or deletion
 /// </summary>
 void Entity::Shutdown()
 {
+	//Set inactive
+	Object::Shutdown();
+
+	//Shutdown components
+	for (Component* ThisComponent : Components)
+	{
+		ThisComponent->Shutdown();
+	}
+
+	//Strip of components
+	//Components.clear();
+
 }
 
 //Delete all components

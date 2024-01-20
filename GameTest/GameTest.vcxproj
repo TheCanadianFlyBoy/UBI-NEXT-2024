@@ -188,6 +188,7 @@
     <ClInclude Include="Engine\Component\CameraComponent.h" />
     <ClInclude Include="Engine\Component\Component.h" />
     <ClInclude Include="Engine\Component\EasingComponent.h" />
+    <ClInclude Include="Engine\Component\HealthComponent.h" />
     <ClInclude Include="Engine\Component\RigidBodyComponent.h" />
     <ClInclude Include="Engine\Component\SpriteComponent.h" />
     <ClInclude Include="Engine\Component\TileMovementComponent.h" />
@@ -214,7 +215,6 @@
     <ClInclude Include="Engine\World\Tilemap.h" />
     <ClInclude Include="Engine\World\World.h" />
     <ClInclude Include="Game\Environment\Water.h" />
-    <ClInclude Include="Game\Object\HealthComponent.h" />
     <ClInclude Include="Game\Object\Projectile.h" />
     <ClInclude Include="Game\World\GameWorld.h" />
     <ClInclude Include="stb_image\stb_image.h" />
@@ -242,6 +242,7 @@
     <ClCompile Include="Engine\Math\MathOps.cpp" />
     <ClCompile Include="Engine\Math\Vector2.cpp" />
     <ClCompile Include="Engine\Math\Vector3.cpp" />
+    <ClCompile Include="Engine\Object\Actor.cpp" />
     <ClCompile Include="Engine\Object\Controller.cpp" />
     <ClCompile Include="Engine\Object\Entity.cpp" />
     <ClCompile Include="Engine\Object\Object.cpp" />

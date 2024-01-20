@@ -17,7 +17,7 @@ void CCamera::Update(float DeltaTime)
 		Vector2 Target = OwnerTransform->GetPosition() - Dimensions / 2 + GetPosition();
 
 		//Check if we have another target
-		if (TargetActor)
+		if (TargetActor && TargetActor->Active)
 		{
 			Target = TargetActor->GetActorLocation() - Dimensions / 2 + GetPosition();
 		}
@@ -26,9 +26,10 @@ void CCamera::Update(float DeltaTime)
 		Origin = MathOps::VectorLerp(Origin, Target, DeltaTime * CameraLag * CameraLag);
 
 		//Clamp
-		if (fabsf(Origin.x - Target.x) > CameraMaxDistance) Origin.x = Target.x - (MathOps::FSign(Target.x - Origin.x) * CameraMaxDistance);
-		if (fabsf(Origin.y - Target.y) > CameraMaxDistance) Origin.y = Target.y - (MathOps::FSign(Target.y - Origin.y) * CameraMaxDistance);
-
+		if (bCameraIsBound) {
+			if (fabsf(Origin.x - Target.x) > CameraMaxDistance) Origin.x = Target.x - (MathOps::FSign(Target.x - Origin.x) * CameraMaxDistance);
+			if (fabsf(Origin.y - Target.y) > CameraMaxDistance) Origin.y = Target.y - (MathOps::FSign(Target.y - Origin.y) * CameraMaxDistance);
+		}
 
 	}
 }

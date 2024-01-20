@@ -29,7 +29,16 @@ void World::Update(float DeltaTime)
 	WorldObjectManager->Update(DeltaTime);
 	WorldEventManager->ProcessEvents(DeltaTime);
 	WorldGameState->Update(DeltaTime);
-	WorldQuadTree->Query(nullptr);
+	WorldQuadTree->Query();
+}
+
+/// <summary>
+/// Handles late update for all objects
+/// </summary>
+/// <param name="DeltaTime"></param>
+void World::LateUpdate(float DeltaTime)
+{
+	WorldObjectManager->LateUpdate(DeltaTime);
 }
 
 /// <summary>
@@ -38,7 +47,7 @@ void World::Update(float DeltaTime)
 void World::Render()
 {
 	//Object Draw
-	WorldObjectManager->Draw(ActiveCamera);
+	WorldObjectManager->Render(ActiveCamera);
 }
 
 void World::Shutdown()

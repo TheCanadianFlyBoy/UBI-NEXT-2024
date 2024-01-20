@@ -32,12 +32,12 @@ bool CollisionBox::CircleToAABB(CollisionCircle& Circle, CollisionLine& CircleTr
 		//Get edge
 		Vector2 EdgeStart = GetMax();
 		Vector2 EdgeEnd = GetMax();
-		
+		//Calculate all the edges
 		bool Top    = CollisionLine(GetMin(), Vector2(GetMax().x, GetMin().y)).PointToLine(ClosestPointToCircle);
 		bool Left   = CollisionLine(GetMin(), Vector2(GetMin().x, GetMax().y)).PointToLine(ClosestPointToCircle);
 		bool Right  = CollisionLine(GetMax(), Vector2(GetMax().x, GetMin().y)).PointToLine(ClosestPointToCircle);
 		bool Bottom = CollisionLine(GetMax(), Vector2(GetMin().x, GetMax().y)).PointToLine(ClosestPointToCircle);
-
+		//Calculate normal based on edge
 		Vector2 Normal;
 
 		if (Top)
@@ -62,7 +62,8 @@ bool CollisionBox::CircleToAABB(CollisionCircle& Circle, CollisionLine& CircleTr
 		OutInfo.PenetrationDepth = ToSurface.Length();
 		OutInfo.Normal = Normal;
 
-		ENGINE->GetCurrentWorld()->GetWorldEventManager()->AddEvent(new CollisionEvent(OutInfo));
+		//MOVED
+		//ENGINE->GetCurrentWorld()->GetWorldEventManager()->AddEvent(new CollisionEvent(OutInfo));
 
 		Debug::DrawLineInWorld(Position, (Position + Normal.GetNormalized()) * 40.f, ENGINE->GetCurrentWorld()->GetActiveCamera(), Color3(0.f, 1.f, 0.f));
 	}

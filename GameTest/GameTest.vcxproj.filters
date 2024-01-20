@@ -99,6 +99,9 @@
     <ClCompile Include="Engine\World\World.cpp">
       <Filter>Engine\World</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Object\Actor.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -225,11 +228,11 @@
     <ClInclude Include="Engine\World\World.h">
       <Filter>Engine\World</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\HealthComponent.h">
-      <Filter>Game\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Component\EasingComponent.h">
       <Filter>Engine\Component\Kinetic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\HealthComponent.h">
+      <Filter>Engine\Component\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,16 +15,19 @@ class Object
 {
 public:
 	//Constructor
-	Object() {};
+	Object() { OnBegin(); };
 
 	// Class Name
 	inline virtual const char* GetObjectClassName() = 0;
 	
 	//Common Methods
-	virtual void OnBegin() {};
+	virtual void OnBegin() { Active = true; };
 	virtual void Update(float DeltaTime) {};
 	virtual void LateUpdate(float DeltaTime) {};
-	virtual void Shutdown() {};
+	virtual void Shutdown() { 
+		//Set inactive
+		Active = false;
+	};
 	virtual void Render(CCamera* InCamera = nullptr) {};
 
 	//Active flag

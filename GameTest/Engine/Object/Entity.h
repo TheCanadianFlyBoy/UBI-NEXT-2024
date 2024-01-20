@@ -26,10 +26,13 @@ public: //Setup/Common
 	inline static const char* GetStaticClassName() { return "Entity"; }
 
 	//Constructor with optional params
-	Entity(World* InWorld = nullptr) : ThisWorld(InWorld) {};
+	Entity(World* InWorld = nullptr) : Object(), ThisWorld(InWorld) { OnBegin(); };
+	
+	virtual void OnBegin() override;
 	//Shutdown
 	virtual void Shutdown() override;
 	
+
 	//Destructor
 	virtual ~Entity();
 
@@ -60,6 +63,8 @@ protected: //Members
 	std::vector<Component*> Components;
 
 protected: //Helper Functions
+
+	//Remove all components
 
 	//Gets the index of a given component
 	int GetIndexOfComponent(Component* InComponent);

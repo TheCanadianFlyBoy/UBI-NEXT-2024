@@ -106,7 +106,7 @@ void QuadTree::RemoveObject(CRigidBody* InBody)
 	itr = Bodies.begin();
 
 	//Iterate
-	while (itr != Bodies.end())
+ 	while (itr != Bodies.end())
 	{
 		//Case 1: found it
 		if (*itr == InBody)
@@ -114,6 +114,8 @@ void QuadTree::RemoveObject(CRigidBody* InBody)
 			Bodies.erase(itr);
 			return;
 		}
+
+		itr++;
 
 	}
 
@@ -215,7 +217,7 @@ QuadTree* QuadTree::FindNodeAtPoint(Vector2 InPoint)
 /// Queries the given node from this node
 /// </summary>
 /// <param name="InTree"></param>
-void QuadTree::Query(QuadTree* InTree)
+void QuadTree::Query()
 {
 	//Case 1: Query self
 	if (!Bodies.empty())
@@ -233,30 +235,39 @@ void QuadTree::Query(QuadTree* InTree)
 		}
 	}
 
-	//Case 2: secondary tree
-	if (InTree && InTree != this)
+	if (!IsLeaf())
 	{
-		//Case 2: check our objects against theirs
-		for (auto& MyObject : Bodies)
-		{
-			for (auto& OtherObject : InTree->Bodies)
-			{
-				//Get rigid body //TODO make useable with multiple rigid bodies / maybe use
-				CollisionInfo OutInfo;
 
-				MyObject->GetCollision(OtherObject, OutInfo);
-
-			}
-		}
-	};
+	//Query Neighbours
+	if (TopLeftTree)	 QueryOther(TopLeftTree.get());
+	if (TopRightTree)    QueryOther(TopRightTree.get());
+	if (BottomLeftTree)  QueryOther(BottomLeftTree.get());
+	if (BottomRightTree) QueryOther(BottomRightTree.get());
 
 	//Recurse
-	if (TopLeftTree) Query(TopLeftTree.get());
-	if (TopRightTree) Query(TopRightTree.get());
-	if (BottomLeftTree) Query(BottomLeftTree.get());
-	if (BottomRightTree) Query(BottomRightTree.get());
+	if (TopLeftTree)	 TopLeftTree->Query();
+	if (TopRightTree)    TopRightTree->Query();
+	if (BottomLeftTree)  BottomLeftTree->Query();
+	if (BottomRightTree) BottomRightTree->Query();
+
+	}
 
 
+}
+
+/// <summary>
+/// Check if there are any overlaps between this tree and the next
+/// </summary>
+/// <param name="InTree"></param>
+void QuadTree::QueryOther(QuadTree* InTree)
+{
+	for (const auto& MyBody : Bodies)
+	{
+		for (const auto& TheirBody : InTree->Bodies)
+		{
+			MyBody->GetCollision(TheirBody, CollisionInfo());
+		}
+	}
 }
 
 bool QuadTree::IsInBoundary(Vector2 InPoint)
@@ -277,8 +288,8 @@ void QuadTreeUnitTest()
 	World* TempWorld = new World(GET_SINGLE(EngineCore));
 
 	//Actor
-	std::shared_ptr<Actor> Actor1_1 = std::make_shared<Actor>(Vector2(1.f), TempWorld);
-	std::shared_ptr<Actor> Actor4_4 = std::make_shared<Actor>(Vector2(4.f), TempWorld);
+	//std::shared_ptr<Actor> Actor1_1 = std::make_shared<Actor>(Vector2(1.f), TempWorld);
+	//std::shared_ptr<Actor> Actor4_4 = std::make_shared<Actor>(Vector2(4.f), TempWorld);
 
 	//Insertion test
 	//Root->InsertNode(Actor1_1->GetActorLocation(), Actor1_1);

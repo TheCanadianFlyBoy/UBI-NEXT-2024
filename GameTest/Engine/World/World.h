@@ -31,6 +31,7 @@ public:
 
 	//Update
 	virtual void Update(float DeltaTime);
+	virtual void LateUpdate(float DeltaTime);
 	virtual void Render();
 	virtual void Shutdown() override;
 
@@ -42,7 +43,7 @@ public: // Camera Methods
 	inline void SetActiveCamera(CCamera* InCamera) { ActiveCamera = InCamera; };
 	inline CCamera* GetActiveCamera() { return ActiveCamera; }
 public: //Quad Tree Methods
-	inline void RegisterCollisionEntity(CRigidBody* InBody) { WorldQuadTree->AddObject(InBody); }
+	inline void RegisterCollisionEntity(CRigidBody* InBody) { WorldQuadTree->InsertNode(InBody->Position, InBody); }
 	inline void UnRegisterCollisionEntity(CRigidBody* InBody) { WorldQuadTree->RemoveObject(InBody); }
 
 public: // Object Managment Methods

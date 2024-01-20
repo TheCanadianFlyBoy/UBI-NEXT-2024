@@ -50,7 +50,7 @@ struct CollisionPrimitive : public Object {
 	//Common Properties
 	Vector2 Position = Vector2(0.f);
 
-	virtual void DebugDraw(CCamera* InCamera) = 0;
+	virtual void DebugDraw(CCamera* InCamera, Color3 InColor = Color3(1.f)) = 0;
 	
 
 };
@@ -64,7 +64,7 @@ struct CollisionBox : public CollisionPrimitive
 	//Constructor
 	CollisionBox(Vector2 InPosition, Vector2 InBounds, bool Centred = false) : CollisionPrimitive(InPosition), Bounds(InBounds), PositionCentred(Centred) {};
 
-	virtual void DebugDraw(CCamera* InCamera) override { Debug::DrawRectangle(Position - InCamera->GetCameraOrigin(), Bounds, Color3(1.f), PositionCentred); };
+	virtual void DebugDraw(CCamera* InCamera, Color3 InColor = Color3(1.f)) override { Debug::DrawRectangle(Position - InCamera->GetCameraOrigin(), Bounds, InColor, PositionCentred); };
 
 	//Properties
 	Vector2 Bounds = Vector2(0.f);
@@ -129,7 +129,7 @@ struct CollisionCircle : public CollisionPrimitive
 
 	CollisionCircle(Vector2 InPosition, float InRadius) : CollisionPrimitive(InPosition), Radius(InRadius) {};
 	
-	virtual void DebugDraw(CCamera* InCamera) override { Debug::DrawCircle(Position - InCamera->GetCameraOrigin(), Radius); };
+	virtual void DebugDraw(CCamera* InCamera, Color3 InColor = Color3(1.f)) override { Debug::DrawCircle(Position - InCamera->GetCameraOrigin(), Radius, 12, InColor); };
 
 	//Properties
 	float Radius = 0.f;
@@ -152,7 +152,7 @@ struct CollisionLine : public CollisionPrimitive
 	//Constructor
 	CollisionLine(Vector2 InStart, Vector2 InEnd, float InCollisionAccuracy = 0.2f, Vector2 InPosition = Vector2(0.f)) : CollisionPrimitive(InPosition), Start(InStart), End(InEnd), CollisionAccuracy(InCollisionAccuracy) {};
 
-	virtual void DebugDraw(CCamera* InCamera) override { Debug::DrawLine(Start - InCamera->GetCameraOrigin(), End + InCamera->GetCameraOrigin()); }
+	virtual void DebugDraw(CCamera* InCamera, Color3 InColor = Color3(1.f)) override { Debug::DrawLine(Start - InCamera->GetCameraOrigin(), End + InCamera->GetCameraOrigin(), InColor); }
 
 	//Properties
 	Vector2 Start = Vector2(0.f);

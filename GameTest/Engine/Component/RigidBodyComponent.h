@@ -36,7 +36,9 @@ public: //Properties
 	~CRigidBody();
 
 	//Update
+	virtual void OnBegin() override;
 	virtual void Update(float DeltaTime) override;
+	virtual void LateUpdate(float DeltaTime) override;
 	virtual void Render(CCamera* InCamera) override;
 	virtual void Shutdown() override;
 
@@ -74,6 +76,10 @@ public: //Methods
 	//Physics Damping
 	virtual void Damping(float DeltaTime);
 
+	//Debouncing for overlaps
+	void RegisterOverlappingBody(CRigidBody* InBody);
+	void RemoveOverlappingBody(CRigidBody* InBody);
+	bool IsOverlappingBody(CRigidBody* InBody);
 
 protected: // Methods
 
@@ -83,20 +89,22 @@ protected: // Methods
 
 protected: // Members
 
+	//Velocity
 	Vector2 Velocity = Vector2(0.f);
 	float VelocityDamping = 1.f;
-
+	//Angular Velocity
 	float AngularVelocity = 0.f;
 	float AngularDamping = 0.1f;
-
+	//Gravity
 	float GravityScale = 1.f;
 	float Mass = 1.f;
-
+	//Buoyancy
 	float WaterLevel = 224.f;
 	float BuoyancyCircleRadius = 12;
-
-	std::unique_ptr<CollisionPrimitive> CollisionShape = nullptr;
 	std::vector<std::shared_ptr<BuoyancyCircle>> BuoyancyCircles;
+	//Collision
+	std::unique_ptr<CollisionPrimitive> CollisionShape = nullptr;
+	std::vector<CRigidBody*> OverlappingBodies;
 	
 	
 

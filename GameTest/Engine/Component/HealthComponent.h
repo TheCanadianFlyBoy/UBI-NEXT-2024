@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	ANGRY SHIPS - Health Component
+*	Engine - Health Component
 *	Component to store health data and call relevant instruction
 *
 */
@@ -15,6 +15,8 @@ public:
 	inline static const char* GetStaticClassName() { return "CHealth"; }
 
 	CHealth(Entity* InEntity, float InHealth = 100.f) : Component(InEntity), Health(InHealth), MaxHealth(InHealth) {}
+
+	virtual void Update(float DeltaTime) override { if (!Alive()) Owner->Shutdown(); }
 
 	//Health Setters
 	inline void SetHealth(float InHealth) { Health = InHealth; };

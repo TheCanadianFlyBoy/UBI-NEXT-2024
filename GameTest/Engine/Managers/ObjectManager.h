@@ -36,16 +36,19 @@ public:
 public: //Methods
 
 	virtual void Update(float DeltaTime);
-	virtual void Draw(CCamera* InCamera = nullptr);
+	virtual void LateUpdate(float DeltaTime);
+	virtual void Render(CCamera* InCamera = nullptr);
 	virtual void Shutdown() override;
 
 
 public: //Add/Removal
 	void DestroyComponent(Component* InComponent);
 
-public: //Factory Getters
-	//template <class Type>
-	//Type* GetEntity();
+
+
+public: //Getters
+
+	inline int GetEntityInstanceCount(std::string ClassName) { return int(Entities[ClassName].size()); }
 
 public: //Factory Constructors
 
@@ -61,6 +64,10 @@ public: //Factory Constructors
 	template <class Type>
 	Type* CreateCanvas();
 
+protected: // Helpers
+	template <class Type>
+	Type* GetEntityOfClass();
+
 
 protected: //Members
 
@@ -71,6 +78,9 @@ protected: //Members
 	//World List
 	//UI List
 	std::vector<std::unique_ptr<UICanvas>> Canvases; //TODO z order
+
+	Vector2 KillBoundsLower = Vector2(-200.f, -100.f);
+	Vector2 KillBoundsUpper = Vector2(20000.f, 1200.f);
 
 
 
@@ -87,6 +97,12 @@ inline Type* ObjectManager::CreateEntity()
 {
 	//Check we have actually passed in an entity, otherwise this code will be broken
 	assert((std::is_base_of < Entity, Type>()));
+
+	//Object pooled? Use it
+	if (Type* ExistingEntity = GetEntityOfClass<Type>()) {
+		ExistingEntity->OnBegin();
+		return ExistingEntity;
+	}
 
 	//Create a unique pointer for mem mgmt
 	Entities[Type::GetStaticClassName()].push_back(std::make_unique<Type>(ThisWorld));
@@ -149,5 +165,29 @@ inline Type* ObjectManager::CreateCanvas()
 
 	//Return ptr to new object (we've already asserted so static cast is safe)
 	return static_cast<Type*>(Canvases.back().get());
+}
+
+/// <summary>
+/// Gets an entity of the given class
+/// </summary>																	//TODO fix desc
+/// <typeparam name="Type"></typeparam>
+/// <returns></returns>
+template<class Type>
+inline Type* ObjectManager::GetEntityOfClass()
+{
+	//Check we have actually passed in an entity, otherwise this code will be broken
+	assert((std::is_base_of < Entity, Type>()));
+
+	//Iterate
+	for (auto& ThisEntity : Entities[Type::GetStaticClassName()])
+	{
+		if (!ThisEntity->Active)
+		{
+			ThisEntity->OnBegin();
+			return static_cast<Type*>(ThisEntity.get());
+		}
+	}
+
+	return nullptr;
 }
 ;
