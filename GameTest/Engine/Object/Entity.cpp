@@ -4,10 +4,17 @@
 #include "../Component/Component.h"
 #include "../World/World.h"
 
+/// <summary>
+/// On level end or deletion
+/// </summary>
+void Entity::Shutdown()
+{
+}
+
 //Delete all components
 Entity::~Entity()
 {
-	//Components.clear();
+	Components.clear();
 }
 /// <summary>
 /// Takes a pointer to a component and attempts to find it's index in the component vector;

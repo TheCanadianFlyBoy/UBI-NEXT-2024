@@ -9,6 +9,7 @@
 #include "../State/GameState.h"
 #include "../Managers/EventManager.h" //TODO figure this out why it's needed?
 #include "../Managers/ObjectManager.h"
+#include "../Managers/QuadTree.h"
 #include "../Managers/SpriteManager.h"
 class ObjectManager;
 class Entity;
@@ -26,10 +27,12 @@ public:
 
 	//Constructor
 	World(EngineCore* InEngine);
+	virtual ~World();
 
 	//Update
 	virtual void Update(float DeltaTime);
 	virtual void Render();
+	virtual void Shutdown() override;
 
 public: // Game State Methods
 	inline GameState* GetWorldGameState() { return WorldGameState.get(); };
@@ -38,6 +41,9 @@ public: // Event Handler Methods
 public: // Camera Methods
 	inline void SetActiveCamera(CCamera* InCamera) { ActiveCamera = InCamera; };
 	inline CCamera* GetActiveCamera() { return ActiveCamera; }
+public: //Quad Tree Methods
+	inline void RegisterCollisionEntity(CRigidBody* InBody) { WorldQuadTree->AddObject(InBody); }
+	inline void UnRegisterCollisionEntity(CRigidBody* InBody) { WorldQuadTree->RemoveObject(InBody); }
 
 public: // Object Managment Methods
 	//Getter
@@ -67,6 +73,8 @@ protected: // Methods / Members
 	std::unique_ptr<EventManager> WorldEventManager;
 	//Object Manager
 	std::unique_ptr<ObjectManager> WorldObjectManager;
+	//Quad Tree
+	std::unique_ptr<QuadTree> WorldQuadTree;
 	//Sprite Manager
 	SpriteManager* EngineSpriteManager = nullptr;
 

@@ -58,6 +58,14 @@ void EngineCore::Render()
 	}
 }
 
+/// <summary>
+/// Handle safe closure of the game
+/// </summary>
+void EngineCore::Shutdown()
+{
+	if (CurrentWorld) CurrentWorld->Shutdown();
+}
+
 void EngineCore::LoadWorld(World* InWorld)
 {
 	//TODO handle shutdown of world

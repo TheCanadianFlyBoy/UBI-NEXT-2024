@@ -2,6 +2,7 @@
 #include "GameWorld.h"
 #include "../Environment/Water.h"
 #include "../../Engine/Managers/SpriteManager.h"
+#include "../Object/Projectile.h"
 
 WaterRenderer* Waves;
 
@@ -69,7 +70,19 @@ void GameWorld::Update(float DeltaTime)
 
 	if (Hull->GetCollision(MouseBody, Hit))
 	{
-		bool g;
+		bool g = true;
+	}
+
+	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A))
+	{
+		Vector2 Trajectory = ENGINE->GetMousePosition() + ActiveCamera->GetCameraOrigin() -  PlayerShip->GetActorLocation();
+
+		Projectile* NewProjectile = CreateEntity<Projectile>();
+		//NewProjectile->SetActorRotation(PI / 4);
+		NewProjectile->SetActorLocation(PlayerShip->GetActorLocation() + Trajectory.GetNormalized() * 8.f);
+		NewProjectile->ProjectileBody->SetVelocity(Vector2(Trajectory.GetNormalized() * -(NewProjectile->ProjectileSpeed)));
+		NewProjectile->ProjectileBody->SetGravityScale(9.8f);
+		NewProjectile->Owner = PlayerShip;
 	}
 
 

@@ -29,6 +29,7 @@ public: // Methods
 	void Update(float DeltaTime);
 	void LateUpdate(float DeltaTime);
 	void Render();
+	void Shutdown();
 
 	//Returns current world
 	inline World* GetCurrentWorld() { return CurrentWorld; }

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CameraComponent.h"
-
+#include "../Object/Actor.h"
 #include "../Math/MathOps.h"
 #include "../Object/Entity.h"
 
@@ -12,17 +12,22 @@ void CCamera::Update(float DeltaTime)
 	{
 		//Get the transform
 		CTransform* OwnerTransform = Owner->GetComponentOfClass<CTransform>();
-		//Calculate our target X
-		float TargetX = OwnerTransform->GetPosition().x - Dimensions.x / 2 + GetPosition().x;
-		float TargetY = OwnerTransform->GetPosition().y - Dimensions.y / 2 + GetPosition().y;
+
+		//Setup default target: self
+		Vector2 Target = OwnerTransform->GetPosition() - Dimensions / 2 + GetPosition();
+
+		//Check if we have another target
+		if (TargetActor)
+		{
+			Target = TargetActor->GetActorLocation() - Dimensions / 2 + GetPosition();
+		}
 
 		//Lerp toward the target position
-		Origin.x = MathOps::FLerp(Origin.x, TargetX, CameraLag / DeltaTime);
-		Origin.y = MathOps::FLerp(Origin.y, TargetY, CameraLag / DeltaTime);
+		Origin = MathOps::VectorLerp(Origin, Target, DeltaTime * CameraLag * CameraLag);
 
 		//Clamp
-		if (fabsf(Origin.x - TargetX) > CameraMaxDistance) Origin.x = TargetX - (MathOps::FSign(TargetX - Origin.x) * CameraMaxDistance);
-		if (fabsf(Origin.y - TargetY) > CameraMaxDistance) Origin.y = TargetY - (MathOps::FSign(TargetY - Origin.y) * CameraMaxDistance);
+		if (fabsf(Origin.x - Target.x) > CameraMaxDistance) Origin.x = Target.x - (MathOps::FSign(Target.x - Origin.x) * CameraMaxDistance);
+		if (fabsf(Origin.y - Target.y) > CameraMaxDistance) Origin.y = Target.y - (MathOps::FSign(Target.y - Origin.y) * CameraMaxDistance);
 
 
 	}

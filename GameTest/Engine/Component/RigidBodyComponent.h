@@ -32,11 +32,13 @@ public: //Properties
 	inline static const char* GetStaticClassName() { return "CRigidBody"; }
 
 	//Constructor with optional args
-	CRigidBody(Entity* InEntity = nullptr) : CTransform(InEntity) {};
+	CRigidBody(Entity* InEntity = nullptr);
+	~CRigidBody();
 
 	//Update
 	virtual void Update(float DeltaTime) override;
 	virtual void Render(CCamera* InCamera) override;
+	virtual void Shutdown() override;
 
 public: //Methods
 

@@ -12,7 +12,6 @@ ObjectManager::~ObjectManager()
 	//Clear all the vector
 	for (auto &VectorPair : Entities)
 	{
-		//Get the vector value
 		VectorPair.second.clear();
 	}
 }
@@ -63,6 +62,19 @@ void ObjectManager::Draw(CCamera* InCamera)
 		}
 	}
 
+}
+
+//Call shutdown on all relevant entities/components
+void ObjectManager::Shutdown()
+{
+	//Clear all the vector
+	for (auto& VectorPair : Entities)
+	{
+		for (auto& ThisEntity : VectorPair.second)
+		{
+			ThisEntity->Shutdown();
+		}
+	}
 }
 
 //Removes component from the list if it matches

@@ -10,7 +10,7 @@
 
 #define QUAD_MAX_CHILDREN 8
 
-class Actor;
+class Actor; class CRigidBody;
 
 class QuadTree {
 public://Common
@@ -23,19 +23,33 @@ public://Common
 	//Unit test data
 	//int Data;
 
-	//Points to child or first element
-	std::vector<std::shared_ptr<Actor>> Objects;
+	
 
 	//Return if this is a leaf
 	inline bool IsLeaf() { return !TopLeftTree && !TopRightTree && !BottomLeftTree && !BottomRightTree; }
 
 	//Insertion
-	void InsertNode(Vector2 InPosition, std::shared_ptr<Actor>& InActor);
+	void InsertNode(Vector2 InPosition, CRigidBody* InBody);
 
 	//Add object or call c
-	void AddObject(std::shared_ptr<Actor> InActor);
+	void AddObject(CRigidBody* InBody);
 
+	void RemoveObject(CRigidBody* InBody);
+
+	//Split a leaf node
 	void Split();
+
+	//Clear the entire tree
+	inline void ClearTree() { 
+		Bodies.clear(); 
+		if (TopLeftTree)		TopLeftTree->ClearTree();
+		if (TopRightTree)		TopRightTree->ClearTree();
+		if (BottomLeftTree)		BottomLeftTree->ClearTree();
+		if (BottomRightTree)	BottomRightTree->ClearTree();
+	}
+
+	//Points to child or first element
+	std::vector<CRigidBody*> Bodies;
 
 protected: //Members
 	//Boundaries
@@ -52,13 +66,19 @@ protected: //Members
 	std::shared_ptr<QuadTree> BottomRightTree = nullptr;
 
 
+
 public: // Methods
 
-	//Insert a node in the tree system
-	void InsertNode(Vector2 InPosition);
 
 	//Find a node
 	QuadTree* FindNodeAtPoint(Vector2 InPoint);
+
+
+	//Shorthand for self query at root
+	inline void StartQuery() { Query(this); }
+
+	//Queries the tree for collisions
+	void Query(QuadTree* InTree);
 
 	//Check if within our quad
 	bool IsInBoundary(Vector2 InPoint);

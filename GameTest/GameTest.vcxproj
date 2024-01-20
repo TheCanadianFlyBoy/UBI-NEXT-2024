@@ -187,6 +187,7 @@
     <ClInclude Include="Engine\Component\AudioComponent.h" />
     <ClInclude Include="Engine\Component\CameraComponent.h" />
     <ClInclude Include="Engine\Component\Component.h" />
+    <ClInclude Include="Engine\Component\EasingComponent.h" />
     <ClInclude Include="Engine\Component\RigidBodyComponent.h" />
     <ClInclude Include="Engine\Component\SpriteComponent.h" />
     <ClInclude Include="Engine\Component\TileMovementComponent.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Engine\World\Tilemap.h" />
     <ClInclude Include="Engine\World\World.h" />
     <ClInclude Include="Game\Environment\Water.h" />
+    <ClInclude Include="Game\Object\HealthComponent.h" />
     <ClInclude Include="Game\Object\Projectile.h" />
     <ClInclude Include="Game\World\GameWorld.h" />
     <ClInclude Include="stb_image\stb_image.h" />

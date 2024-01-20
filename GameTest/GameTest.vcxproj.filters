@@ -28,7 +28,7 @@
       <Filter>Game\Environment</Filter>
     </ClCompile>
     <ClCompile Include="Game\Object\Projectile.cpp">
-      <Filter>Game\Projectile</Filter>
+      <Filter>Game\Object</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Engine.cpp">
       <Filter>Engine</Filter>
@@ -133,7 +133,7 @@
       <Filter>Game\Environment</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Projectile.h">
-      <Filter>Game\Projectile</Filter>
+      <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Engine.h">
       <Filter>Engine</Filter>
@@ -225,6 +225,12 @@
     <ClInclude Include="Engine\World\World.h">
       <Filter>Engine\World</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\HealthComponent.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\EasingComponent.h">
+      <Filter>Engine\Component\Kinetic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -284,7 +290,7 @@
     <Filter Include="Game\Environment">
       <UniqueIdentifier>{997995a2-f06d-4da6-a6aa-9c4387e798b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Projectile">
+    <Filter Include="Game\Object">
       <UniqueIdentifier>{3535e2e9-c7f1-4c21-9ea4-444cfe7073f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

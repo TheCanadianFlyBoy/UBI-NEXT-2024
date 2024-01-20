@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "World.h"
 #include "../Managers/ObjectManager.h"
+#include "../Managers/Quadtree.h"
 #include "../Engine.h"
 
 World::World(EngineCore* InEngine) : WorldEngine(InEngine)
@@ -10,7 +11,13 @@ World::World(EngineCore* InEngine) : WorldEngine(InEngine)
 	WorldGameState = std::make_unique<GameState>(this);
 	EngineSpriteManager = InEngine->GetSpriteManager();
 
+	WorldQuadTree = std::make_unique<QuadTree>();
+
 	bool g = true;
+}
+
+World::~World()
+{
 }
 
 /// <summary>
@@ -22,7 +29,7 @@ void World::Update(float DeltaTime)
 	WorldObjectManager->Update(DeltaTime);
 	WorldEventManager->ProcessEvents(DeltaTime);
 	WorldGameState->Update(DeltaTime);
-
+	WorldQuadTree->Query(nullptr);
 }
 
 /// <summary>
@@ -32,4 +39,21 @@ void World::Render()
 {
 	//Object Draw
 	WorldObjectManager->Draw(ActiveCamera);
+}
+
+void World::Shutdown()
+{
+	//Flush events
+	WorldEventManager->Shutdown();
+
+	//Game State
+	WorldGameState->Shutdown();
+
+	//Clear object manager
+	WorldObjectManager->Shutdown();
+	WorldObjectManager.reset();
+
+	//Quad Tree
+	WorldQuadTree->ClearTree();
+
 }

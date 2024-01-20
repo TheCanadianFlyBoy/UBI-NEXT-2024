@@ -63,10 +63,6 @@ void Render()
 {	
 	ENGINE->Render();
 
-
-	//Debug::DrawCircle(MouseCircle.Position, MouseCircle.Radius, 12, collision ? Color3(1.f, 0.5f, 0.f) : Color3(1.f));
-
-
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.

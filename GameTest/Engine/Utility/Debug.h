@@ -28,7 +28,7 @@ namespace Debug
 		std::vector<Vector2> Points = MathOps::CreateCirclePoints(Radius, Segments);
 		for (int i = 0; i < Points.size(); i++)
 		{
-			int j = i > 0 ? i - 1 : Points.size() - 1;
+			int j = i > 0 ? i - 1 : int(Points.size()) - 1;
 			DrawLine(Position + Points[i], Position + Points[j], Color);
 		}
 	}

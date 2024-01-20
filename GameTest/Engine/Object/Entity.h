@@ -27,8 +27,11 @@ public: //Setup/Common
 
 	//Constructor with optional params
 	Entity(World* InWorld = nullptr) : ThisWorld(InWorld) {};
+	//Shutdown
+	virtual void Shutdown() override;
+	
 	//Destructor
-	~Entity();
+	virtual ~Entity();
 
 public: //Common Gameplay Methods
 	

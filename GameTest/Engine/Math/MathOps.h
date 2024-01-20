@@ -11,6 +11,7 @@
 
 #include <cassert>
 
+
 #include "../../App/app.h"
 
 class Vector2;
@@ -54,6 +55,8 @@ namespace MathOps {
 	{
 		return std::max<float>(Min, std::min<float>(Max, Value));
 	}
+
+	Vector2 VectorLerp(::Vector2 A, ::Vector2 B, float Delta);
 
 	std::vector<Vector2> CreateCirclePoints(float Radius, int SegmentCount);
 

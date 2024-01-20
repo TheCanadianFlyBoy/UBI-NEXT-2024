@@ -37,6 +37,7 @@ public: //Methods
 
 	virtual void Update(float DeltaTime);
 	virtual void Draw(CCamera* InCamera = nullptr);
+	virtual void Shutdown() override;
 
 
 public: //Add/Removal

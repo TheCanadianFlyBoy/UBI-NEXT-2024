@@ -6,6 +6,18 @@
 #include "../Math/Collision.h"
 #include "CameraComponent.h"
 
+CRigidBody::CRigidBody(Entity* InEntity) : CTransform(InEntity)
+{
+	if (Actor* ActorOwner = dynamic_cast<Actor*>(Owner)) {
+		ActorOwner->GetWorld()->RegisterCollisionEntity(this);
+	}
+}
+
+CRigidBody::~CRigidBody()
+{
+	
+}
+
 void CRigidBody::Update(float DeltaTime)
 {
 	DeltaTime *= 0.02f;
@@ -66,6 +78,14 @@ void CRigidBody::Render(CCamera* InCamera)
 	}
 }
 
+void CRigidBody::Shutdown()
+{
+	if (Actor* ActorOwner = dynamic_cast<Actor*>(Owner))
+	{
+		ActorOwner->GetWorld()->UnRegisterCollisionEntity(this);
+	}
+}
+
 void CRigidBody::MakeCollisionCircle(Vector2 InOffset, float InRadius)
 {
 	//Handles transform
@@ -95,68 +115,8 @@ bool CRigidBody::GetCollision(CRigidBody* Other, CollisionInfo& OutHitInfo)
 	Info.OtherActor = dynamic_cast<Actor*>(Owner);
 	Info.OtherBody = Other;
 
-	//Set variables
-	CollisionPrimitive* ThisShape = GetCollisionShape();
-	CollisionPrimitive* OtherShape = Other->GetCollisionShape();
+	return GetCollision(*Info.OtherBody->GetCollisionShape(), Info);
 
-	//Eject if invalid shapes
-	if (!ThisShape || !OtherShape) return false;
-
-	//Handle all cases
-	//AABB
-	if (ThisShape->GetObjectClassName() == "CollisionBox")
-	{
-		CollisionBox* ThisBox = static_cast<CollisionBox*>(ThisShape);
-
-		if (OtherShape->GetObjectClassName() == "CollisionBox")
-		{	//Cast
-			CollisionBox* OtherBox = static_cast<CollisionBox*>(OtherShape);
-			
-			//Call
-			return ThisBox->AABBToAABB(*OtherBox);
-
-			
-		}
-		else if (OtherShape->GetObjectClassName() == "CollisionCircle")
-		{	//Cast
-			CollisionCircle* OtherCircle = static_cast<CollisionCircle*>(OtherShape);
-
-			
-
-			//Call
-			return ThisBox->CircleToAABB(*OtherCircle, CollisionLine(Position, Velocity), Info);
-
-
-		}
-	}
-	else if (ThisShape->GetObjectClassName() == "CollisionCircle")
-	{
-		CollisionCircle* ThisCircle = static_cast<CollisionCircle*>(ThisShape);
-
-		if (OtherShape->GetObjectClassName() == "CollisionBox")
-		{	//Cast
-			CollisionBox* OtherBox = static_cast<CollisionBox*>(OtherShape);
-
-			CollisionInfo Info; //TODO flip this ?
-
-			//Call
-			return OtherBox->CircleToAABB(*ThisCircle, CollisionLine(Position, Velocity), Info);
-
-
-		}
-		else if (OtherShape->GetObjectClassName() == "CollisionCircle")
-		{	//Cast
-			CollisionCircle* OtherCircle = static_cast<CollisionCircle*>(OtherShape);
-
-			//Call
-			return ThisCircle->CircleToCircle(*OtherCircle);
-
-
-		}
-	}
-
-
-	return false;
 }
 
 bool CRigidBody::GetCollision(CollisionPrimitive& InCollisionPrimitive, CollisionInfo& OutHitInfo)
@@ -186,10 +146,8 @@ bool CRigidBody::GetCollision(CollisionPrimitive& InCollisionPrimitive, Collisio
 		{	//Cast
 			CollisionCircle* OtherCircle = static_cast<CollisionCircle*>(OtherShape);
 
-			CollisionInfo Info;
-
 			//Call
-			return ThisBox->CircleToAABB(*OtherCircle, CollisionLine(Position, Velocity), Info);
+			return ThisBox->CircleToAABB(*OtherCircle, CollisionLine(Position, Velocity), OutHitInfo);
 
 
 		}
@@ -205,7 +163,7 @@ bool CRigidBody::GetCollision(CollisionPrimitive& InCollisionPrimitive, Collisio
 			CollisionInfo Info; //TODO flip this ?
 
 			//Call
-			return OtherBox->CircleToAABB(*ThisCircle, CollisionLine(Position, Velocity), Info);
+			return OtherBox->CircleToAABB(*ThisCircle, CollisionLine(Position, Velocity), OutHitInfo);
 
 
 		}
@@ -300,8 +258,8 @@ void CRigidBody::SetupBoxBuoyancy()
 	CollisionBox* Box= static_cast<CollisionBox*>(CollisionShape.get());
 
 	//Calculate how many circles can fit
-	int MaxXSpheres = std::max<int>(Box->Bounds.x / (BuoyancyCircleRadius * 2), 1);
-	int MaxYSpheres = std::max<int>(Box->Bounds.y / (BuoyancyCircleRadius * 2), 1);
+	int MaxXSpheres = std::max<int>(int(Box->Bounds.x / (BuoyancyCircleRadius * 2.f)), 1);
+	int MaxYSpheres = std::max<int>(int(Box->Bounds.y / (BuoyancyCircleRadius * 2.f)), 1);
 
 	for (int i = 0; i < MaxXSpheres; i++)
 	{

@@ -20,6 +20,7 @@ public:
 	Actor(World* InWorld = nullptr) : Entity(InWorld) { Transform = CreateComponent<CTransform>(); }
 	Actor(Vector2 Position, World* InWorld = nullptr) : Entity(InWorld) { Transform = CreateComponent<CTransform>(); Transform->SetPosition(Position); }
 
+	virtual ~Actor() {};
 
 public: //Helper Methods
 	//Setters

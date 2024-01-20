@@ -8,6 +8,7 @@
 #include "TransformComponent.h"
 
 class Entity;
+class Actor;
 
 class CCamera : public CTransform
 {
@@ -39,6 +40,8 @@ protected: // Members
 	float CameraLag = 0.03f;
 	//Hard bound for camera to keep player in view
 	float CameraMaxDistance = 150.f;
+	//Target for looking elsewhere
+	Actor* TargetActor = nullptr;
 
 
 
