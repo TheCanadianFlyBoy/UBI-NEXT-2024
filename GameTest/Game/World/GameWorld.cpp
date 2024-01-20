@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GameWorld.h"
 #include "../Environment/Water.h"
-#include "../../CFB_Engine/Managers/SpriteManager.h"
+#include "../../Engine/Managers/SpriteManager.h"
 
 WaterRenderer* Waves;
 

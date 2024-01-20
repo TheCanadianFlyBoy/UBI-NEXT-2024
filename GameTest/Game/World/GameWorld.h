@@ -5,8 +5,8 @@
 *
 */
 
-#include "../../CFB_Engine/Engine.h"
-#include "../../CFB_Engine/Common.h"
+#include "../../Engine/Engine.h"
+#include "../../Engine/Common.h"
 
 
 class GameWorld : public World

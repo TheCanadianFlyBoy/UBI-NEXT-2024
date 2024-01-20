@@ -5,8 +5,8 @@
 *
 */
 
-#include "../../CFB_Engine/Object/Actor.h"
-#include "../../CFB_Engine/Component/CameraComponent.h"
+#include "../../Engine/Object/Actor.h"
+#include "../../Engine/Component/CameraComponent.h"
 
 class WaterRenderer : public Actor
 {

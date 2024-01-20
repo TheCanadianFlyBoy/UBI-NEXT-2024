@@ -21,77 +21,83 @@
     <ClCompile Include="stb_image\stb_image.cpp">
       <Filter>stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="CFB_Engine\Managers\ObjectManager.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Object\Object.cpp">
-      <Filter>Engine\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Math\Vector2.cpp">
-      <Filter>Engine\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Math\Vector3.cpp">
-      <Filter>Engine\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Object\Entity.cpp">
-      <Filter>Engine\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\World\World.cpp">
-      <Filter>Engine\World</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Component\Component.cpp">
-      <Filter>Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Managers\SpriteManager.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Resource\SpriteResource.cpp">
-      <Filter>Engine\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Managers\EventManager.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\State\GameState.cpp">
-      <Filter>Engine\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\UI\UICanvas.cpp">
-      <Filter>Engine\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Engine.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\World\Tilemap.cpp">
-      <Filter>Engine\World</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Component\SpriteComponent.cpp">
-      <Filter>Engine\Component\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Component\CameraComponent.cpp">
-      <Filter>Engine\Component\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Component\TileMovementComponent.cpp">
-      <Filter>Engine\Component\Kinetic</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\World\Pathfinder.cpp">
-      <Filter>Engine\World</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Component\RigidBodyComponent.cpp">
-      <Filter>Engine\Component\Kinetic</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Math\Collision.cpp">
-      <Filter>Engine\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Managers\Quadtree.cpp">
-      <Filter>Engine\Manager\Quadtree</Filter>
-    </ClCompile>
-    <ClCompile Include="CFB_Engine\Math\MathOps.cpp">
-      <Filter>Engine\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Game\World\GameWorld.cpp">
       <Filter>Game\World</Filter>
     </ClCompile>
     <ClCompile Include="Game\Environment\Water.cpp">
       <Filter>Game\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Projectile.cpp">
+      <Filter>Game\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Component.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\CameraComponent.cpp">
+      <Filter>Engine\Component\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\AudioComponent.cpp">
+      <Filter>Engine\Component\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\RigidBodyComponent.cpp">
+      <Filter>Engine\Component\Kinetic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\TileMovementComponent.cpp">
+      <Filter>Engine\Component\Kinetic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\SpriteComponent.cpp">
+      <Filter>Engine\Component\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\EventManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\ObjectManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\Quadtree.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\SpriteManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math\Collision.cpp">
+      <Filter>Engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math\MathOps.cpp">
+      <Filter>Engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math\Vector2.cpp">
+      <Filter>Engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math\Vector3.cpp">
+      <Filter>Engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Object\Controller.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Object\Entity.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Object\Object.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\State\GameState.cpp">
+      <Filter>Engine\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UICanvas.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\World\Pathfinder.cpp">
+      <Filter>Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\World\Tilemap.cpp">
+      <Filter>Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\World\World.cpp">
+      <Filter>Engine\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,98 +126,104 @@
     <ClInclude Include="stb_image\stb_image.h">
       <Filter>stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="CFB_Engine\Managers\ObjectManager.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Object\Object.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\Component.h">
-      <Filter>Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Math\MathOps.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Math\Vector2.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Math\Vector3.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Object\Entity.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\World\World.h">
-      <Filter>Engine\World</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Object\Actor.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Managers\SpriteManager.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Resource\SpriteResource.h">
-      <Filter>Engine\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Managers\EventManager.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Event\Event.h">
-      <Filter>Engine\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\State\GameState.h">
-      <Filter>Engine\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\UI\UICanvas.h">
-      <Filter>Engine\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\UI\UIWidget.h">
-      <Filter>Engine\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Engine.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\AllComponents.h">
-      <Filter>Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\World\Tilemap.h">
-      <Filter>Engine\World</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\TransformComponent.h">
-      <Filter>Engine\Component\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\SpriteComponent.h">
-      <Filter>Engine\Component\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\CameraComponent.h">
-      <Filter>Engine\Component\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\TileMovementComponent.h">
-      <Filter>Engine\Component\Kinetic</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\World\Pathfinder.h">
-      <Filter>Engine\World</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Component\RigidBodyComponent.h">
-      <Filter>Engine\Component\Kinetic</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Math\Collision.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Managers\Quadtree.h">
-      <Filter>Engine\Manager\Quadtree</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Common.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="CFB_Engine\Utility\Debug.h">
-      <Filter>Engine\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Game\World\GameWorld.h">
       <Filter>Game\World</Filter>
     </ClInclude>
     <ClInclude Include="Game\Environment\Water.h">
       <Filter>Game\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Projectile.h">
+      <Filter>Game\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Common.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\AllComponents.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Component.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\CameraComponent.h">
+      <Filter>Engine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\AudioComponent.h">
+      <Filter>Engine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\RigidBodyComponent.h">
+      <Filter>Engine\Component\Kinetic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\TileMovementComponent.h">
+      <Filter>Engine\Component\Kinetic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\TransformComponent.h">
+      <Filter>Engine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\SpriteComponent.h">
+      <Filter>Engine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Event\Event.h">
+      <Filter>Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\EventManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\ObjectManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\Quadtree.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\SpriteManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math\Collision.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math\MathOps.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math\Vector2.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math\Vector3.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Object\Actor.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Object\Controller.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Object\Entity.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Object\Object.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\State\GameState.h">
+      <Filter>Engine\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UICanvas.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIWidget.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\Debug.h">
+      <Filter>Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\World\Pathfinder.h">
+      <Filter>Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\World\Tilemap.h">
+      <Filter>Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\World\World.h">
+      <Filter>Engine\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
