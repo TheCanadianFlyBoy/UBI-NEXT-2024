@@ -35,6 +35,7 @@ public:
 
 public: //Methods
 
+	virtual void OnBegin() override;
 	virtual void Update(float DeltaTime);
 	virtual void LateUpdate(float DeltaTime);
 	virtual void Render(CCamera* InCamera = nullptr);
@@ -106,6 +107,15 @@ inline Type* ObjectManager::CreateEntity()
 
 	//Create a unique pointer for mem mgmt
 	Entities[Type::GetStaticClassName()].push_back(std::make_unique<Type>(ThisWorld));
+
+	//Get unmanaged pointer to new object
+	Type* NewObject = static_cast<Type*>(Entities[Type::GetStaticClassName()].back().get());
+
+	//Setup default name
+	std::string DefaultName = NewObject->GetStaticClassName() + std::to_string(Entities[Type::GetStaticClassName()].size());
+
+	//Stamp default name
+	Entities[Type::GetStaticClassName()].back().get()->InstanceName = DefaultName;
 
 	//Return ptr to new object
 	return static_cast<Type*>(Entities[Type::GetStaticClassName()].back().get());

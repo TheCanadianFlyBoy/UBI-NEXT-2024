@@ -15,6 +15,7 @@ public:
 	WaterRenderer(World* InWorld = nullptr);
 
 
+	virtual void OnBegin() override;
 	virtual void Update(float DeltaTime) override;
 	virtual void Render(CCamera* InCamera = nullptr);
 

@@ -62,7 +62,11 @@ protected: // Members
 	std::vector <std::unique_ptr<UICanvas>> GlobalCanvases;
 
 public: //Helpers
-	Vector2 GetMousePosition();
+	//Mouse Position
+	Vector2 GetMouseScreenPosition();
+	Vector2 GetMouseWorldPosition();
+	//Camera getter with null check
+	inline CCamera* GetActiveWorldCamera() { return GetCurrentWorld() ? GetCurrentWorld()->GetActiveCamera() : nullptr; }
 
 };
 

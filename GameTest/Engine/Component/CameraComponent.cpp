@@ -17,9 +17,24 @@ void CCamera::Update(float DeltaTime)
 		Vector2 Target = OwnerTransform->GetPosition() - Dimensions / 2 + GetPosition();
 
 		//Check if we have another target
-		if (TargetActor && TargetActor->Active)
+		if (TargetActor)
 		{
-			Target = TargetActor->GetActorLocation() - Dimensions / 2 + GetPosition();
+			//Linger counter
+			if (!TargetActor->Active)
+			{
+				TargetLingerCounter += DeltaTime * 0.001f;
+			}
+
+			//Are we lingering?
+			if (TargetLingerCounter <= TargetLingerTime)
+			{
+				Target = TargetActor->GetActorLocation() - Dimensions / 2 + GetPosition();
+			}
+			else 
+			{ //Return to main position
+				TargetLingerCounter = 0.f;
+				TargetActor = nullptr;
+			}
 		}
 
 		//Lerp toward the target position

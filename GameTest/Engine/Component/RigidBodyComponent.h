@@ -42,11 +42,14 @@ public: //Properties
 	virtual void Render(CCamera* InCamera) override;
 	virtual void Shutdown() override;
 
-public: //Methods
+public: //Collision
 
 	//Collision Makers
 	void MakeCollisionCircle(Vector2 InPosition, float InRadius);
+	inline void MakeCollisionCircle(float InRadius) { MakeCollisionCircle(Vector2(0.f), InRadius); }
+
 	void MakeCollisionBox(Vector2 InPosition, Vector2 InDimensions);
+	inline void MakeCollisionBox(Vector2 InDimensions) { MakeCollisionBox(Vector2(0.f), InDimensions); }
 
 	inline CollisionPrimitive* GetCollisionShape() { return CollisionShape.get(); }
 	//Gets if there is a collision between two bodies
@@ -54,6 +57,18 @@ public: //Methods
 	//Raw collision with primitive
 	virtual bool GetCollision(CollisionPrimitive& InCollisionPrimitive, CollisionInfo& OutHitInfo);
 
+	inline void AddIgnoredEntity(Entity* Other) { IgnoredEntities.push_back(Other); }
+
+	//Debouncing for overlaps
+	void RegisterOverlappingBody(CRigidBody* InBody);
+	void RemoveOverlappingBody(CRigidBody* InBody);
+	bool IsOverlappingBody(CRigidBody* InBody);
+
+public: // Methods
+
+	//Offset
+	inline void SetOffset(Vector2 InOffset) { Offset = InOffset; }
+	inline Vector2 GetOffset() { return Offset; }
 	//Static check for checking two collisions TODO
 	
 	//Mass
@@ -76,10 +91,6 @@ public: //Methods
 	//Physics Damping
 	virtual void Damping(float DeltaTime);
 
-	//Debouncing for overlaps
-	void RegisterOverlappingBody(CRigidBody* InBody);
-	void RemoveOverlappingBody(CRigidBody* InBody);
-	bool IsOverlappingBody(CRigidBody* InBody);
 
 protected: // Methods
 
@@ -88,6 +99,8 @@ protected: // Methods
 
 
 protected: // Members
+	//Offset
+	Vector2 Offset = Vector2(0.f);
 
 	//Velocity
 	Vector2 Velocity = Vector2(0.f);
@@ -98,6 +111,7 @@ protected: // Members
 	//Gravity
 	float GravityScale = 1.f;
 	float Mass = 1.f;
+	float ObjectDensity = 1.f;
 	//Buoyancy
 	float WaterLevel = 224.f;
 	float BuoyancyCircleRadius = 12;
@@ -105,6 +119,7 @@ protected: // Members
 	//Collision
 	std::unique_ptr<CollisionPrimitive> CollisionShape = nullptr;
 	std::vector<CRigidBody*> OverlappingBodies;
+	std::vector<Entity*> IgnoredEntities;
 	
 	
 

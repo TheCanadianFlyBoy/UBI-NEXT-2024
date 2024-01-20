@@ -3,10 +3,13 @@
 
 #include "../Engine.h"
 #include "../Component/AllComponents.h"
+//#include "../../Game/Component/GameComponents.h"
 #include "../UI/UICanvas.h"
 #include "../UI/UIWidget.h"
 
+#include "../Object/ParticleSprite.h"
 #include "../../Game/Object/Projectile.h" //TODO move to engine
+
 
 //Delete all the objects
 ObjectManager::~ObjectManager()
@@ -18,9 +21,47 @@ ObjectManager::~ObjectManager()
 	}
 }
 
+/// <summary>
+/// Setup all entities, components, and widgets
+/// </summary>
+void ObjectManager::OnBegin()
+{
+	Entity::OnBegin();
+
+	//Clear all the entity vectors
+	for (auto& VectorPair : Entities)
+	{
+		for (auto& ThisEntity : VectorPair.second)
+		{
+			ThisEntity->OnBegin();
+		}
+	}
+	//Clear components
+	for (auto& ComponentVector : Components)
+	{
+		for (auto& ThisComponent : ComponentVector.second)
+		{
+			ThisComponent->OnBegin();
+		}
+	}
+	//Clear UI
+	for (auto& Canvas : Canvases)
+	{
+		Canvas->OnBegin();
+	}
+
+}
+
 //UPDATe
 void ObjectManager::Update(float DeltaTime)
 {
+	//Update controllers
+	for (auto& Controller : Components["CControllerBase"])
+	{
+		if (Controller->Active)
+			Controller->Update(DeltaTime);
+	}
+
 	//Update Health
 	for (auto& Health : Components["CHealth"])
 	{
@@ -44,6 +85,14 @@ void ObjectManager::Update(float DeltaTime)
 		}
 	}
 
+	//Update sprites
+	for (auto& Sprite : Components["CSprite"])
+	{
+		if (Sprite->Active) Sprite->Update(DeltaTime);
+	}
+
+
+	//Handle projectiles
 	for (auto& ThisProjectile : Entities["Projectile"])
 	{
 
@@ -78,6 +127,12 @@ void ObjectManager::LateUpdate(float DeltaTime)
 	{
 		RigidBody->LateUpdate(DeltaTime);
 	}
+	//Handle updating particles
+	for (auto& Particle : Entities["ParticleSprite"])
+	{
+		Particle->LateUpdate(DeltaTime);
+	}
+
 }
 
 //DRAW
@@ -113,7 +168,7 @@ void ObjectManager::Render(CCamera* InCamera)
 //Call shutdown on all relevant entities/components
 void ObjectManager::Shutdown()
 {
-	//Clear all the vector
+	//Clear all the entity vectors
 	for (auto& VectorPair : Entities)
 	{
 		for (auto& ThisEntity : VectorPair.second)
@@ -121,6 +176,20 @@ void ObjectManager::Shutdown()
 			ThisEntity->Shutdown();
 		}
 	}
+	//Clear components
+	for (auto& ComponentVector : Components)
+	{
+		for (auto& ThisComponent : ComponentVector.second)
+		{
+			ThisComponent->Shutdown();
+		}
+	}
+	//Clear UI
+	for (auto& Canvas : Canvases)
+	{
+		Canvas->Shutdown();
+	}
+
 }
 
 //Removes component from the list if it matches

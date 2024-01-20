@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Engine.h"
 #include "Managers/SpriteManager.h"
+#include "Utility/EngineProfiler.h"
 
 /// <summary>
 /// Instantiates all the managers for the engine
@@ -56,6 +57,11 @@ void EngineCore::Render()
 	{
 		CurrentWorld->Render();
 	}
+
+	if (ENGINE_DEBUG_MODE)
+	{
+		EngineProfiler::GetInstance()->Render();
+	}
 }
 
 /// <summary>
@@ -103,11 +109,28 @@ void EngineCore::DeleteWorld(World* InWorld)
 	}
 }
 
-Vector2 EngineCore::GetMousePosition()
+/// <summary>
+/// Helper function to get the mouse position in vector format
+/// </summary>
+/// <returns></returns>
+Vector2 EngineCore::GetMouseScreenPosition()
 {
 	float x; float y;
 	
 	App::GetMousePos(x, y);
 
 	return Vector2(x, y);
+}
+
+/// <summary>
+/// Helper function that gets the mouse in vector format, in world context
+/// </summary>
+/// <returns></returns>
+Vector2 EngineCore::GetMouseWorldPosition()
+{
+	//If camera, do origin shift
+	if (GetActiveWorldCamera()) 
+		return GetMouseScreenPosition() + GetActiveWorldCamera()->GetCameraOrigin();
+	//Else
+	return GetMouseScreenPosition();
 }

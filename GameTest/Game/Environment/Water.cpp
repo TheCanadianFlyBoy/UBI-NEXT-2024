@@ -5,10 +5,20 @@
 
 WaterRenderer::WaterRenderer(World* InWorld) : Actor(InWorld)
 {
-	//Generate points
-	for (int i = 0; i < PointNumber; i++)
+	
+}
+
+void WaterRenderer::OnBegin()
+{
+	Actor::OnBegin();
+
+	if (WaterPoints.empty())
 	{
-		WaterPoints.push_back(GetActorLocation() + Vector2(PointDistance * i, WaterLevel));
+		//Generate points
+		for (int i = 0; i < PointNumber; i++)
+		{
+			WaterPoints.push_back(GetActorLocation() + Vector2(PointDistance * i, WaterLevel));
+		}
 	}
 }
 
@@ -19,8 +29,8 @@ void WaterRenderer::Update(float DeltaTime)
 
 	for (int i = 0; i < WaterPoints.size() - 1; i++)
 	{
-		WaterPoints[i].y += sinf(CurrentWaterValue + WaterPoints[i].x + i/2.f) * 0.2;
-		WaterPoints[i].y += cosf(CurrentWaterValue + WaterPoints[i].x) * 0.2;
+		WaterPoints[i].y += sinf(CurrentWaterValue + WaterPoints[i].x + i/2.f) * 0.2f;
+		WaterPoints[i].y += cosf(CurrentWaterValue + WaterPoints[i].x) * 0.2f;
 
 	}
 

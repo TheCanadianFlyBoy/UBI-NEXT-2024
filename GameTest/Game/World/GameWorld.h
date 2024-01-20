@@ -8,6 +8,8 @@
 #include "../../Engine/Engine.h"
 #include "../../Engine/Common.h"
 
+class Ship;
+
 
 class GameWorld : public World
 {
@@ -17,8 +19,8 @@ public:
 
 	void FireCannon();
 
-	Vector2 PlayerShipLocation = Vector2(700.f, 200.f);
-	Actor* PlayerShip;
+	Vector2 PlayerShipLocation = Vector2(700.f, 220.f);
+	Ship* PlayerShip;
 
 
 	virtual void Update(float DeltaTime) override;

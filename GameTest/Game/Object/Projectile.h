@@ -23,6 +23,8 @@ public:
 
 	virtual void OnActorCollision(CollisionInfo Info) override;
 
+	virtual void Shutdown() override;
+
 	Entity* Owner = nullptr;
 
 	float Damage = 50.f;

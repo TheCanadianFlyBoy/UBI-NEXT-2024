@@ -21,6 +21,16 @@ World::~World()
 }
 
 /// <summary>
+/// Call initial begin on everything
+/// </summary>
+void World::OnBegin()
+{
+	WorldObjectManager->OnBegin();
+	WorldEventManager->OnBegin();
+	WorldGameState->OnBegin();
+}
+
+/// <summary>
 /// Passes update calls to appropriate managers
 /// </summary>
 /// <param name="DeltaTime">Time since last frame</param>

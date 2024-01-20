@@ -102,6 +102,27 @@
     <ClCompile Include="Engine\Object\Actor.cpp">
       <Filter>Engine\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameUI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Ship.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Component\FireControlComponent.cpp">
+      <Filter>Game\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Object\ParticleSprite.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Component\WeaponComponent.cpp">
+      <Filter>Game\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utility\EngineProfiler.cpp">
+      <Filter>Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utility\Debug.cpp">
+      <Filter>Engine\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -234,6 +255,33 @@
     <ClInclude Include="Engine\Component\HealthComponent.h">
       <Filter>Engine\Component\Common</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameUI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Ship.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Component\FireControlComponent.h">
+      <Filter>Game\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\ControllerComponent.h">
+      <Filter>Engine\Component\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\World\GameObjectManager.h">
+      <Filter>Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Component\GameComponents.h">
+      <Filter>Game\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Object\ParticleSprite.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Component\WeaponComponent.h">
+      <Filter>Game\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\EngineProfiler.h">
+      <Filter>Engine\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -295,6 +343,12 @@
     </Filter>
     <Filter Include="Game\Object">
       <UniqueIdentifier>{3535e2e9-c7f1-4c21-9ea4-444cfe7073f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{53a097fa-dc45-4939-97e6-7a3a9717af4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Component">
+      <UniqueIdentifier>{31256081-1253-42d2-968b-24d67a95f8ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

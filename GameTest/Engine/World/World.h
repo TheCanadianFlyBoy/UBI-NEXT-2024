@@ -30,6 +30,7 @@ public:
 	virtual ~World();
 
 	//Update
+	virtual void OnBegin() override;
 	virtual void Update(float DeltaTime);
 	virtual void LateUpdate(float DeltaTime);
 	virtual void Render();

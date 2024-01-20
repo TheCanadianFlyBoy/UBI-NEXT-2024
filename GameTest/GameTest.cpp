@@ -37,9 +37,14 @@ void Init()
 	SpriteManager::GetInstance()->RegisterNewSprite("Destroyer", ".\\Game\\Resources\\Sprites\\CFB_SPR_Destroyer.png");
 	SpriteManager::GetInstance()->RegisterNewSprite("DestroyerHull", ".\\Game\\Resources\\Sprites\\CFB_SPR_Destroyer_CollisionArea.png");
 
+	//Register particles
+	SpriteManager::GetInstance()->RegisterNewSprite("Explosion1", ".\\Game\\Resources\\Sprites\\CFB_FX_Explosion_1.png", 6, 1);
+	SpriteManager::GetInstance()->RegisterAnimation("Explosion1", 0, 0.2f, {0, 1, 2, 3, 4, 5});
+
 	ENGINE->LoadWorld(ENGINE->CreateWorld<GameWorld>());
 
-
+	//Now we can begin
+	ENGINE->GetCurrentWorld()->OnBegin();
 
 
 }

@@ -27,5 +27,6 @@
 //Actor
 #include "Object/Actor.h"
 #include "Object/Controller.h"
+#include "Object/ParticleSprite.h"
 //Debugging
 #include "Utility/Debug.h"

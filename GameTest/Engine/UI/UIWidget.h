@@ -24,7 +24,7 @@ public:
 	UIWidget(UICanvas* InCanvas = nullptr) : Canvas(InCanvas)  {} ;
 	
 	//Draw Call
-	virtual void Draw() = 0;
+	virtual void Render() = 0;
 
 	inline void SetPosition(Vector2& InVector) { Position = InVector; }
 	inline Vector2 GetPosition()			   { return Position; }
@@ -56,7 +56,7 @@ public: // Methods
 	inline Color3 GetColor() { return TextColor; };
 	inline std::string GetText() { return Text; };
 	//Draw Override
-	virtual void Draw() override {
+	virtual void Render() override {
 
 		App::Print(Position.x, Position.y, Text.c_str(), TextColor.r, TextColor.g, TextColor.b);
 
@@ -85,7 +85,7 @@ public:
 	inline void SetBoxColor(Color3 InColor) { BoxColor = InColor; }
 	inline Color3 GetBoxColor() { return BoxColor; }
 
-	virtual void Draw() override
+	virtual void Render() override
 	{
 		Vector2 TopLeft			= Vector2(Position.x - (Dimensions.x / 2), Position.y - (Dimensions.y / 2));
 		Vector2 TopRight		= Vector2(Position.x + (Dimensions.x / 2), Position.y - (Dimensions.y / 2));
@@ -99,7 +99,7 @@ public:
 		App::DrawLine(BottomLeft.x, BottomRight.y, TopLeft.x, TopLeft.y, BoxColor.r, BoxColor.g, BoxColor.b); //LEFT
 
 		//Super
-		UIText::Draw();
+		UIText::Render();
 
 	}
 protected:
@@ -138,7 +138,7 @@ public:
 
 		}
 
-		UITextBox::Draw();
+		UITextBox::Render();
 
 	}
 

@@ -10,10 +10,9 @@
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
 
-
-
 #include "../Component/CameraComponent.h"
 
+class EngineProfiler;
 
 namespace Debug
 {
@@ -52,10 +51,30 @@ namespace Debug
 
 
 	}
+
+	/// <summary>
+	/// Draws a rectangle in world space based on inputs
+	/// </summary>
+	/// <param name="Position"></param>
+	/// <param name="Bounds"></param>
+	/// <param name="InCamera"></param>
+	/// <param name="Color"></param>
+	/// <param name="Centred"></param>
 	inline void DrawRectangleInWorld(Vector2 Position, Vector2 Bounds, ::CCamera* InCamera, Color3 Color = Color3(1.f), bool Centred = true)
 	{
 		DrawRectangle(Position - InCamera->GetCameraOrigin(), Bounds, Color, Centred);
 	}
 
+	//MACRO redef, low pri change for best practices TODO
+	inline void DrawText(Vector2 InPosition, std::string Text, Color3 Color = Color3(1.f), void* Font = (void*)8U)
+	{
+		App::Print(InPosition.x, InPosition.y, Text.c_str(), Color.r, Color.g, Color.b, Font);
+	}
+
+	void PrintLine(std::string InText);
+
+
+
 
 } //namespace Debug
+

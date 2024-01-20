@@ -26,7 +26,7 @@ public: //Setup/Common
 	inline static const char* GetStaticClassName() { return "Entity"; }
 
 	//Constructor with optional params
-	Entity(World* InWorld = nullptr) : Object(), ThisWorld(InWorld) { OnBegin(); };
+	Entity(World* InWorld = nullptr) : Object(), ThisWorld(InWorld) { };
 	
 	virtual void OnBegin() override;
 	//Shutdown
@@ -37,7 +37,11 @@ public: //Setup/Common
 	virtual ~Entity();
 
 public: //Common Gameplay Methods
-	
+
+	//Auto checks for transform and gets it
+	Vector2 GetEntityLocation();
+
+
 public: //Getters
 
 	//World
@@ -47,6 +51,8 @@ public: //Getters
 	template <class Type>
 	Type* GetComponentOfClass();
 
+	template <class Type>
+	std::vector<Type*> GetComponentsOfClass();
 
 public: //Adders
 
@@ -122,6 +128,34 @@ Type* Entity::GetComponentOfClass()
 
 	//Nothing found, return null
 	return nullptr;
+}
+
+/// <summary>
+/// Gets all instances of a given class type
+/// </summary>
+/// <typeparam name="Type">Component Class</typeparam>
+/// <returns>Vector of component pointers</returns>
+template<class Type>
+std::vector<Type*> Entity::GetComponentsOfClass()
+{
+	//Ensure that we have a component class passed in
+	assert((std::is_base_of < Component, Type>()));
+
+	//Create return vector
+	std::vector<Type*> ReturnVector;
+
+	//Iterate
+	for (auto& ThisComponent : Components)
+	{
+
+		if (std::is_class<Type>(ThisComponent))
+		{
+			ReturnVector->push_back(ThisComponent);
+		}
+	}
+
+	return ReturnVector;
+
 }
 
 /// <summary>

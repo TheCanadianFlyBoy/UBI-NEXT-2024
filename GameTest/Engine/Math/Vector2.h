@@ -31,8 +31,8 @@ public: // ** Methods ** //
 		float out_y = y != 0.f ? y / fabsf(Length()) : 0.f;
 		return Vector2(out_x, out_y); }
 	inline void Normalize()				     {  
-		x = x != 0.f ? x / fabsf(Length()) : 0.f; 
-		y = y != 0.f ? y / fabsf(Length()) : 0.f;		  }
+				  x = x != 0.f ? x / fabsf(Length()) : 0.f; 
+				  y = y != 0.f ? y / fabsf(Length()) : 0.f;		  }
 		// ~ Cross/Dot calculations ~ //
 	inline float Cross(const Vector2& other) { return x * other.y - y * other.x; }
 	inline float Dot(const Vector2& other)   { return x * other.x + y * other.y; }

@@ -14,6 +14,7 @@
 
 class UICanvas : public Object
 {
+    friend class ObjectManager;
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
@@ -24,7 +25,9 @@ public:
 
     //Draw Call
     virtual void Render();
+    virtual void OnBegin() override;
     virtual void Update(float DeltaTime);
+    virtual void Shutdown() override;
 
 public: // Methods
     //Widget Factory

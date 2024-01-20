@@ -20,7 +20,7 @@ CRigidBody::~CRigidBody()
 
 void CRigidBody::Update(float DeltaTime)
 {
-	DeltaTime *= 0.02f;
+	DeltaTime *= 0.02f; //IMPERATIVE TODO IMPORTANT - Remove this and refactor
 
 	//Check if we have a transform to snag
 	if (Actor* ActorOwner = dynamic_cast<Actor*>(Owner))
@@ -28,7 +28,7 @@ void CRigidBody::Update(float DeltaTime)
 		//Ensure we have made a shape
 		if (CollisionShape)
 		{
-			CollisionShape->Position = ActorOwner->GetActorLocation();
+			CollisionShape->Position = ActorOwner->GetActorLocation() + Offset;
 		}
 
 
@@ -36,10 +36,10 @@ void CRigidBody::Update(float DeltaTime)
 		AngularVelocity = MathOps::FLerp(AngularVelocity, 0.f, DeltaTime * AngularDamping);
 
 		//Do gravity
-		Velocity += Vector2(0.f, GravityScale * DeltaTime * 0.01f * Mass);
+		Velocity += Vector2(0.f, -GravityScale * DeltaTime * 0.01f * Mass);
 
 		//Do physics 'sim'
-		ActorOwner->AddActorLocation(-Velocity);
+		ActorOwner->AddActorLocation(Velocity);
 
 		ApplyBuoyancy(DeltaTime);
 
@@ -51,8 +51,13 @@ void CRigidBody::Update(float DeltaTime)
 
 void CRigidBody::LateUpdate(float DeltaTime)
 {
+	//Move in tree
 	ENGINE->GetCurrentWorld()->UnRegisterCollisionEntity(this);
 	ENGINE->GetCurrentWorld()->RegisterCollisionEntity(this);
+
+	//Clean overlaps
+	OverlappingBodies.erase(std::remove_if(OverlappingBodies.begin(), OverlappingBodies.end(), [](CRigidBody* val) { return !val->Active; }), OverlappingBodies.end());
+
 }
 
 void CRigidBody::Render(CCamera* InCamera)
@@ -97,6 +102,10 @@ void CRigidBody::Shutdown()
 void CRigidBody::OnBegin()
 {
 	CTransform::OnBegin();
+
+	//Add self to ignore
+	AddIgnoredEntity(Owner);
+
 }
 
 void CRigidBody::MakeCollisionCircle(Vector2 InOffset, float InRadius)
@@ -121,6 +130,20 @@ void CRigidBody::MakeCollisionBox(Vector2 InOffset, Vector2 InBounds)
 
 bool CRigidBody::GetCollision(CRigidBody* Other, CollisionInfo& Info)
 {
+	//Inactive check
+	if (!Other->Active || !Active) return false;
+
+	//Ignore check
+	for (auto& ThisEntity : IgnoredEntities)
+	{
+		//Found an ignoreable
+		if (ThisEntity == Other->Owner)
+		{
+			//Do not need to do anything
+			return false;
+		}
+	}
+
 	//Fill out partial hit info
 	Info.ThisActor = dynamic_cast<Actor*>(Owner);
 	Info.ThisBody = this;
@@ -212,6 +235,7 @@ bool CRigidBody::GetCollision(CollisionPrimitive& InCollisionPrimitive, Collisio
 	return false;
 }
 
+
 /// <summary>
 /// Handles buoyancy by using a global hard deck for water surface
 /// </summary>
@@ -262,7 +286,7 @@ void CRigidBody::ApplyBuoyancy(float DeltaTime)
 			if (Velocity.y > 0.f)
 				Force -= Velocity.y * Velocity.y; //todo damping
 
-			Velocity += Vector2(0.f, Force * DeltaTime * 0.001f);
+			Velocity -= Vector2(0.f, Force * DeltaTime * 0.001f);
 
 
 

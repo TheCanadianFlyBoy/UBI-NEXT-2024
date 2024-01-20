@@ -11,9 +11,20 @@ void UICanvas::Render()
     for (auto &Widget : Widgets)
     {
         //Pass draw call
-        Widget->Draw();
+        Widget->Render();
     }
 
+}
+
+/// <summary>
+/// Wake all widgets
+/// </summary>
+void UICanvas::OnBegin()
+{
+    for (auto& Widget : Widgets)
+    {
+        Widget->OnBegin();
+    }
 }
 
 void UICanvas::Update(float DeltaTime)
@@ -21,6 +32,19 @@ void UICanvas::Update(float DeltaTime)
     for (auto& Widget : Widgets)
     {
         Widget->Update(DeltaTime);
+    }
+}
+
+/// <summary>
+/// Clear all for shutdown
+/// </summary>
+void UICanvas::Shutdown()
+{
+    Object::Shutdown();
+
+    for (auto& Widget : Widgets)
+    {
+        Widget->Shutdown();
     }
 }
 

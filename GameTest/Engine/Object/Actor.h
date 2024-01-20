@@ -17,7 +17,7 @@ public:
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
 	inline static const char* GetStaticClassName() { return "Actor"; }
 
-	Actor(World* InWorld = nullptr) : Entity(InWorld) { Transform = CreateComponent<CTransform>(); OnBegin(); }
+	Actor(World* InWorld = nullptr) : Entity(InWorld) { Transform = CreateComponent<CTransform>(); }
 	//Actor(Vector2 Position, World* InWorld = nullptr) : Entity(InWorld) { Transform = CreateComponent<CTransform>(); Transform->SetPosition(Position); }
 
 	//virtual void OnBegin() override {  }

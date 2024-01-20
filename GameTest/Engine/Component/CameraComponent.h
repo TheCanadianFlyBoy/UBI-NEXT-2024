@@ -50,6 +50,8 @@ protected: // Members
 	float CameraMaxDistance = 300.f;
 	//Target for looking elsewhere
 	Actor* TargetActor = nullptr;
+	float TargetLingerTime = 4.f;
+	float TargetLingerCounter = 0.f;
 
 
 

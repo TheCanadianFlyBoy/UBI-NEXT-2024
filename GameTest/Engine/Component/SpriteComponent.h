@@ -50,9 +50,9 @@ public: //Methods
 
 	//Animation wrappers
 	inline void CreateAnimation(unsigned int AnimationID, float AnimationSpeed, const std::vector<int>& Frames) { Sprite->CreateAnimation(AnimationID, AnimationSpeed, Frames); };
-	inline void SetAnimation(int AnimationID) { Sprite->SetAnimation(AnimationID); }
+	inline void SetAnimation(int AnimationID, bool Restart = false) { Sprite->SetAnimation(AnimationID, Restart); }
 	inline unsigned int GetAnimationFrame() { return Sprite->GetFrame(); };
-
+	inline void SetFrame(unsigned int Frame) { Sprite->SetFrame(Frame); }
 	//Scaling Wrappers
 	inline float GetSpriteHeight() { return Sprite->GetHeight(); };
 	inline float GetSpriteWidth()  { return Sprite->GetWidth();  };

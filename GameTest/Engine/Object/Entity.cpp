@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "../Component/Component.h"
+#include "../Component/TransformComponent.h"
 #include "../World/World.h"
 
 /// <summary>
@@ -40,6 +41,13 @@ void Entity::Shutdown()
 Entity::~Entity()
 {
 	Components.clear();
+}
+Vector2 Entity::GetEntityLocation()
+{
+	if (CTransform* Transform = GetComponentOfClass<CTransform>())
+		return Transform->GetPosition();
+
+	return Vector2();
 }
 /// <summary>
 /// Takes a pointer to a component and attempts to find it's index in the component vector;
