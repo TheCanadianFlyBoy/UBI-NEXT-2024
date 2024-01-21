@@ -26,6 +26,7 @@ public: //Methods
     inline void AddEvent(std::shared_ptr<Event> InEvent) { EventQueue.push(InEvent); };
     void ProcessEvents(float DeltaTime);
 
+    void FlushEvents(float DeltaTime);
 
 protected: //Variables
     std::queue<std::shared_ptr<Event>> EventQueue; //TODO make shared

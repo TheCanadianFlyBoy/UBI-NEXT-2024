@@ -4,6 +4,7 @@
 #include "../Component/FireControlComponent.h"
 #include "../../Engine/Engine.h"
 #include "../World/TurnBasedState.h"
+#include "../World/GameWorld.h"
 
 void PlayerController::OnBegin()
 {
@@ -21,6 +22,8 @@ void PlayerController::Update(float DeltaTime)
 {
 	//Super
 	Controller::Update(DeltaTime);
+
+	if (App::IsKeyPressed(VK_LCONTROL)) EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>(ENGINE->CreateWorld<GameWorld>()));
 
 	//Case: not our turn
 	if (State->GetCurrentPlayerID() != PlayerID)

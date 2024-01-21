@@ -27,6 +27,9 @@ void WaterRenderer::Update(float DeltaTime)
 	//Update the wave value
 	CurrentWaterValue += DeltaTime * 0.01f;
 
+	//Null guard
+	if (WaterPoints.empty()) return;
+
 	for (int i = 0; i < WaterPoints.size() - 1; i++)
 	{
 		WaterPoints[i].y += sinf(CurrentWaterValue + WaterPoints[i].x + i/2.f) * 0.2f;
@@ -39,6 +42,8 @@ void WaterRenderer::Update(float DeltaTime)
 void WaterRenderer::Render(CCamera* InCamera)
 {
 	//Debug for now
+
+	if (WaterPoints.empty()) return;
 
 	for (int i = 0; i < WaterPoints.size() - 1; i++)
 	{

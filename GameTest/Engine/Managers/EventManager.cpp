@@ -16,10 +16,15 @@ void EventManager::ProcessEvents(float DeltaTime)
         // Remove it from the queue.
         std::shared_ptr<Event> CurrentEvent = EventQueue.front();
 
-        // Send it to the game.
-        ENGINE->GetCurrentWorld()->GetWorldGameState()->OnEvent(CurrentEvent, DeltaTime);
-
         // Delete the event.
         EventQueue.pop();
+
+        // Send it to the game.
+        ENGINE->GetCurrentWorld()->GetWorldGameState()->OnEvent(CurrentEvent, DeltaTime);
     }
+}
+
+void EventManager::FlushEvents(float DeltaTime)
+{
+    ProcessEvents(DeltaTime);
 }

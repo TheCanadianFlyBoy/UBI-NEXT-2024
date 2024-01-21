@@ -25,10 +25,6 @@ class GameState : public Entity
 
 public: //Common
 
-	//Class Name
-	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
-	inline static const char* GetStaticClassName() { return "GameState"; }
-
 	//Default constructor with optional world pointer //TODO MAKE NON OPTIONAL
 	GameState(World* InWorld = nullptr) : Entity(InWorld) {};
 

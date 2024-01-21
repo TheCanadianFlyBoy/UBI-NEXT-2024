@@ -67,6 +67,9 @@ void World::Render()
 
 void World::Shutdown()
 {
+	//Flush Events
+	EventManager::GetInstance()->FlushEvents(1.f);
+
 	//Game State
 	WorldGameState->Shutdown();
 
