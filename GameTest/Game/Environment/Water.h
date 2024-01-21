@@ -32,7 +32,7 @@ protected:
 
 	float CurrentWaterValue = 0.f;
 
-	float WaterLevel = 225.f;
+	float WaterLevel = 215.f;
 
 };
 
