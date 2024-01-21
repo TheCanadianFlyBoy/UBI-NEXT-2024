@@ -63,12 +63,10 @@ Destroyer::Destroyer(World* InWorld) : Ship(InWorld)
 	FireControlComponent->InsertWeaponSlot("Autocannon", WeaponSlot(2));
 
 	CWeapon* MainGun = CreateComponent<DeckGun>();
-	MainGun->SetOffset(Vector2(100.f, 20.f));
-	MainGun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
+
 
 	CWeapon* RearGun = CreateComponent<AutoCannon>();
-	RearGun->SetOffset(Vector2(-100.f, 20.f));
-	RearGun->MakeCollisionBox(Vector2(15.f));
+
 
 };
 
@@ -92,13 +90,13 @@ Gunboat::Gunboat(World* InWorld) : Ship(InWorld)
 	FireControlComponent->InsertWeaponSlot("Light .50", WeaponSlot(1));
 
 	CWeapon* Gun = CreateComponent<AutoCannon>();
-	Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
+	//Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
 	Gun = CreateComponent<LightFifty>();
-	Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
+	//Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
 	Gun = CreateComponent<LightFifty>();
-	Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
+	//Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
 	Gun = CreateComponent<LightFifty>();
-	Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
+	//Gun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
 };
 
 Corvette::Corvette(World* InWorld) : Ship(InWorld)
@@ -120,13 +118,18 @@ Corvette::Corvette(World* InWorld) : Ship(InWorld)
 	FireControlComponent->InsertWeaponSlot("Autocannon", WeaponSlot());
 
 	CWeapon* MainGun = CreateComponent<AutoCannon>();
-	MainGun->SetOffset(Vector2(100.f, 20.f));
-	MainGun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
+
 };
 
 
 Cruiser::Cruiser(World* InWorld) : Ship(InWorld)
 {
+	FireControlComponent->InsertWeaponSlot("Autocannon", WeaponSlot(2));
+	CreateComponent<AutoCannon>();
+	FireControlComponent->InsertWeaponSlot("Hydra Rockets", WeaponSlot(2));
+	CreateComponent<HydraRockets>();
+	FireControlComponent->InsertWeaponSlot("Light .50", WeaponSlot(2));
+	CreateComponent<LightFifty>();
 	SpriteComponent->SetSprite("Cruiser");
 	SpriteComponent->SetPosition(Vector2(5, 30.f));
 
@@ -139,11 +142,8 @@ Cruiser::Cruiser(World* InWorld) : Ship(InWorld)
 	RigidBodyComponent->SetupBuoyancyCircles();
 	RigidBodyComponent->SetDensity(20.f);
 
-	ActionsMax = 4;
+	ActionsMax = 3;
 
-	FireControlComponent->InsertWeaponSlot("Autocannon", WeaponSlot());
+	//
 
-	CWeapon* MainGun = CreateComponent<AutoCannon>();
-	MainGun->SetOffset(Vector2(100.f, 20.f));
-	MainGun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
 }

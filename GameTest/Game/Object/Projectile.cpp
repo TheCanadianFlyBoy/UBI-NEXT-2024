@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Projectile.h"
+#include "../Component/FireControlComponent.h"
 
 /// <summary>
 /// Creates the rigid body necessary for the projectile
@@ -27,6 +28,28 @@ void Projectile::OnBegin()
 	//Set class defaults
 	ProjectileBody->SetVelocity(Vector2(0.f));
 
+
+}
+
+/// <summary>
+/// Handle the additonal projectiles types
+/// </summary>
+/// <param name="DeltaTime"></param>
+void Projectile::Update(float DeltaTime)
+{
+	Actor::Update(DeltaTime);
+
+	switch (Type)
+	{
+	case EWeaponType::Rocket:
+	{
+		Vector2 Velocity = ProjectileBody->GetVelocity();
+		Velocity *= 1.07f;
+		Velocity += (ENGINE->RandRangeF(-0.2f, 0.2f));
+		ProjectileBody->SetVelocity(Velocity);
+		break;
+	}
+	}
 
 }
 

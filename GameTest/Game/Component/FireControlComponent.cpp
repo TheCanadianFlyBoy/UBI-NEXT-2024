@@ -36,7 +36,7 @@ bool CFireControl::InsertWeapon(CWeapon* Weapon)
 			{
 				//Insert
 				itr->second.Weapon = Weapon;
-				Weapon->Offset = itr->second.Offset;
+				Weapon->Position = itr->second.Offset;
 				return true;
 			}
 		}

@@ -12,7 +12,7 @@ class CWeapon;
 
 struct WeaponSlot
 {
-	WeaponSlot(int InSize = 1) { Size = InSize; }
+	WeaponSlot(int InSize = 1) { Size = InSize; Offset = Vector2(0.f), Weapon = nullptr; };
 
 	Vector2 Offset = Vector2(0.f);
 	int Size = 1;

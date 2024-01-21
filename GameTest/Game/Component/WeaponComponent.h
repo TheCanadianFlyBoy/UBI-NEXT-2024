@@ -9,16 +9,18 @@
 
 class Projectile;
 
-class CWeapon : public CRigidBody
+enum class EWeaponType {
+	Cannon,
+	Rocket,
+	RadarMissile,
+	GuidedMissile
+};
+
+class CWeapon : public CTransform
 {
 	friend class CFireControl;
 public:
-	enum class EWeaponType {
-		Cannon,
-		Rocket,
-		RadarMissile,
-		GuidedMissile
-	};
+	
 
 public:
 
@@ -74,7 +76,11 @@ class LightFifty : public CWeapon
 public:
 	LightFifty(Entity* InEntity) : CWeapon(InEntity)
 	{
-
+		WeaponSize = 1;
+		ProjectileDamage = 20.f;
+		ProjectileCount = 7;
+		ProjectileSpeed = 40.f;
+		ProjectileMass = 4.0f;
 	};
 };
 
@@ -83,7 +89,11 @@ class AutoCannon : public CWeapon
 public:
 	AutoCannon(Entity* InEntity) : CWeapon(InEntity)
 	{
-
+		WeaponSize = 2;
+		ProjectileDamage = 20.f;
+		ProjectileCount = 3;
+		ProjectileSpeed = 30.f;
+		ProjectileMass = 2.0f;
 	};
 };
 
@@ -97,4 +107,18 @@ public:
 		ProjectileSpeed = 20.f;
 		ProjectileMass = 4.0f;
 	};
+};
+
+class HydraRockets : public CWeapon
+{
+public:
+	HydraRockets(Entity* InEntity) : CWeapon(InEntity)
+	{
+		WeaponSize = 3;
+		ProjectileDamage = 50.f;
+		ProjectileCount = 6;
+		ProjectileSpeed = 40.f;
+		ProjectileMass = 1.0f;
+		AimWobble = 20.0f;
+	}
 };

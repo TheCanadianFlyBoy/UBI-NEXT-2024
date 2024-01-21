@@ -5,16 +5,15 @@
 #include "../../Engine/Engine.h"
 #include "../../Engine/Managers/TimerManager.h"
 
-CWeapon::CWeapon(Entity* InEntity) : CRigidBody(InEntity)
+CWeapon::CWeapon(Entity* InEntity) : CTransform(InEntity)
 {
-	SetGravityScale(0.f);
 }
 
 
 void CWeapon::OnBegin()
 {
 	//Super
-	CRigidBody::OnBegin();
+	CTransform::OnBegin();
 
 	if (CFireControl* FireControl = Owner->GetComponentOfClass<CFireControl>())
 	{
@@ -25,7 +24,7 @@ void CWeapon::OnBegin()
 
 void CWeapon::Update(float DeltaTime)
 {
-	CRigidBody::Update(DeltaTime);
+	CTransform::Update(DeltaTime);
 
 }
 
@@ -36,7 +35,7 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 	LastFiringSolution = FiringSolution;
 
 	//Calculate launch position
-	Vector2 LaunchPosition = Owner->GetEntityLocation() + Offset + FiringSolution * 40.f;
+	Vector2 LaunchPosition = Owner->GetEntityLocation() + Position + FiringSolution * 40.f;
 
 	Projectile* NewProjectile = nullptr;
 
@@ -82,7 +81,11 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 
 void CWeapon::Repeat()
 {
-	LastFiringSolution = (LastFiringSolution + Vector2(ENGINE->RandRangeF(-AimWobble, AimWobble))).GetNormalized();
+	Vector2 Wobble = Vector2(
+		ENGINE->RandRangeF(-AimWobble, AimWobble),
+		ENGINE->RandRangeF(-AimWobble, AimWobble));
+
+	LastFiringSolution = (LastFiringSolution + Wobble);
 
 	Fire(LastFiringSolution);
 }
