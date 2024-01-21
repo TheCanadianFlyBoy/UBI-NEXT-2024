@@ -43,8 +43,11 @@ void PlayerController::Update(float DeltaTime)
 
 	
 	//Snap back to fleet
-	if (ENGINE->CheckButton(XINPUT_GAMEPAD_Y))
+	if (ENGINE->CheckButton(XINPUT_GAMEPAD_Y)) 
+	{
 		SetActorLocation(PossessedShip->GetActorLocation());
+		GetWorld()->GetActiveCamera()->SetTarget(nullptr);
+	}
 
 		//Cast to state, static since we absolutely need the correct game state
 	TurnBasedGameState* State = static_cast<TurnBasedGameState*>(GetWorld()->GetWorldGameState());

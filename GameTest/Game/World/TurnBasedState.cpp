@@ -2,6 +2,14 @@
 #include "TurnBasedState.h"
 #include "../Object/Ship.h"
 #include "../../Engine/Object/Controller.h"
+#include "../GameUI.h"
+
+
+TurnBasedGameState::TurnBasedGameState(World* InWorld) : GameState(InWorld) 
+{
+	PauseMenu = GetWorld()->GetWorldObjectManager()->CreateCanvas<UIPauseCanvas>();
+	PauseMenu->Active = false;
+};
 
 /// <summary>
 /// Handles turn status and game logic
@@ -17,6 +25,15 @@ void TurnBasedGameState::Update(float DeltaTime)
 	{
 		EndTurn();
 	}
+
+}
+
+void TurnBasedGameState::OnBegin()
+{
+	//Super
+	GameState::OnBegin();
+
+	
 
 }
 
@@ -93,4 +110,27 @@ void TurnBasedGameState::PossessShip(Ship* InShip)
 
 void TurnBasedGameState::ClearPossession()
 {
+}
+
+/// <summary>
+/// A custom handler extending to include pause menu functionality
+/// </summary>
+/// <param name="InEvent"></param>
+/// <param name="DeltaTime"></param>
+void TurnBasedGameState::DefaultEventHandler(std::shared_ptr<Event> InEvent, float DeltaTime)
+{
+	//Super
+	GameState::DefaultEventHandler(InEvent, DeltaTime);
+
+	//Close pause
+	if (InEvent->GetEventType() == "ClosePauseCanvas")
+	{
+		if (PauseMenu) PauseMenu->Shutdown();
+	}
+
+	//Close pause
+	if (InEvent->GetEventType() == "OpenPauseCanvas")
+	{
+		if (PauseMenu) PauseMenu->OnBegin();
+	}
 }

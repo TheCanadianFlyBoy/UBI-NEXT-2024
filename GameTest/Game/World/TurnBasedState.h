@@ -8,7 +8,7 @@
 #include "../../Engine/State/GameState.h"
 #include "../Object/Ship.h"
 
-class Ship;
+class Ship; class UIPauseCanvas;
 
 struct Player {
 
@@ -38,18 +38,17 @@ enum class ETurnState : int
 
 class TurnBasedGameState : public GameState
 {
-public:
-	
 
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
 	inline static const char* GetStaticClassName() { return "Ship"; }
 
-	TurnBasedGameState(World* InWorld) : GameState(InWorld) {};
+	TurnBasedGameState(World* InWorld);
 
 
 	virtual void Update(float DeltaTime) override;
+	virtual void OnBegin() override;
 
 	//Custom Update
 	//virtual void TurnBasedUpdate(float DeltaTime);
@@ -94,9 +93,15 @@ protected: // Methods
 	void PossessShip(Ship* InShip);
 	void ClearPossession();
 
+	//Handle pause
+	virtual void DefaultEventHandler(std::shared_ptr<Event> InEvent, float DeltaTime) override;
+
 protected: // Members
 	std::vector<Player> Players;
 	unsigned int CurrentPlayerID = 0;
+
+	//Permanent pointer to pause menu
+	UIPauseCanvas* PauseMenu = nullptr;
 
 	float EndTurnTimer = 0.f;
 

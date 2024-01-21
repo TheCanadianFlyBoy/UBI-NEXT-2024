@@ -123,9 +123,6 @@
     <ClCompile Include="Engine\Managers\Quadtree.cpp">
       <Filter>Engine\Manager\Quadtree</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\State\GameState.cpp">
-      <Filter>Engine\World</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Managers\EventManager.cpp">
       <Filter>Engine\Event</Filter>
     </ClCompile>
@@ -134,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Managers\SpriteManager.cpp">
       <Filter>Engine\Manager\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\State\GameState.cpp">
+      <Filter>Engine\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -294,9 +294,6 @@
     <ClInclude Include="Engine\Managers\Quadtree.h">
       <Filter>Engine\Manager\Quadtree</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\State\GameState.h">
-      <Filter>Engine\World</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Managers\EventManager.h">
       <Filter>Engine\Event</Filter>
     </ClInclude>
@@ -308,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Managers\TimerManager.h">
       <Filter>Engine\Manager\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\State\GameState.h">
+      <Filter>Engine\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

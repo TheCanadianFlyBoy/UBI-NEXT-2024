@@ -69,6 +69,13 @@ protected: //Members
 
 };
 
+class Cruiser : public Ship
+{
+public:
+	Cruiser(World* InWorld);
+
+};
+
 //Default Destroyer
 class Destroyer : public Ship
 {

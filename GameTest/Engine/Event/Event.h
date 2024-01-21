@@ -55,3 +55,22 @@ public:
     std::string WorldToLoad;
 };
 
+class OpenPauseCanvas : public Event
+{
+public:
+    static const char* GetStaticEventType() { return "OpenPauseCanvas"; }
+    virtual const char* GetEventType() override { return GetStaticEventType(); }
+
+    OpenPauseCanvas() {};
+
+};
+
+class ClosePauseCanvas : public Event
+{
+public:
+    static const char* GetStaticEventType() { return "ClosePauseCanvas"; }
+    virtual const char* GetEventType() override { return GetStaticEventType(); }
+
+    ClosePauseCanvas() {};
+
+};

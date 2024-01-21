@@ -42,7 +42,7 @@ GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 	State->RegisterController(EnemyController, 1);
 
 	//Setup Player
-	PlayerShip = CreateEntity<Corvette>();
+	PlayerShip = CreateEntity<Cruiser>();
 	PlayerShip->SetActorLocation(PlayerShipLocation);
 	State->RegisterShip(PlayerShip, 0);
 	LocalController->Possess(PlayerShip);
@@ -54,7 +54,7 @@ GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 	
 
 	//Setup enemy
-	Enemy = CreateEntity<Corvette>();
+	Enemy = CreateEntity<Cruiser>();
 	Enemy->SetActorLocation(Vector2(2000.f, 220.f));
 	Enemy->FireControlComponent->FlipAxis();
 
@@ -62,14 +62,22 @@ GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 	Waves->SetActorLocation(Vector2(-5000.f, 0.f));
 
 
-	//UI SETUP
-	UIHUDCanvas* Canvas = WorldObjectManager->CreateCanvas<UIHUDCanvas>();
-	Canvas->AimPointWidget->SetPlayerController(LocalController);
+	
 
 	
 	State->RegisterShip(Enemy, 1);
 
 
+
+}
+
+void GameWorld::OnBegin()
+{
+	World::OnBegin();
+
+	//UI SETUP
+	UIHUDCanvas* Canvas = WorldObjectManager->CreateCanvas<UIHUDCanvas>();
+	Canvas->AimPointWidget->SetPlayerController(LocalController);
 
 }
 
