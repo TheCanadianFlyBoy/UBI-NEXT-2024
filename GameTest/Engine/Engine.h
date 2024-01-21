@@ -34,11 +34,10 @@ public: // Methods
 	void Shutdown();
 
 	//Returns current world
-	inline World* GetCurrentWorld() { return CurrentWorld; }
-	void LoadWorld(World* InWorld);
-	void LoadWorld(std::string Name);
+	inline std::shared_ptr<World> GetCurrentWorld() { return CurrentWorld; }
+	void LoadWorld(std::shared_ptr<World> World);
 	//Deletes a world
-	void DeleteWorld(World* InWorld);
+	void DeleteWorld(std::shared_ptr<World> World);
 
 	//Returns Sprite Manager
 	inline SpriteManager* GetSpriteManager() { return SpriteManager::GetInstance(); }
@@ -55,7 +54,7 @@ public: // Methods
 public: //Factory Constructors
 
 	template <class Type>
-	Type* CreateWorld(std::string Name);
+	std::shared_ptr<Type> CreateWorld();
 
 	template <class Type>
 	Type* CreateGlobalWidget(UICanvas* InCanvas = nullptr);
@@ -72,10 +71,10 @@ protected: // Members
 	float FixedUpdateTimer = 0.f;
 
 	//Active world
-	World* CurrentWorld = nullptr;
+	std::shared_ptr<World> CurrentWorld = nullptr;
 
 	//World Vector
-	std::map<std::string, std::unique_ptr<World>> Worlds; // TODO MAP for saving names
+	//std::map<std::string, std::shared_ptr<World>> Worlds; // TODO MAP for saving names
 	//Persistent Canvases
 	std::vector <std::unique_ptr<UICanvas>> GlobalCanvases;
 
@@ -122,16 +121,16 @@ public: //Helpers
 /// <typeparam name="Type"></typeparam>
 /// <returns></returns>
 template<class Type>
-inline Type* EngineCore::CreateWorld(std::string Name)
+inline std::shared_ptr<Type> EngineCore::CreateWorld()
 {
 	//Check we have actually passed in an entity, otherwise this code will be broken
 	assert((std::is_base_of < World, Type>()));
 
 	//Create a unique pointer for mem mgmt
-	Worlds[Name] = (std::make_unique<Type>(this));
+	//Worlds[Name] = (std::make_shared<Type>(this));
 
 	//Return ptr to new object
-	return static_cast<Type*>(Worlds[Name].get());
+	return std::make_shared<Type>();
 }
 
 /// <summary>

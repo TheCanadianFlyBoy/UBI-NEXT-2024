@@ -21,7 +21,7 @@ CRigidBody* Hull;
 
 
 
-GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
+GameWorld::GameWorld() : World()
 {
 	//Setup state
 	WorldGameState = std::make_unique<TurnBasedGameState>(this);

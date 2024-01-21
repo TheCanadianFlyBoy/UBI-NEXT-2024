@@ -18,7 +18,10 @@ void EngineCore::Initialize()
 void EngineCore::Update(float DeltaTime)
 {
 	FixedUpdateTimer += DeltaTime * 0.01f;
-	
+
+	//Do Event Processing
+	EventManager::GetInstance()->ProcessEvents(DeltaTime);
+
 	//Handle Timers
 	TimerManager::GetInstance()->Update(DeltaTime);
 
@@ -55,8 +58,6 @@ void EngineCore::LateUpdate(float DeltaTime)
 		CurrentWorld->LateUpdate(DeltaTime);
 	}
 
-	//Do Event Processing
-	EventManager::GetInstance()->ProcessEvents(DeltaTime);
 
 }
 
@@ -88,52 +89,27 @@ void EngineCore::Shutdown()
 	if (CurrentWorld) CurrentWorld->Shutdown();
 }
 
-void EngineCore::LoadWorld(World* InWorld)
-{
-	//TODO handle shutdown of world
-	if (CurrentWorld)
-		CurrentWorld->Shutdown();
 
-	//Load new world
-	CurrentWorld = InWorld;
-	CurrentWorld->OnBegin();
+void EngineCore::LoadWorld(std::shared_ptr<World> World)
+{
+	if (CurrentWorld) {
+		CurrentWorld->Shutdown();
+		EventManager::GetInstance()->AddEvent(std::make_shared<ScheduledLevelDeletion>(CurrentWorld));
+	}
+
+	CurrentWorld = World;
+	World->OnBegin();
 }
 
-void EngineCore::LoadWorld(std::string Name)
-{
-	//TODO handle shutdown of world
-	if (CurrentWorld)
-		CurrentWorld->Shutdown();
 
-	//Load new world
-	CurrentWorld = Worlds[Name].get();
-	CurrentWorld->OnBegin();
-}
 
 /// <summary>
 /// Deletes a given world
 /// </summary>
 /// <param name="InWorld">World to delete</param>
-void EngineCore::DeleteWorld(World* InWorld)
+void EngineCore::DeleteWorld(std::shared_ptr<World> World)
 {
-	//Size check
-	//if (Worlds.size() > 0)
-	//{
-	//	//Iterate
-	//	for (int i = 0; i < Worlds.size(); i ++)
-	//	{
-	//		//Get the current world
-	//		World* CurrentWorld = Worlds[i].get();
-	//
-	//		//Check if we have a match
-	//		if (CurrentWorld == InWorld)
-	//		{
-	//			//match, remove
-	//			Worlds.erase(Worlds.begin() + i); //TODO erase remove?
-	//		}
-	//
-	//	}
-	//}
+
 }
 
 /// <summary>

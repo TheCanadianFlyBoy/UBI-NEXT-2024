@@ -17,6 +17,7 @@ class UICanvas;
 
 class UIWidget : public Object
 {
+
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
@@ -30,6 +31,8 @@ public:
 
 	inline void SetPosition(Vector2& InVector) { Position = InVector; }
 	inline Vector2 GetPosition()			   { return Position; }
+
+	virtual void Callback() {};
 
 protected:
 
@@ -115,8 +118,6 @@ class UIButton : public UITextBox
 {
 public:
 
-	std::function<void()> CallbackFunction;
-
 	//Update override
 	virtual void Update(float DeltaTime) override {
 		//Setup the collision
@@ -138,7 +139,7 @@ public:
 			{
 				//Set color
 				BoxColor = ClickedColor;
-				CallbackFunction();
+				Callback();
 			}
 
 		}

@@ -26,7 +26,7 @@ public:
 	inline static const char* GetStaticClassName() { return "World"; }
 
 	//Constructor
-	World(EngineCore* InEngine);
+	World();
 	virtual ~World();
 
 	//Update

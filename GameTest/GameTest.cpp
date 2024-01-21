@@ -51,9 +51,7 @@ void Init()
 
 	//Create Main Menu Level
 
-	ENGINE->CreateWorld<MenuWorld>("Menu");
-	ENGINE->CreateWorld<GameWorld>("Game");
-	ENGINE->LoadWorld("Menu");
+	ENGINE->LoadWorld(ENGINE->CreateWorld<MenuWorld>());
 
 
 }

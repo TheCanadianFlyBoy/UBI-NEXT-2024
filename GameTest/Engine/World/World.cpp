@@ -4,11 +4,11 @@
 #include "../Managers/Quadtree.h"
 #include "../Engine.h"
 
-World::World(EngineCore* InEngine) : WorldEngine(InEngine)
+World::World() : WorldEngine(ENGINE)
 {
 	WorldObjectManager = std::make_unique<ObjectManager>(this);
 	WorldGameState = std::make_unique<GameState>(this);
-	EngineSpriteManager = InEngine->GetSpriteManager();
+	EngineSpriteManager = ENGINE->GetSpriteManager();
 
 	WorldQuadTree = std::make_unique<QuadTree>();
 

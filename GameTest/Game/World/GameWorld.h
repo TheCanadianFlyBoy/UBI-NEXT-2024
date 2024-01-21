@@ -14,7 +14,7 @@ class Ship;
 class GameWorld : public World
 {
 public:
-	GameWorld(EngineCore* Engine);
+	GameWorld();
 
 	Vector2 PlayerShipLocation = Vector2(700.f, 220.f);
 	Ship* PlayerShip;

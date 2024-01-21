@@ -63,7 +63,7 @@ void GameState::DefaultEventHandler(std::shared_ptr<Event> InEvent, float DeltaT
 
 	if (InEvent->GetEventType() == "LoadLevelEvent")
 	{
-		LoadLevelEvent* ThisEvent = static_cast<LoadLevelEvent*>(InEvent.get());
+		LoadLevelEvent* ThisEvent = static_cast<LoadLevelEvent*>(InEvent.get()); //TODO
 		ENGINE->LoadWorld(ThisEvent->WorldToLoad);
 	}
 }

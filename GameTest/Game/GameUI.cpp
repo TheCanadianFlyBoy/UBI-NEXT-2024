@@ -14,20 +14,21 @@ UIMainMenu::UIMainMenu() : UICanvas()
 {
 	Vector2 CentrePoint = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 2);
 
-	PlayButton = AddWidget<UIButton>();
+	PlayButton = AddWidget<UIPlayButton>();
 	PlayButton->SetPosition(CentrePoint);
 	PlayButton->SetDimensions(Vector2(200.f, 50.f));
 	PlayButton->SetText("Play");
 
-	ExitButton = AddWidget<UIButton>();
+	ExitButton = AddWidget<UIExitButton>();
 	ExitButton->SetPosition(CentrePoint - Vector2(0.f, 100.f));
 	ExitButton->SetDimensions(Vector2(200.f, 50.f));
 	ExitButton->SetText("Exit");
 
-	ExitButton->CallbackFunction = []() { exit(0); };
-	PlayButton->CallbackFunction = []() { EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>("Game")); };
+	
 
 };
+
+
 
 UIPauseCanvas::UIPauseCanvas() : UICanvas()
 {
@@ -43,8 +44,8 @@ UIPauseCanvas::UIPauseCanvas() : UICanvas()
 	MenuButton->SetDimensions(Vector2(200.f, 50.f));
 	MenuButton->SetText("Quit to Menu");
 
-	MenuButton->CallbackFunction = []()   { exit(0); };
-	ResumeButton->CallbackFunction = []() { EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>("Game")); };
+	//MenuButton->CallbackFunction = []()   { exit(0); };
+	//ResumeButton->CallbackFunction = []() { EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>("Game")); };
 }
 
 
@@ -198,4 +199,10 @@ UIHUDCanvas::UIHUDCanvas() : UICanvas()
 {
 	AimPointWidget = AddWidget<UIAimPoint>();
 	PlayerDisplayWidget = AddWidget<UIPlayerDisplay>();
+}
+
+
+void UIPlayButton::Callback()
+{
+	EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>(std::make_shared<GameWorld>())); 
 }

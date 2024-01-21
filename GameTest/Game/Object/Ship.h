@@ -27,6 +27,8 @@ public:
 
 	Ship(World* InWorld);
 
+	virtual void Shutdown() override;
+
 	//Accessible components for easy usage
 	CSprite* SpriteComponent = nullptr;
 	CRigidBody* RigidBodyComponent = nullptr;

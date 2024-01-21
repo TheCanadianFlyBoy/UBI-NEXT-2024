@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "../../Engine/Common.h"
 #include "Ship.h"
+#include "../World/TurnBasedState.h"
 
 #include "../Component/FireControlComponent.h"
 
@@ -24,6 +25,18 @@ Ship::Ship(World* InWorld) : Actor(InWorld)
 	//Health component for combat
 	HealthComponent = CreateComponent<CHealth>();
 
+}
+
+
+/// <summary>
+/// Remove from registry if in a registry
+/// </summary>
+void Ship::Shutdown()
+{
+	if (PlayerReference)
+	{
+		PlayerReference->Fleet.erase(std::find(PlayerReference->Fleet.begin(), PlayerReference->Fleet.end(), this));
+	}
 }
 
 //Toggles the fire control system

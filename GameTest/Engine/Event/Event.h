@@ -44,15 +44,37 @@ public:
 
 };
 
+class NewLevelEvent : public Event
+{
+public:
+    static const char* GetStaticEventType() { return "NewLevelEvent"; }
+    virtual const char* GetEventType() override { return GetStaticEventType(); }
+    
+    NewLevelEvent() : Event() {};
+
+};
+
+class ScheduledLevelDeletion : public Event
+{
+public:
+    static const char* GetStaticEventType() { return "ScheduledLevelDeletion"; }
+    virtual const char* GetEventType() override { return GetStaticEventType(); }
+
+    ScheduledLevelDeletion(std::shared_ptr<World> InWorld) : Event()  {};
+
+    std::shared_ptr<World> WorldPointer;
+
+};
+
 class LoadLevelEvent : public Event
 {
 public:
     static const char* GetStaticEventType() { return "LoadLevelEvent"; }
     virtual const char* GetEventType() override { return GetStaticEventType(); }
 
-    LoadLevelEvent(std::string InWorld) : WorldToLoad(InWorld) {};
+    LoadLevelEvent(std::shared_ptr<World> InWorld) : WorldToLoad(InWorld) {};
 
-    std::string WorldToLoad;
+    std::shared_ptr<World> WorldToLoad;
 };
 
 class OpenPauseCanvas : public Event

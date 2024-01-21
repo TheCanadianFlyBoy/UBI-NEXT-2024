@@ -11,5 +11,5 @@
 class MenuWorld : public World
 {
 public:
-	MenuWorld(EngineCore* InEngine) : World(InEngine) { WorldObjectManager->CreateCanvas<UIMainMenu>(); };
+	MenuWorld() : World() { WorldObjectManager->CreateCanvas<UIMainMenu>(); };
 };

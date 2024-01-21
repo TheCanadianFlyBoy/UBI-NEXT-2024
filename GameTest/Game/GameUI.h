@@ -14,14 +14,34 @@ class Ship;
 
 class UIAimPoint; class UIPlayerDisplay;
 
+class UIPlayButton : public UIButton
+{
+public:
+	UIPlayButton() : UIButton() {};
+	virtual void Callback() override;
+
+};
+
+class UIExitButton : public UIButton
+{
+public:
+	UIExitButton() : UIButton() {};
+	virtual void Callback() override { exit(0); };
+
+};
+
 class UIMainMenu : public UICanvas
 {
 public:
 	UIMainMenu();
 
-	UIButton* PlayButton;
-	UIButton* ExitButton;
+	UIPlayButton* PlayButton;
+	UIExitButton* ExitButton;
+
 };
+
+
+
 
 class UIPauseCanvas : public UICanvas
 {

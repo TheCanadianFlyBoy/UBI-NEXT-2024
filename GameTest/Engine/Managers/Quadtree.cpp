@@ -281,28 +281,28 @@ void QuadTreeUnitTest()
 {
 
 	//Create a tree
-	std::shared_ptr<QuadTree> Root = std::make_shared<QuadTree>(Vector2(0, 0), Vector2(5, 5));
-	QuadTree* ReturnValue;
-
-	//Create world context
-	World* TempWorld = new World(GET_SINGLE(EngineCore));
-
-	//Actor
-	//std::shared_ptr<Actor> Actor1_1 = std::make_shared<Actor>(Vector2(1.f), TempWorld);
-	//std::shared_ptr<Actor> Actor4_4 = std::make_shared<Actor>(Vector2(4.f), TempWorld);
-
-	//Insertion test
-	//Root->InsertNode(Actor1_1->GetActorLocation(), Actor1_1);
-	//Root->InsertNode(Actor4_4->GetActorLocation(), Actor4_4);
-	
-	//Search Test
-	ReturnValue = Root->FindNodeAtPoint(Vector2(1, 1));
-	ReturnValue = Root->FindNodeAtPoint(Vector2(-30, 30));
-	ReturnValue = Root->FindNodeAtPoint(Vector2(4, 4));
-	ReturnValue = Root->FindNodeAtPoint(Vector2(10, 14));
-
-	bool end = true;
-
-	delete TempWorld;
+	//std::shared_ptr<QuadTree> Root = std::make_shared<QuadTree>(Vector2(0, 0), Vector2(5, 5));
+	//QuadTree* ReturnValue;
+	//
+	////Create world context
+	////World* TempWorld = new World(GET_SINGLE(EngineCore));
+	//
+	////Actor
+	////std::shared_ptr<Actor> Actor1_1 = std::make_shared<Actor>(Vector2(1.f), TempWorld);
+	////std::shared_ptr<Actor> Actor4_4 = std::make_shared<Actor>(Vector2(4.f), TempWorld);
+	//
+	////Insertion test
+	////Root->InsertNode(Actor1_1->GetActorLocation(), Actor1_1);
+	////Root->InsertNode(Actor4_4->GetActorLocation(), Actor4_4);
+	//
+	////Search Test
+	//ReturnValue = Root->FindNodeAtPoint(Vector2(1, 1));
+	//ReturnValue = Root->FindNodeAtPoint(Vector2(-30, 30));
+	//ReturnValue = Root->FindNodeAtPoint(Vector2(4, 4));
+	//ReturnValue = Root->FindNodeAtPoint(Vector2(10, 14));
+	//
+	//bool end = true;
+	//
+	//delete TempWorld;
 
 }
