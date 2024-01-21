@@ -10,6 +10,10 @@
 class Ship;
 
 struct Player {
+
+	Player(Controller* InController) { LinkedController = InController; };
+	Player(Ship* InShip) { Fleet.push_back(InShip); };
+
 	//Ships
 	std::vector<Ship*> Fleet;
 
@@ -19,6 +23,8 @@ struct Player {
 
 	//End turn flag
 	bool EndTurn = false;
+
+	Controller* LinkedController = nullptr;
 
 };
 
@@ -42,8 +48,10 @@ public:
 	TurnBasedGameState(World* InWorld) : GameState(InWorld) {};
 
 
+	virtual void Update(float DeltaTime) override;
+
 	//Custom Update
-	virtual void TurnBasedUpdate(float DeltaTime);
+	//virtual void TurnBasedUpdate(float DeltaTime);
 	//Fleet management
 	inline void RegisterShip(Ship* InShip, unsigned int PlayerID) { 
 		if (PlayerID < Players.size())
@@ -53,7 +61,7 @@ public:
 		else
 		{
 			//Create struct with ship in array
-			Players.push_back({ {InShip}, nullptr, 0, false });
+			Players.insert(Players.begin(), PlayerID, Player(InShip));
 		}
 	
 	}
@@ -71,6 +79,11 @@ public:
 	inline ETurnState GetTurnState() { return ETurnState(CurrentState); }
 	// Player Getter
 	inline Player& GetCurrentPlayer() { return Players[CurrentPlayerID]; }
+	inline unsigned int GetCurrentPlayerID() { return CurrentPlayerID; };
+
+	//Player Registry
+	void RegisterController(Controller* InController, int PlayerID);
+
 protected: // Methods
 	inline void GetNextPlayer() { CurrentPlayerID = CurrentPlayerID + 1 < Players.size() ? CurrentPlayerID + 1 : 0; }
 
@@ -80,4 +93,8 @@ protected: // Methods
 protected: // Members
 	std::vector<Player> Players;
 	unsigned int CurrentPlayerID = 0;
+
+	float EndTurnTimer = 0.f;
+
+
 };

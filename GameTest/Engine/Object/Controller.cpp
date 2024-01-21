@@ -11,6 +11,7 @@ void Controller::Possess(Actor* InActor)
 
 	//Save reference
 	PossessedActor = InActor;
+	PossessedActor->ThisController = this;
 
 	//Call on possessed
 	OnPossess(InActor);
@@ -25,5 +26,8 @@ void Controller::UnPossess()
 {
 	//Call OnUnPossess FIRST
 	OnUnPossess();
+
+	PossessedActor->ThisController = nullptr;
+	PossessedActor = nullptr;
 
 }

@@ -52,6 +52,8 @@ public: //Getters
 
 	inline int GetEntityInstanceCount(std::string ClassName) { return int(Entities[ClassName].size()); }
 
+	Actor* GetNearestActor(Vector2 InPosition, std::vector<Actor*> IgnoredActors);
+
 public: //Factory Constructors
 
 	template <class Type>

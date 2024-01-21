@@ -2,23 +2,8 @@
 #include "EventManager.h"
 #include "../World/World.h"
 #include "../State/GameState.h"
+#include "../Engine.h"
 
-/// <summary>
-/// Deconstructor with event queue deletion
-/// </summary>
-EventManager::~EventManager()
-{
-    while (!EventQueue.empty()) 
-    {
-        //Grab front
-        Event* CurrentEvent = EventQueue.front();
-        //Delete
-        delete CurrentEvent;
-        //Pop
-        EventQueue.pop();
-    }
-
-}
 
 void EventManager::ProcessEvents(float DeltaTime)
 {
@@ -29,13 +14,12 @@ void EventManager::ProcessEvents(float DeltaTime)
     while (EventQueue.empty() == false)
     {
         // Remove it from the queue.
-        Event* CurrentEvent = EventQueue.front();
-        EventQueue.pop();
+        std::shared_ptr<Event> CurrentEvent = EventQueue.front();
 
         // Send it to the game.
-        ThisWorld->GetWorldGameState()->OnEvent(CurrentEvent, DeltaTime);
+        ENGINE->GetCurrentWorld()->GetWorldGameState()->OnEvent(CurrentEvent, DeltaTime);
 
         // Delete the event.
-        delete CurrentEvent;
+        EventQueue.pop();
     }
 }

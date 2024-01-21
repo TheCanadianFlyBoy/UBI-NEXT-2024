@@ -246,3 +246,42 @@ void ObjectManager::DestroyComponent(Component* InComponent)
 		//Components[ObjectName].erase(std::remove(Components[ObjectName].begin(), Components[ObjectName].end(), { InComponent }), Components[ObjectName].end());
 	}
 }
+
+Actor* ObjectManager::GetNearestActor(Vector2 InPosition, std::vector<Actor*> IgnoredActors)
+{
+	Actor* ReturnActor = nullptr;
+	float DistanceSquared = -1.f;
+
+	//Iterate
+	for (auto& ThisActor : Entities["Actor"]) //TODO swap to ship only?
+	{
+		float ThisDistance = ThisActor->GetEntityLocation().DistanceFromSquared(InPosition);
+		//Initial check
+		if (ReturnActor == nullptr || DistanceSquared > ThisDistance)
+		{
+			//Check if excluded
+			bool Continue = false;
+			for (auto& IgnoredActor : IgnoredActors)
+			{
+				//Found an ignore
+				if (IgnoredActor == static_cast<Actor*>(ThisActor.get()))
+				{
+					bool Continue = true;
+					break;
+				}
+			}
+
+			//Skip
+			if (Continue) continue;
+
+			//Works
+			ReturnActor = static_cast<Actor*>(ThisActor.get());
+			DistanceSquared = ThisDistance;
+
+
+		}
+	}
+
+	return ReturnActor;
+
+}

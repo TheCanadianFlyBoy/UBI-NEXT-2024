@@ -51,16 +51,7 @@
     <ClCompile Include="Engine\Component\SpriteComponent.cpp">
       <Filter>Engine\Component\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Managers\EventManager.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Managers\ObjectManager.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Managers\Quadtree.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Managers\SpriteManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Math\Collision.cpp">
@@ -83,9 +74,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Object\Object.cpp">
       <Filter>Engine\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\State\GameState.cpp">
-      <Filter>Engine\State</Filter>
     </ClCompile>
     <ClCompile Include="Engine\UI\UICanvas.cpp">
       <Filter>Engine\UI</Filter>
@@ -131,6 +119,21 @@
     </ClCompile>
     <ClCompile Include="Game\Object\PlayerController.cpp">
       <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\Quadtree.cpp">
+      <Filter>Engine\Manager\Quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\State\GameState.cpp">
+      <Filter>Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\EventManager.cpp">
+      <Filter>Engine\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\TimerManager.cpp">
+      <Filter>Engine\Manager\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\SpriteManager.cpp">
+      <Filter>Engine\Manager\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,16 +204,7 @@
     <ClInclude Include="Engine\Event\Event.h">
       <Filter>Engine\Event</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Managers\EventManager.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Managers\ObjectManager.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Managers\Quadtree.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Managers\SpriteManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Math\Collision.h">
@@ -236,9 +230,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Object\Object.h">
       <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\State\GameState.h">
-      <Filter>Engine\State</Filter>
     </ClInclude>
     <ClInclude Include="Engine\UI\UICanvas.h">
       <Filter>Engine\UI</Filter>
@@ -299,6 +290,24 @@
     </ClInclude>
     <ClInclude Include="Game\Object\PlayerController.h">
       <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\Quadtree.h">
+      <Filter>Engine\Manager\Quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\State\GameState.h">
+      <Filter>Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\EventManager.h">
+      <Filter>Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\World\MenuWorld.h">
+      <Filter>Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\SpriteManager.h">
+      <Filter>Engine\Manager\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\TimerManager.h">
+      <Filter>Engine\Manager\Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +376,9 @@
     </Filter>
     <Filter Include="Game\Component">
       <UniqueIdentifier>{31256081-1253-42d2-968b-24d67a95f8ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\Global">
+      <UniqueIdentifier>{76f86b3e-97a8-4c4f-a577-a6f818fa8614}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

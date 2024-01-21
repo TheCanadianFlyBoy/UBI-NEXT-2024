@@ -38,16 +38,23 @@ public: // Methods
 	inline void SetInputLeft(Vector2& InVector) { InputLeft = InVector; };
 	inline void SetInputRight(Vector2& InVector) { InputRight = InVector; };
 	inline void SetControlRotation(float& InRotation) { ControlRotation = InRotation; };
+	inline void SetPlayerID(int ID) { PlayerID = ID; }
+	inline int  GetPlayerID() { return PlayerID; }
+	
 	//Getters
 	inline Vector2 GetInputLeft() { return InputLeft; };
 	inline Vector2 GetInputRight() { return InputRight; }
 	inline float GetControlRotation() { return ControlRotation; };
+
+
 
 protected: // Members
 	//Controller data
 	Vector2 InputLeft = Vector2(0.f);
 	Vector2 InputRight = Vector2(0.f);
 	float ControlRotation = 0.f;
+
+	int PlayerID = -1;
 
 	//Controlled Actor
 	Actor* PossessedActor = nullptr;

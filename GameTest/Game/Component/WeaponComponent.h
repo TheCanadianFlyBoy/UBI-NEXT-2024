@@ -7,6 +7,7 @@
 
 #include "../../Engine/Component/RigidBodyComponent.h"
 
+class Projectile;
 
 class CWeapon : public CRigidBody
 {
@@ -31,7 +32,8 @@ public:
 
 
 	//Creates projectile
-	void Fire(Vector2 FiringSolution);
+	Projectile* Fire(Vector2 FiringSolution);
+	void Repeat();
 
 
 	//Handle weapon updates
@@ -42,7 +44,12 @@ protected:
 	float CooldownTimer = 0.f;
 	float CooldownLength = 1.f;
 	
+	Vector2 LastFiringSolution = Vector2(0.f);
+
 	int WeaponSize = 1;
+	int ActionCost = 1;
+	int ProjectileCount = 3;
+
 	//Defaults to cannon
 	EWeaponType Type = EWeaponType::Cannon;
 

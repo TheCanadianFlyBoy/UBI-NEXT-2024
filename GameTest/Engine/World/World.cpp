@@ -7,7 +7,6 @@
 World::World(EngineCore* InEngine) : WorldEngine(InEngine)
 {
 	WorldObjectManager = std::make_unique<ObjectManager>(this);
-	WorldEventManager = std::make_unique<EventManager>(this);
 	WorldGameState = std::make_unique<GameState>(this);
 	EngineSpriteManager = InEngine->GetSpriteManager();
 
@@ -26,7 +25,6 @@ World::~World()
 void World::OnBegin()
 {
 	WorldObjectManager->OnBegin();
-	WorldEventManager->OnBegin();
 	WorldGameState->OnBegin();
 }
 
@@ -37,7 +35,6 @@ void World::OnBegin()
 void World::Update(float DeltaTime)
 {
 	WorldObjectManager->Update(DeltaTime);
-	WorldEventManager->ProcessEvents(DeltaTime);
 	WorldGameState->Update(DeltaTime);
 	WorldQuadTree->Query();
 }
@@ -70,17 +67,20 @@ void World::Render()
 
 void World::Shutdown()
 {
-	//Flush events
-	WorldEventManager->Shutdown();
-
 	//Game State
 	WorldGameState->Shutdown();
 
 	//Clear object manager
 	WorldObjectManager->Shutdown();
-	WorldObjectManager.reset();
 
 	//Quad Tree
 	WorldQuadTree->ClearTree();
+
+}
+
+
+Actor* World::GetNearestActor(Vector2 InPosition, std::vector<Actor*> IgnoredActors)
+{
+	return WorldObjectManager->GetNearestActor(InPosition, IgnoredActors);
 
 }

@@ -5,6 +5,14 @@
 #include "../../Engine/Engine.h"
 #include "../World/TurnBasedState.h"
 
+void PlayerController::OnBegin()
+{
+	Controller::OnBegin();
+	
+	//Save state pointer (static is fine since this should only happen once, and is crucial)
+	State = static_cast<TurnBasedGameState*>(ThisWorld->GetWorldGameState());
+}
+
 /// <summary>
 /// Handle parsing inputs
 /// </summary>
@@ -13,6 +21,16 @@ void PlayerController::Update(float DeltaTime)
 {
 	//Super
 	Controller::Update(DeltaTime);
+
+	//Case: not our turn
+	if (State->GetCurrentPlayerID() != PlayerID)
+	{
+		//Possessish
+		if (State->GetCurrentFleetShip()) SetActorLocation(State->GetCurrentFleetShip());
+		else SetActorLocation(State->GetCurrentPlayer().Fleet[0]);
+
+		return;
+	}
 
 	//Keep within map params
 	ClampLocation();
@@ -28,12 +46,13 @@ void PlayerController::Update(float DeltaTime)
 	if (ENGINE->CheckButton(XINPUT_GAMEPAD_Y))
 		SetActorLocation(PossessedShip->GetActorLocation());
 
+		//Cast to state, static since we absolutely need the correct game state
+	TurnBasedGameState* State = static_cast<TurnBasedGameState*>(GetWorld()->GetWorldGameState());
 
 	//If we can pass inputs...
 	if (GetWorld()->GetWorldGameState()->CanPassControllerInputs())
 	{
-		//Cast to state, static since we absolutely need the correct game state
-		TurnBasedGameState* State = static_cast<TurnBasedGameState*>(GetWorld()->GetWorldGameState());
+		
 	
 		switch (State->GetTurnState())
 		{
@@ -49,6 +68,13 @@ void PlayerController::Update(float DeltaTime)
 				break;
 			}
 		}
+	}
+
+	//End turn
+	if (ENGINE->CheckButton(XINPUT_GAMEPAD_BACK, true))
+	{
+		UnPossess();
+		State->SetTurnState(ETurnState::End);
 	}
 
 
@@ -89,6 +115,10 @@ void PlayerController::SelectUpdate(float DeltaTime)
 
 }
 
+/// <summary>
+/// Update during action phase
+/// </summary>
+/// <param name="DeltaTime"></param>
 void PlayerController::ActionUpdate(float DeltaTime)
 {
 	TurnBasedGameState* State = static_cast<TurnBasedGameState*>(GetWorld()->GetWorldGameState()); //TODO refactor
@@ -113,7 +143,7 @@ void PlayerController::ActionUpdate(float DeltaTime)
 	if (ENGINE->CheckButton(XINPUT_GAMEPAD_DPAD_DOWN, true))
 		FireControlComponent.GetPreviousWeapon();
 	//Handle firing
-	if (ENGINE->CheckButton(XINPUT_GAMEPAD_A, true) || ENGINE->CheckButton(APP_PAD_EMUL_BUTTON_ALT_A, true))
+	if (ENGINE->CheckButton(XINPUT_GAMEPAD_A, true))
 	{
 		//Attempt to fire
 		if (PossessedShip->UseAction())
@@ -124,7 +154,7 @@ void PlayerController::ActionUpdate(float DeltaTime)
 
 	//Handle Reselect ship
 	//Handle firing
-	if (ENGINE->CheckButton(XINPUT_GAMEPAD_B, true) || ENGINE->CheckButton(APP_PAD_EMUL_BUTTON_B, true))
+	if (ENGINE->CheckButton(XINPUT_GAMEPAD_B, true))
 	{
 		State->SetTurnState(ETurnState::Select);
 	}

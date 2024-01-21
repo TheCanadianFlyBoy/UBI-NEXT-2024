@@ -14,6 +14,15 @@ class Ship;
 
 class UIAimPoint; class UIPlayerDisplay;
 
+class UIMainMenu : public UICanvas
+{
+public:
+	UIMainMenu();
+
+	UIButton* PlayButton;
+	UIButton* ExitButton;
+};
+
 class UIHUDCanvas : public UICanvas
 {
 public:

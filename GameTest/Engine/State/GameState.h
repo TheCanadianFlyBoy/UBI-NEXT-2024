@@ -12,14 +12,16 @@
 class EventManager;
 class World;
 class ObjectManager;
+class Controller;
 //class UI
+
 
 class GameState : public Entity
 {
 	//Function pointers to allow for independent state handlers
 	typedef void (GameState::* StateRenderFunction) ();
 	typedef void (GameState::* StateUpdateFunction) (float DeltaTime);
-	typedef void (GameState::* StateEventsFunction) (Event* inEvent, float DeltaTime);
+	typedef void (GameState::* StateEventsFunction) (std::shared_ptr<Event> inEvent, float DeltaTime);
 
 public: //Common
 
@@ -34,13 +36,10 @@ public: //Methods
 
 	//Game Loop
 	virtual void Update(float DeltaTime);
-	virtual void OnEvent(Event* InEvent, float DeltaTime);
+	virtual void OnEvent(std::shared_ptr<Event> InEvent, float DeltaTime);
 	virtual void Render();
 
 	//Internal Reference Modification
-	//Event Manager
-	inline void SetEventManager(EventManager* InEventManager) { WorldEventManager = InEventManager; };
-	inline EventManager* GetEventManager()				      { return WorldEventManager; };
 
 	//Current World
 	inline void SetWorld(World* InWorld) { ThisWorld = InWorld; }
@@ -51,8 +50,11 @@ public: //Methods
 
 	inline int GetCurrentState() { return CurrentState; }
 
+	
+
+
 protected: // Members
-	EventManager* WorldEventManager = nullptr;
+	
 	//UI pointer TODO
 	//mathops pointer
 
@@ -73,8 +75,9 @@ protected: // Methods
 	//Default Handlers!
 	void virtual DefaultUpdateHandler(float DeltaTime)	{};
 	void virtual DefaultRenderHandler() {}; 
-	void virtual DefaultEventHandler(Event* InEvent, float DeltaTime); // Need to actually implement to allow easy usage of collision events
+	void virtual DefaultEventHandler(std::shared_ptr<Event> InEvent, float DeltaTime); // Need to actually implement to allow easy usage of collision events
 
-	void virtual TestEventHandler(Event* InEvent, float DeltaTime);
+	void virtual TestEventHandler(std::shared_ptr<Event> InEvent, float DeltaTime);
+
 
 };

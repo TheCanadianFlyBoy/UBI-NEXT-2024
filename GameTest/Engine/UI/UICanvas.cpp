@@ -31,7 +31,8 @@ void UICanvas::Update(float DeltaTime)
 {
     for (auto& Widget : Widgets)
     {
-        Widget->Update(DeltaTime);
+        if (Widget && Widget->Active)
+            Widget->Update(DeltaTime);
     }
 }
 

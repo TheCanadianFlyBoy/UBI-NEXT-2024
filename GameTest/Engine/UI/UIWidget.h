@@ -11,6 +11,8 @@
 #include "../Math/Vector3.h"
 #include "../Math/Collision.h"
 
+#include <functional>
+
 class UICanvas;
 
 class UIWidget : public Object
@@ -112,6 +114,9 @@ protected:
 class UIButton : public UITextBox
 {
 public:
+
+	std::function<void()> CallbackFunction;
+
 	//Update override
 	virtual void Update(float DeltaTime) override {
 		//Setup the collision
@@ -129,11 +134,11 @@ public:
 			//Set the color
 			BoxColor = MouseOverColor;
 			//If we click...
-			if (App::GetController().CheckButton(APP_PAD_EMUL_BUTTON_X))
+			if (App::GetController().CheckButton(XINPUT_GAMEPAD_A) || App::IsKeyPressed(VK_LBUTTON))
 			{
 				//Set color
 				BoxColor = ClickedColor;
-				//TODO dispatch click event
+				CallbackFunction();
 			}
 
 		}

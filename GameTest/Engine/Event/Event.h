@@ -8,6 +8,8 @@
 #include "../Object/Object.h"
 #include "../Math/Collision.h"
 
+#include <functional>
+
 class Event
 {
     friend class EventManager;
@@ -41,3 +43,15 @@ public:
     CollisionInfo OutHit;
 
 };
+
+class LoadLevelEvent : public Event
+{
+public:
+    static const char* GetStaticEventType() { return "LoadLevelEvent"; }
+    virtual const char* GetEventType() override { return GetStaticEventType(); }
+
+    LoadLevelEvent(std::string InWorld) : WorldToLoad(InWorld) {};
+
+    std::string WorldToLoad;
+};
+

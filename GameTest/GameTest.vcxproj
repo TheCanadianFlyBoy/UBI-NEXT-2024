@@ -200,6 +200,7 @@
     <ClInclude Include="Engine\Managers\ObjectManager.h" />
     <ClInclude Include="Engine\Managers\Quadtree.h" />
     <ClInclude Include="Engine\Managers\SpriteManager.h" />
+    <ClInclude Include="Engine\Managers\TimerManager.h" />
     <ClInclude Include="Engine\Math\Collision.h" />
     <ClInclude Include="Engine\Math\MathOps.h" />
     <ClInclude Include="Engine\Math\Vector2.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="Game\Object\Ship.h" />
     <ClInclude Include="Game\World\GameObjectManager.h" />
     <ClInclude Include="Game\World\GameWorld.h" />
+    <ClInclude Include="Game\World\MenuWorld.h" />
     <ClInclude Include="Game\World\TurnBasedState.h" />
     <ClInclude Include="stb_image\stb_image.h" />
     <ClInclude Include="stdafx.h" />
@@ -250,6 +252,7 @@
     <ClCompile Include="Engine\Managers\ObjectManager.cpp" />
     <ClCompile Include="Engine\Managers\Quadtree.cpp" />
     <ClCompile Include="Engine\Managers\SpriteManager.cpp" />
+    <ClCompile Include="Engine\Managers\TimerManager.cpp" />
     <ClCompile Include="Engine\Math\Collision.cpp" />
     <ClCompile Include="Engine\Math\MathOps.cpp" />
     <ClCompile Include="Engine\Math\Vector2.cpp" />

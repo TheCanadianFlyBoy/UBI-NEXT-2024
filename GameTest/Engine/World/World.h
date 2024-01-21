@@ -40,7 +40,7 @@ public:
 public: // Game State Methods
 	inline GameState* GetWorldGameState() { return WorldGameState.get(); };
 public: // Event Handler Methods
-	inline EventManager* GetWorldEventManager() { return WorldEventManager.get(); };
+	inline EventManager* GetWorldEventManager() { return EventManager::GetInstance(); };
 public: // Camera Methods
 	inline void SetActiveCamera(CCamera* InCamera) { ActiveCamera = InCamera; };
 	inline CCamera* GetActiveCamera() { return ActiveCamera; }
@@ -62,6 +62,9 @@ public: // Sprite Manager
 	inline void SetSpriteManager(SpriteManager* InSpriteManager) { EngineSpriteManager = InSpriteManager; }; //DEPRECATE
 	inline SpriteManager* GetEngineSpriteManager() { return EngineSpriteManager; };							//DEPRECATE
 
+public: //Helpers
+	Actor* GetNearestActor(Vector2 InPoint, std::vector<Actor*> IgnoredActors);
+
 protected: // Methods / Members
 	
 	//Engine References
@@ -72,8 +75,6 @@ protected: // Methods / Members
 
 	//Game State
 	std::unique_ptr<GameState> WorldGameState;
-	//Event Manager
-	std::unique_ptr<EventManager> WorldEventManager;
 	//Object Manager
 	std::unique_ptr<ObjectManager> WorldObjectManager;
 	//Quad Tree

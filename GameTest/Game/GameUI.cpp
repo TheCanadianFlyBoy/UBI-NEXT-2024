@@ -4,6 +4,31 @@
 #include "Object/Ship.h"
 #include "Component/FireControlComponent.h"
 #include "World/TurnBasedState.h"
+#include "World/GameWorld.h"
+
+
+/// <summary>
+/// Set up the default main menu canvas
+/// </summary>
+UIMainMenu::UIMainMenu() : UICanvas()
+{
+	Vector2 CentrePoint = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 2);
+
+	PlayButton = AddWidget<UIButton>();
+	PlayButton->SetPosition(CentrePoint);
+	PlayButton->SetDimensions(Vector2(200.f, 50.f));
+	PlayButton->SetText("Play");
+
+	ExitButton = AddWidget<UIButton>();
+	ExitButton->SetPosition(CentrePoint - Vector2(0.f, 100.f));
+	ExitButton->SetDimensions(Vector2(200.f, 50.f));
+	ExitButton->SetText("Exit");
+
+	ExitButton->CallbackFunction = []() { exit(0); };
+	PlayButton->CallbackFunction = []() { EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>("Game")); };
+
+};
+
 
 /// <summary>
 /// Renders aiming information
@@ -122,9 +147,9 @@ void UIPlayerDisplay::Render()
 		Vector2 CentrePoint = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 8);
 
 		//Render
-		Vector2 TextPosition = CentrePoint - Vector2(0.f, 200.f);
+		Vector2 TextPosition = Vector2(APP_VIRTUAL_WIDTH / 2 - 200.f, APP_VIRTUAL_HEIGHT -  20.f);
 
-		Debug::DrawText(TextPosition, "Current Player: ");
+		Debug::DrawText(TextPosition, "Current Player: " + std::to_string(State->GetCurrentPlayerID()));
 	}
 
 }

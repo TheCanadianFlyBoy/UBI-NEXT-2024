@@ -35,6 +35,7 @@ public:
 
 	//Aim setters
 	inline void AddAzimuth(float InAzimuth) { AzimuthRadians += InAzimuth * TraversalRate; }
+	inline void SetAzimuth(float inAzimuth) { AzimuthRadians = inAzimuth; }
 	inline void SetAimPoint(Vector2 InVector) { AimVector = acos((InVector - GetTurretPosition()).x); }
 	//Aim Getters
 	inline Vector2 GetAimVector() { return AimVector; }
@@ -43,7 +44,7 @@ public:
 
 public: // Weapon Management
 	//Fire!
-	inline void Fire() { if (GetCurrentWeapon()) GetCurrentWeapon()->Fire(GetAimVector()); }
+	inline Projectile* Fire() { if (GetCurrentWeapon()) return GetCurrentWeapon()->Fire(GetAimVector()); return nullptr; }
 
 	//Weapon Slot Insertion
 	inline void InsertWeaponSlot(std::string Name, WeaponSlot Slot) { AvailableWeapons.push_back(std::pair<std::string, WeaponSlot>(Name, Slot)); }
@@ -65,6 +66,9 @@ public: // Weapon Management
 	/// </summary>
 	inline void GetPreviousWeapon() { WeaponIndex = int(WeaponIndex - 1 >= 0  ? WeaponIndex - 1 : AvailableWeapons.size() - 1); }
 
+	//Flip axis around for other facing
+	inline void FlipAxis() { bFlipAxis = !bFlipAxis; }
+
 protected: // Methods
 
 	inline Vector2 GetTurretPosition() { 
@@ -81,5 +85,7 @@ protected: // Members
 	//Register of available weapons
 	std::vector<std::pair<std::string, WeaponSlot>> AvailableWeapons;
 	int WeaponIndex = 0;
+
+	bool bFlipAxis = false;
 
 };

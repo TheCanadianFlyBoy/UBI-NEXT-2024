@@ -18,7 +18,7 @@ class Ship : public Actor
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
-	inline static const char* GetStaticClassName() { return "Ship"; }
+	inline static const char* GetStaticClassName() { return "Actor"; }
 
 	Ship(World* InWorld);
 
@@ -40,7 +40,7 @@ public:
 		return false;
 	}
 	inline void EndTurn() { ActionPoints = ActionsMax; }
-	inline void SetActionPointMax(unsigned int Actions) { ActionsMax = ActionsMax; ActionPoints = ActionsMax; }
+	inline void SetActionPointMax(unsigned int Actions) { ActionsMax = Actions; ActionPoints = Actions; }
 
 	//Toggle for Firecontol
 	void Possess();
@@ -51,10 +51,10 @@ public:
 
 protected: //Members
 	//How many action points the ship has
-	unsigned int ActionPoints = 1;
-	unsigned int ActionsMax = 1;
+	int ActionPoints = 1;
+	int ActionsMax = 1;
 
-	unsigned int MovementCost = 1;
+	int MovementCost = 1;
 
 };
 

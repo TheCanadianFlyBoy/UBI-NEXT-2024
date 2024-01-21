@@ -166,7 +166,7 @@ bool CRigidBody::GetCollision(CRigidBody* Other, CollisionInfo& Info)
 	{
 		//If this is our first hit, send it
 		if (!IsOverlappingBody(Info.OtherBody))
-			ENGINE->GetCurrentWorld()->GetWorldEventManager()->AddEvent(new CollisionEvent(Info));
+			ENGINE->GetCurrentWorld()->GetWorldEventManager()->AddEvent(std::make_shared<CollisionEvent>(Info));
 		//Add
 		Info.ThisBody->RegisterOverlappingBody(Info.OtherBody);
 		Info.OtherBody->RegisterOverlappingBody(Info.ThisBody);

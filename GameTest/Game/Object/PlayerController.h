@@ -7,7 +7,7 @@
 
 #include "../../Engine/Object/Controller.h"
 
-class Ship;
+class Ship; class TurnBasedGameState;
 
 
 class PlayerController : public Controller
@@ -20,6 +20,7 @@ public: // COMMON
 	//Constructor
 	PlayerController(World* InWorld) : Controller(InWorld) {};
 
+	virtual void OnBegin() override;
 	virtual void Update(float DeltaTime) override;
 
 	//Location Methods
@@ -40,5 +41,7 @@ public: // COMMON
 	EControlType CurrentControlScheme = EControlType::Controller;
 
 	Vector2 WorldBounds = Vector2(20000.f, 350.f);
+
+	TurnBasedGameState* State = nullptr;
 
 };

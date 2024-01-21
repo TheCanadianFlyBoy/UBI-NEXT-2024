@@ -11,8 +11,12 @@ void CFireControl::Update(float DeltaTime)
 {
 	CInput::Update(DeltaTime);
 
+	//Calculate bounds
+	float UpperBound = bFlipAxis ? 3.f * PI / 2.f: PI / 2.f;
+	float LowerBound = bFlipAxis ? PI / 2.f : -PI / 2.f;
+
 	//Clamp aim
-	AzimuthRadians = MathOps::FClamp(AzimuthRadians, -PI / 2.f, PI / 2.f);
+	AzimuthRadians = MathOps::FClamp(AzimuthRadians, LowerBound, UpperBound);
 
 	AimVector = Vector2(cosf(AzimuthRadians), sinf(AzimuthRadians));
 

@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "Managers/SpriteManager.h"
 #include "Utility/EngineProfiler.h"
+#include "Managers/TimerManager.h"
 
 /// <summary>
 /// Instantiates all the managers for the engine
@@ -18,6 +19,8 @@ void EngineCore::Update(float DeltaTime)
 {
 	FixedUpdateTimer += DeltaTime * 0.01f;
 	
+	//Handle Timers
+	TimerManager::GetInstance()->Update(DeltaTime);
 
 	//Update global UI first
 	for (auto& Canvas : GlobalCanvases)
@@ -51,6 +54,10 @@ void EngineCore::LateUpdate(float DeltaTime)
 	{
 		CurrentWorld->LateUpdate(DeltaTime);
 	}
+
+	//Do Event Processing
+	EventManager::GetInstance()->ProcessEvents(DeltaTime);
+
 }
 
 void EngineCore::Render()
@@ -92,6 +99,17 @@ void EngineCore::LoadWorld(World* InWorld)
 	CurrentWorld->OnBegin();
 }
 
+void EngineCore::LoadWorld(std::string Name)
+{
+	//TODO handle shutdown of world
+	if (CurrentWorld)
+		CurrentWorld->Shutdown();
+
+	//Load new world
+	CurrentWorld = Worlds[Name].get();
+	CurrentWorld->OnBegin();
+}
+
 /// <summary>
 /// Deletes a given world
 /// </summary>
@@ -99,23 +117,23 @@ void EngineCore::LoadWorld(World* InWorld)
 void EngineCore::DeleteWorld(World* InWorld)
 {
 	//Size check
-	if (Worlds.size() > 0)
-	{
-		//Iterate
-		for (int i = 0; i < Worlds.size(); i ++)
-		{
-			//Get the current world
-			World* CurrentWorld = Worlds[i].get();
-
-			//Check if we have a match
-			if (CurrentWorld == InWorld)
-			{
-				//match, remove
-				Worlds.erase(Worlds.begin() + i); //TODO erase remove?
-			}
-
-		}
-	}
+	//if (Worlds.size() > 0)
+	//{
+	//	//Iterate
+	//	for (int i = 0; i < Worlds.size(); i ++)
+	//	{
+	//		//Get the current world
+	//		World* CurrentWorld = Worlds[i].get();
+	//
+	//		//Check if we have a match
+	//		if (CurrentWorld == InWorld)
+	//		{
+	//			//match, remove
+	//			Worlds.erase(Worlds.begin() + i); //TODO erase remove?
+	//		}
+	//
+	//	}
+	//}
 }
 
 /// <summary>

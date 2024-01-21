@@ -22,7 +22,7 @@ void GameState::Update(float DeltaTime)
 /// </summary>
 /// <param name="InEvent">Current Event</param>
 /// <param name="DeltaTime">Time since last frame</param>
-void GameState::OnEvent(Event* InEvent, float DeltaTime)
+void GameState::OnEvent(std::shared_ptr<Event> InEvent, float DeltaTime)
 {
 	// Call current event processing
 	(this->*CurrentEventHandler)(InEvent, DeltaTime);
@@ -49,20 +49,26 @@ void GameState::SetState(int State)
 }
 
 
-void GameState::DefaultEventHandler(Event* InEvent, float DeltaTime)
+void GameState::DefaultEventHandler(std::shared_ptr<Event> InEvent, float DeltaTime)
 {
 	if (InEvent->GetEventType() == "CollisionEvent")
 	{
 		//Convert type
-		CollisionEvent* Collision = static_cast<CollisionEvent*>(InEvent);
+		CollisionEvent* Collision = static_cast<CollisionEvent*>(InEvent.get());
 		
 		//Notify
 		Collision->OutHit.ThisActor->NotifyCollision(Collision->OutHit);
 		Collision->OutHit.OtherActor->NotifyCollision(Collision->OutHit);
 	}
+
+	if (InEvent->GetEventType() == "LoadLevelEvent")
+	{
+		LoadLevelEvent* ThisEvent = static_cast<LoadLevelEvent*>(InEvent.get());
+		ENGINE->LoadWorld(ThisEvent->WorldToLoad);
+	}
 }
 
-void GameState::TestEventHandler(Event* InEvent, float DeltaTime)
+void GameState::TestEventHandler(std::shared_ptr<Event> InEvent, float DeltaTime)
 {
 	if (InEvent->GetEventType() == "TestEvent")
 	{

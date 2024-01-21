@@ -1,13 +1,23 @@
 #include "stdafx.h"
 #include "TurnBasedState.h"
 #include "../Object/Ship.h"
+#include "../../Engine/Object/Controller.h"
 
 /// <summary>
 /// Handles turn status and game logic
 /// </summary>
 /// <param name="DeltaTime"></param>
-void TurnBasedGameState::TurnBasedUpdate(float DeltaTime)
+void TurnBasedGameState::Update(float DeltaTime)
 {
+	//Super
+	GameState::Update(DeltaTime);
+
+	//On end
+	if (CurrentState == int(ETurnState::End))
+	{
+		EndTurn();
+	}
+
 }
 
 /// <summary>
@@ -47,8 +57,29 @@ Ship* TurnBasedGameState::GetPreviousFleetShip()
 /// </summary>
 void TurnBasedGameState::EndTurn()
 {
-	//Unpossess
+	//Get current player and reset everything
+	for (auto& Ship : GetCurrentPlayer().Fleet)
+	{
+		Ship->EndTurn();
+	}
 
+	GetNextPlayer();
+
+	GetCurrentPlayer().LinkedController->Possess(GetCurrentPlayer().Fleet[0]);
+
+	CurrentState = 0;
+
+
+}
+
+/// <summary>
+/// Register a new player profile
+/// </summary>
+/// <param name="InShip"></param>
+void TurnBasedGameState::RegisterController(Controller* InController, int PlayerID)
+{
+	Players.push_back(Player(InController));
+	InController->SetPlayerID(Players.size() - 1);
 }
 
 void TurnBasedGameState::PossessShip(Ship* InShip)

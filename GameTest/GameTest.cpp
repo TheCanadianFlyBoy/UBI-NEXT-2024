@@ -10,7 +10,10 @@
 //------------------------------------------------------------------------
 #include "Engine/Common.h"
 #include "Game/World/GameWorld.h"
+#include "Game/World/MenuWorld.h"
+#include "Game/GameUI.h"
 
+#include <functional>
 
 enum
 {
@@ -44,10 +47,11 @@ void Init()
 	SpriteManager::GetInstance()->RegisterNewSprite("Explosion1", ".\\Game\\Resources\\Sprites\\CFB_FX_Explosion_1.png", 6, 1);
 	SpriteManager::GetInstance()->RegisterAnimation("Explosion1", 0, 0.2f, {0, 1, 2, 3, 4, 5});
 
-	ENGINE->LoadWorld(ENGINE->CreateWorld<GameWorld>());
+	//Create Main Menu Level
 
-	//Now we can begin
-	ENGINE->GetCurrentWorld()->OnBegin();
+	ENGINE->CreateWorld<MenuWorld>("Menu");
+	ENGINE->CreateWorld<GameWorld>("Game");
+	ENGINE->LoadWorld("Menu");
 
 
 }

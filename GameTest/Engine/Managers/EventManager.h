@@ -12,25 +12,23 @@
 class Event;
 class World;
 
-class EventManager : public Entity
+class EventManager
 {
+    DECLARE_SINGLE(EventManager);
+
 public: //Methods
 
-    //Class Name
-    inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
-    inline static const char* GetStaticClassName() { return "EventManager"; }
-
     //Constructor - Requires pointer to game
-    EventManager(World* InWorld) : Entity(InWorld) {}; //TODO GameState
-    ~EventManager();
+    //EventManager(World* InWorld) : Entity(InWorld) {}; //TODO GameState
+    //~EventManager();
 
     //Queue Handling
-    inline void AddEvent(Event* InEvent) { EventQueue.push(InEvent); };
+    inline void AddEvent(std::shared_ptr<Event> InEvent) { EventQueue.push(InEvent); };
     void ProcessEvents(float DeltaTime);
 
 
 protected: //Variables
-    std::queue<Event*> EventQueue; //TODO make shared
+    std::queue<std::shared_ptr<Event>> EventQueue; //TODO make shared
     //TODO state
 
 };
