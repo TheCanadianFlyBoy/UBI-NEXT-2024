@@ -93,3 +93,26 @@ Gunboat::Gunboat(World* InWorld) : Ship(InWorld)
 	MainGun->SetOffset(Vector2(100.f, 20.f));
 	MainGun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
 }
+
+Corvette::Corvette(World* InWorld) : Ship(InWorld)
+{
+	SpriteComponent->SetSprite("Corvette");
+	SpriteComponent->SetPosition(Vector2(5, 30.f));
+
+	Vector2 HullDimensions = SpriteManager::GetInstance()->GetSpriteDimensions("Corvette");
+
+	RigidBodyComponent->MakeCollisionBox(GetActorLocation(), HullDimensions - Vector2(HullDimensions.x * 0.02f, HullDimensions.y * .7f));
+	RigidBodyComponent->SetOffset(Vector2(0.f, 8.f));
+	RigidBodyComponent->SetBuoyancyCircleRadius(8.f);
+	RigidBodyComponent->SetMass(1.f);
+	RigidBodyComponent->SetupBuoyancyCircles();
+	RigidBodyComponent->SetDensity(20.f);
+
+
+	FireControlComponent->InsertWeaponSlot("Main Gun", WeaponSlot());
+	FireControlComponent->InsertWeaponSlot("Rear Gun", WeaponSlot());
+
+	CWeapon* MainGun = CreateComponent<CWeapon>();
+	MainGun->SetOffset(Vector2(100.f, 20.f));
+	MainGun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
+}

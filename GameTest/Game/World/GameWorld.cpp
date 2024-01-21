@@ -42,7 +42,7 @@ GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 	State->RegisterController(EnemyController, 1);
 
 	//Setup Player
-	PlayerShip = CreateEntity<Destroyer>();
+	PlayerShip = CreateEntity<Corvette>();
 	PlayerShip->SetActorLocation(PlayerShipLocation);
 	State->RegisterShip(PlayerShip, 0);
 	LocalController->Possess(PlayerShip);
@@ -54,7 +54,7 @@ GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 	
 
 	//Setup enemy
-	Enemy = CreateEntity<Destroyer>();
+	Enemy = CreateEntity<Corvette>();
 	Enemy->SetActorLocation(Vector2(2000.f, 220.f));
 	Enemy->FireControlComponent->FlipAxis();
 

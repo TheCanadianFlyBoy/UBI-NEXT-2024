@@ -148,6 +148,11 @@ void ObjectManager::LateUpdate(float DeltaTime)
 		RigidBody->LateUpdate(DeltaTime);
 	}
 
+	for (auto& ThisProjectile : Entities["Projectile"])
+	{
+		ThisProjectile->LateUpdate(DeltaTime);
+	}
+
 }
 
 /// <summary>

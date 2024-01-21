@@ -12,6 +12,9 @@ class CWeapon;
 
 struct WeaponSlot
 {
+	WeaponSlot(int InSize = 1) { Size = InSize; }
+
+	Vector2 Offset = Vector2(0.f);
 	int Size = 1;
 	//std::vector<unsigned int> AllowedTypes; //TODO implement if I have time
 	CWeapon* Weapon = nullptr;

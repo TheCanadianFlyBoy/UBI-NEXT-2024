@@ -41,6 +41,8 @@ void Init()
 	SpriteManager::GetInstance()->RegisterNewSprite("Cruiser", ".\\Game\\Resources\\Sprites\\CFB_SPR_Cruiser.png");
 	SpriteManager::GetInstance()->RegisterNewSprite("Battleship", ".\\Game\\Resources\\Sprites\\CFB_SPR_Battleship.png");
 	SpriteManager::GetInstance()->RegisterNewSprite("Gunboat", ".\\Game\\Resources\\Sprites\\CFB_SPR_Gunboat.png");
+	SpriteManager::GetInstance()->RegisterNewSprite("Corvette", ".\\Game\\Resources\\Sprites\\CFB_SPR_Corvette.png");
+	SpriteManager::GetInstance()->RegisterNewSprite("Shell", ".\\Game\\Resources\\Sprites\\CFB_SPR_Shell.png");
 	SpriteManager::GetInstance()->RegisterNewSprite("DestroyerHull", ".\\Game\\Resources\\Sprites\\CFB_SPR_Destroyer_CollisionArea.png");
 
 	//Register particles

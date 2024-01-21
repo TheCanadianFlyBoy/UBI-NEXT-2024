@@ -84,3 +84,10 @@ public:
 	virtual void Update(float DeltaTime) { Ship::Update(DeltaTime); };
 
 };
+
+class Corvette : public Ship
+{
+public:
+	Corvette(World* InWorld);
+
+};

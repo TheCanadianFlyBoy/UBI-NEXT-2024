@@ -16,7 +16,7 @@ Projectile::Projectile(World* InWorld) : Actor(InWorld)
 
 	AutoDeactivates = true;
 
-	SetLifetimeMax(12.f);
+	SetLifetimeMax(10.f);
 
 }
 
@@ -51,7 +51,7 @@ void Projectile::OnActorCollision(CollisionInfo Info)
 
 		//Calculate positional damage
 		float DistanceToCentreOfMass = (HealthComponent->Owner->GetEntityLocation().DistanceFrom(Info.ImpactPoint));
-		float PositionalDamage = Damage * (std::max<float>(1.f - (1.f / 100.f * sqrtf(DistanceToCentreOfMass)), 0.f)); //TODO make variable based on projectile type
+		float PositionalDamage = Damage * (std::max<float>(1.f - (1.f / 1000.f * sqrtf(DistanceToCentreOfMass)), 0.f)); //TODO make variable based on projectile type //TODO UNSAFE SQRT
 		
 
 		//Take damage

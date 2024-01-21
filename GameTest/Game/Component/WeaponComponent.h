@@ -59,6 +59,7 @@ protected:
 	int CurrentProjectileBurst = 0;
 	float ProjectileDamage = 10.f;
 	float ProjectileSpeed = 10.f;
+	float ProjectileMass = 1.0f;
 	//Aiming
 	float AimWobble = 0.01f;
 
@@ -71,17 +72,29 @@ protected:
 class LightFifty : public CWeapon
 {
 public:
-	LightFifty(Entity* InEntity);
+	LightFifty(Entity* InEntity) : CWeapon(InEntity)
+	{
+
+	};
 };
 
 class AutoCannon : public CWeapon
 {
 public:
-	AutoCannon(Entity* InEntity);
+	AutoCannon(Entity* InEntity) : CWeapon(InEntity)
+	{
+
+	};
 };
 
 class DeckGun : public CWeapon
 {
 public:
-	DeckGun(Entity* InEntity);
+	DeckGun(Entity* InEntity) : CWeapon(InEntity) {
+		WeaponSize = 3;
+		ProjectileDamage = 50.f;
+		ProjectileCount = 1;
+		ProjectileSpeed = 20.f;
+		ProjectileMass = 4.0f;
+	};
 };

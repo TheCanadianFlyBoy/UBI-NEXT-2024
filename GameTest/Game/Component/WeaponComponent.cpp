@@ -54,6 +54,7 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 		NewProjectile->Damage = ProjectileDamage;
 		NewProjectile->ProjectileBody->SetVelocity(FiringSolution * 10.f);
 		NewProjectile->ProjectileBody->SetGravityScale(9.8f);
+		NewProjectile->ProjectileBody->SetMass(ProjectileMass);
 		NewProjectile->Owner = Owner;
 		Owner->GetWorld()->GetActiveCamera()->SetTarget(NewProjectile);
 
@@ -64,11 +65,11 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 
 	
 
+	CurrentProjectileBurst++;
 	//Repeat
-	if (CurrentProjectileBurst <= ProjectileCount)
+	if (CurrentProjectileBurst < ProjectileCount)
 	{
 		TimerManager::GetInstance()->SetTimer(0.4f, std::bind(&CWeapon::Repeat, this), this);
-		CurrentProjectileBurst++;
 	}
 	else 
 	{
