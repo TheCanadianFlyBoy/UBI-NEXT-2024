@@ -23,11 +23,11 @@ void CFireControl::Update(float DeltaTime)
 	else  //Controller defaults
 	{
 		//Increment Aim
-		AimAngle += App::GetController().GetLeftThumbStickY() * DeltaTime * TraversalRate * 0.001f;
-		AimAngle = MathOps::FClamp(AimAngle, PI / -2.f, PI / 2.f);
+		AzumithRadians += App::GetController().GetLeftThumbStickY() * DeltaTime * TraversalRate * 0.001f;
+		AzumithRadians = MathOps::FClamp(AzumithRadians, PI / -2.f, PI / 2.f);
 
-		AimVector.x = cosf(AimAngle);
-		AimVector.y = sinf(AimAngle);
+		AimVector.x = cosf(AzumithRadians);
+		AimVector.y = sinf(AzumithRadians);
 		AimVector = AimVector.GetNormalized();
 	}
 
@@ -47,7 +47,7 @@ void CFireControl::Update(float DeltaTime)
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A) || App::GetController().CheckButton(XINPUT_GAMEPAD_B))
 	{
 		//Empty//nullcheck
-		if (!AvailableWeapons.empty() && CurrentWeapon->second.Weapon)
+		if (!AvailableWeapons.empty() && GetCurrentWeapon())
 		{
 			GetCurrentWeapon()->Fire(AimVector);
 		}

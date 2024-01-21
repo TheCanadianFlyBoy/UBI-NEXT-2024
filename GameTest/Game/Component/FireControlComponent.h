@@ -31,36 +31,33 @@ public:
 
 	CFireControl(Entity* InEntity) : CControllerBase(InEntity) { };
 
-	virtual void OnBegin() override { CControllerBase::OnBegin(), CurrentWeapon = AvailableWeapons.begin(); }
+	virtual void OnBegin() override { CControllerBase::OnBegin(); Active = false; }
 	virtual void Update(float DeltaTime) override;
 
 	inline Vector2 GetAimVector() { return AimVector; }
+	inline float GetAzumithRadians() { return AzumithRadians; }
+	inline float GetAzumithDegrees() { return MathOps::RadiansToDegrees(AzumithRadians); }
 
 public: // Weapon Management
 
-	inline void InsertWeaponSlot(std::string Name, WeaponSlot Slot) { AvailableWeapons["Name"] = Slot; }
+	inline void InsertWeaponSlot(std::string Name, WeaponSlot Slot) { AvailableWeapons.push_back(std::pair<std::string, WeaponSlot>(Name, Slot)); }
 	//inline void RemoveWeaponSlot(std::string Name) { AvailableWeapons.erase() } TODO
 
 	//Weapon insertion
 	bool InsertWeapon(CWeapon* InWeapon);
 	//Getters
-	inline CWeapon* GetCurrentWeapon() { return CurrentWeapon->second.Weapon; }
-	inline std::string GetCurrentWeaponSlot() { return CurrentWeapon->first; }
+	inline CWeapon* GetCurrentWeapon() { return AvailableWeapons[WeaponIndex].second.Weapon; }
+	inline WeaponSlot GetCurrentWeaponSlot() { return AvailableWeapons[WeaponIndex].second; }
+	inline std::string GetCurrentWeaponName() { return AvailableWeapons[WeaponIndex].first; }
 	/// <summary>
 	/// Shorthand to iterating the weapon list to the right
 	/// </summary>
-	inline void GetNextWeapon() { CurrentWeapon = CurrentWeapon == AvailableWeapons.end() 
-		? AvailableWeapons.begin() : 
-		CurrentWeapon++; }
+	inline void GetNextWeapon() { WeaponIndex = WeaponIndex + 1 < AvailableWeapons.size() ? WeaponIndex + 1 : 0; }
 
 	/// <summary>
 	/// Shorthand for iterating the weapon list to the left
 	/// </summary>
-	inline void GetPreviousWeapon() {
-		CurrentWeapon = CurrentWeapon == AvailableWeapons.begin()
-			? AvailableWeapons.end() :
-			CurrentWeapon--;
-	}
+	inline void GetPreviousWeapon() { WeaponIndex = WeaponIndex - 1 >= 0  ? WeaponIndex - 1 : AvailableWeapons.size() - 1; }
 
 
 
@@ -68,12 +65,12 @@ protected: // Members
 	//Fire Control Rates of Change
 	float TraversalRate = 1.f;
 	//Fire Control Position
-	float AimAngle = PI / 4.f;
-	Vector2 AimVector = Vector2(cos(AimAngle), sin(AimAngle));
+	float AzumithRadians = PI / 4.f;
+	Vector2 AimVector = Vector2(cos(AzumithRadians), sin(AzumithRadians));
 	//Fire Control Type
 	EControlType CurrentControlScheme = EControlType::Controller;
 	//Register of available weapons
-	std::map < std::string, WeaponSlot> AvailableWeapons;
-	std::map<std::string, WeaponSlot>::iterator CurrentWeapon;
+	std::vector<std::pair<std::string, WeaponSlot>> AvailableWeapons;
+	int WeaponIndex = 0;
 
 };

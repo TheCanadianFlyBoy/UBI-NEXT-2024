@@ -45,6 +45,10 @@ public: //Methods
 	//Current World
 	inline void SetWorld(World* InWorld) { ThisWorld = InWorld; }
 
+	inline bool CanPassControllerInputs() { return bPassInputsToController; }
+	inline bool StopControllerInputs() { bPassInputsToController = false; }
+	inline bool AllowControllerInputs() { bPassInputsToController = true; }
+
 protected: // Members
 	EventManager* WorldEventManager = nullptr;
 	//UI pointer TODO
@@ -52,6 +56,8 @@ protected: // Members
 
 	//State value
 	int CurrentState = 0;
+
+	bool bPassInputsToController = true;
 	//State handler
 	virtual void SetState(int State);
 

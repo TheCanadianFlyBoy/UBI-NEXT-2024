@@ -30,5 +30,6 @@ protected:
 	Ship* CurrentShip = nullptr;
 
 	void DrawAzumith();
+	void DrawWeaponSelect();
 
 };

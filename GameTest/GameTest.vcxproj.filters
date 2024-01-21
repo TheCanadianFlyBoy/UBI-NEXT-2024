@@ -123,6 +123,9 @@
     <ClCompile Include="Engine\Utility\Debug.cpp">
       <Filter>Engine\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Game\World\TurnBasedState.cpp">
+      <Filter>Game\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -281,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Utility\EngineProfiler.h">
       <Filter>Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\World\TurnBasedState.h">
+      <Filter>Game\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

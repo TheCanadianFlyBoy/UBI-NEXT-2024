@@ -29,8 +29,25 @@ public:
 	CHealth* HealthComponent = nullptr;
 
 
+	//Action
+	inline bool CanUseAction() { return ActionPoints > 0; }
+	inline void UseAction() { if (CanUseAction()) ActionPoints--; }
+	inline void EndTurn() { ActionPoints = ActionsMax; }
+	inline void SetActionPointMax(unsigned int Actions) { ActionsMax = ActionsMax; ActionPoints = ActionsMax; }
+
+	//Toggle for Firecontol
+	void Possess();
+	void UnPossess();
+
+
+	//TODO query and move
+
 protected: //Members
-	
+	//How many action points the ship has
+	unsigned int ActionPoints = 1;
+	unsigned int ActionsMax = 1;
+
+	unsigned int MovementCost = 1;
 
 };
 

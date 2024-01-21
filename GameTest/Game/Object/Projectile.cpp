@@ -31,31 +31,26 @@ void Projectile::OnActorCollision(CollisionInfo Info)
 	if (Info.ThisActor && Info.OtherActor && Info.OtherActor != Owner && Info.ThisActor != Owner)
 	{
 
+		CHealth* HealthComponent;
+
 		//Check health
-		if (CHealth* HealthComponent = Info.OtherActor->GetComponentOfClass<CHealth>())
+		HealthComponent = Info.OtherActor->GetComponentOfClass<CHealth>();
+		if (!HealthComponent) //Swap in case of reversed collision event
+			HealthComponent = Info.ThisActor->GetComponentOfClass<CHealth>();
+
+		//Calculate positional damage
+		float DistanceToCentreOfMass = (HealthComponent->Owner->GetEntityLocation().DistanceFrom(Info.ImpactPoint));
+		float PositionalDamage = Damage * (std::max<float>(1.f - (1.f / 10.f * sqrtf(DistanceToCentreOfMass)), 0.f)); //TODO make variable based on projectile type
+		
+
+		//Take damage
+		HealthComponent->TakeDamage(PositionalDamage);
+
+		Debug::DrawCircle(Vector2(500.f), 40, 4, Color3(1.f, 0.f, 0.f));
+
+		if (!HealthComponent->Alive())
 		{
-			//Take damage
-			HealthComponent->TakeDamage(Damage);
-
-			Debug::DrawCircle(Vector2(500.f), 40, 4, Color3(1.f, 0.f, 0.f));
-
-			if (!HealthComponent->Alive())
-			{
-				Info.OtherActor->Shutdown();
-			}
-
-		} else if (CHealth* HealthComponent = Info.ThisActor->GetComponentOfClass<CHealth>())
-		{
-			//Take damage
-			HealthComponent->TakeDamage(Damage);
-
-			Debug::DrawCircle(Vector2(500.f), 40, 4, Color3(1.f, 0.f, 0.f));
-
-			if (!HealthComponent->Alive())
-			{
-				Info.OtherActor->Shutdown();
-			}
-
+			Info.OtherActor->Shutdown();
 		}
 
 		//Self deletion

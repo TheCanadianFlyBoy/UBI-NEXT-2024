@@ -58,7 +58,7 @@ void ObjectManager::Update(float DeltaTime)
 	//Update controllers
 	for (auto& Controller : Components["CControllerBase"])
 	{
-		if (Controller->Active)
+		if (Controller->Active && GetWorld()->GetWorldGameState()->CanPassControllerInputs())
 			Controller->Update(DeltaTime);
 	}
 
