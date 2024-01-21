@@ -134,17 +134,34 @@ void ObjectManager::Update(float DeltaTime)
 /// <param name="DeltaTime"></param>
 void ObjectManager::LateUpdate(float DeltaTime)
 {
-	//Handle moving on the registry
-	for (auto& RigidBody : Components["CRigidBody"])
-	{
-		RigidBody->LateUpdate(DeltaTime);
-	}
+
 	//Handle updating particles
 	for (auto& Particle : Entities["ParticleSprite"])
 	{
 		Particle->LateUpdate(DeltaTime);
 	}
 
+
+	//Handle moving on the registry
+	for (auto& RigidBody : Components["CRigidBody"])
+	{
+		RigidBody->LateUpdate(DeltaTime);
+	}
+
+}
+
+/// <summary>
+/// Handles physics tick
+/// </summary>
+void ObjectManager::FixedUpdate()
+{
+	//Update Rigid Bodies
+	for (auto& RigidBody : Components["CRigidBody"])
+	{
+		if (RigidBody->Active) {
+			RigidBody->FixedUpdate();
+		}
+	}
 }
 
 //DRAW

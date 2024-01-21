@@ -52,6 +52,14 @@ void World::LateUpdate(float DeltaTime)
 }
 
 /// <summary>
+/// Handles physics calls
+/// </summary>
+void World::FixedUpdate()
+{
+	WorldObjectManager->FixedUpdate();
+}
+
+/// <summary>
 /// Passes draw call to appropriate managers
 /// </summary>
 void World::Render()

@@ -39,6 +39,7 @@ public: //Properties
 	virtual void OnBegin() override;
 	virtual void Update(float DeltaTime) override;
 	virtual void LateUpdate(float DeltaTime) override;
+	virtual void FixedUpdate() override;
 	virtual void Render(CCamera* InCamera) override;
 	virtual void Shutdown() override;
 

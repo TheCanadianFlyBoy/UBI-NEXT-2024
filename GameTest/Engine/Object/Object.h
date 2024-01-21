@@ -34,6 +34,8 @@ public: //Methods
 	virtual void Update(float DeltaTime) {};
 	//Frame end
 	virtual void LateUpdate(float DeltaTime);
+	//Physics Update
+	virtual void FixedUpdate() {};
 	//Draw call
 	virtual void Render(CCamera* InCamera = nullptr) {};
 	//On deletion / world end

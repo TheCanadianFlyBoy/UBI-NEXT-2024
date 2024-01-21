@@ -11,6 +11,7 @@
 #include "World/World.h"
 
 #define ENGINE_DEBUG_MODE true
+#define FIXED_UPDATE_FREQUENCY 0.2f
 
 //class SpriteManager;
 class UIManager;
@@ -54,6 +55,9 @@ public: //Factory Constructors
 
 protected: // Members
 
+	float FixedUpdateTimer = 0.f;
+
+	//Active world
 	World* CurrentWorld = nullptr;
 
 	//World Vector

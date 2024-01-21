@@ -16,6 +16,9 @@ void EngineCore::Initialize()
 /// <param name="DeltaTime"></param>
 void EngineCore::Update(float DeltaTime)
 {
+	FixedUpdateTimer += DeltaTime * 0.01f;
+	
+
 	//Update global UI first
 	for (auto& Canvas : GlobalCanvases)
 	{
@@ -26,6 +29,12 @@ void EngineCore::Update(float DeltaTime)
 	if (CurrentWorld)
 	{
 		CurrentWorld->Update(DeltaTime);
+
+		if (FixedUpdateTimer > FIXED_UPDATE_FREQUENCY)
+		{
+			CurrentWorld->FixedUpdate();
+		}
+
 	}
 }
 

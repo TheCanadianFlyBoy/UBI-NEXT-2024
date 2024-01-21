@@ -113,7 +113,7 @@ void PlayerController::ActionUpdate(float DeltaTime)
 	if (ENGINE->CheckButton(XINPUT_GAMEPAD_DPAD_DOWN, true))
 		FireControlComponent.GetPreviousWeapon();
 	//Handle firing
-	if (ENGINE->CheckButton(XINPUT_GAMEPAD_A, true) || ENGINE->CheckButton(APP_PAD_EMUL_BUTTON_ALT_A))
+	if (ENGINE->CheckButton(XINPUT_GAMEPAD_A, true) || ENGINE->CheckButton(APP_PAD_EMUL_BUTTON_ALT_A, true))
 	{
 		//Attempt to fire
 		if (PossessedShip->UseAction())
@@ -124,7 +124,7 @@ void PlayerController::ActionUpdate(float DeltaTime)
 
 	//Handle Reselect ship
 	//Handle firing
-	if (ENGINE->CheckButton(XINPUT_GAMEPAD_B, true) || ENGINE->CheckButton(APP_PAD_EMUL_BUTTON_B))
+	if (ENGINE->CheckButton(XINPUT_GAMEPAD_B, true) || ENGINE->CheckButton(APP_PAD_EMUL_BUTTON_B, true))
 	{
 		State->SetTurnState(ETurnState::Select);
 	}

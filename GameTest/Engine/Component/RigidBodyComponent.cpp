@@ -20,7 +20,27 @@ CRigidBody::~CRigidBody()
 
 void CRigidBody::Update(float DeltaTime)
 {
-	DeltaTime *= 0.02f; //IMPERATIVE TODO IMPORTANT - Remove this and refactor
+	
+
+}
+
+void CRigidBody::LateUpdate(float DeltaTime)
+{
+	//Move in tree
+	ENGINE->GetCurrentWorld()->UnRegisterCollisionEntity(this);
+	ENGINE->GetCurrentWorld()->RegisterCollisionEntity(this);
+
+	//Clean overlaps
+	OverlappingBodies.erase(std::remove_if(OverlappingBodies.begin(), OverlappingBodies.end(), [](CRigidBody* val) { return !val->Active; }), OverlappingBodies.end());
+
+}
+
+/// <summary>
+/// Calculate physics
+/// </summary>
+void CRigidBody::FixedUpdate()
+{
+	float DeltaTime = FIXED_UPDATE_FREQUENCY;
 
 	//Check if we have a transform to snag
 	if (Actor* ActorOwner = dynamic_cast<Actor*>(Owner))
@@ -46,18 +66,6 @@ void CRigidBody::Update(float DeltaTime)
 		//Damping(DeltaTime);
 
 	}
-
-}
-
-void CRigidBody::LateUpdate(float DeltaTime)
-{
-	//Move in tree
-	ENGINE->GetCurrentWorld()->UnRegisterCollisionEntity(this);
-	ENGINE->GetCurrentWorld()->RegisterCollisionEntity(this);
-
-	//Clean overlaps
-	OverlappingBodies.erase(std::remove_if(OverlappingBodies.begin(), OverlappingBodies.end(), [](CRigidBody* val) { return !val->Active; }), OverlappingBodies.end());
-
 }
 
 void CRigidBody::Render(CCamera* InCamera)
