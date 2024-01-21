@@ -2,6 +2,7 @@
 #include "WeaponComponent.h"
 #include "FireControlComponent.h"
 #include "../Object/Projectile.h"
+#include "../../Engine/Engine.h"
 #include "../../Engine/Managers/TimerManager.h"
 
 CWeapon::CWeapon(Entity* InEntity) : CRigidBody(InEntity)
@@ -44,13 +45,13 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 	{
 	case EWeaponType::Cannon:
 
-		Projectile* NewProjectile = Owner->GetWorld()->CreateEntity<Projectile>();
+		NewProjectile = Owner->GetWorld()->CreateEntity<Projectile>();
 		NewProjectile->SetActorLocation(LaunchPosition);
 
 
 		//NewProjectile->SetActorRotation(PI / 4);
-		NewProjectile->ProjectileSpeed = 10.f;
-		NewProjectile->Damage = 35.f;
+		NewProjectile->ProjectileSpeed = ProjectileSpeed;
+		NewProjectile->Damage = ProjectileDamage;
 		NewProjectile->ProjectileBody->SetVelocity(FiringSolution * 10.f);
 		NewProjectile->ProjectileBody->SetGravityScale(9.8f);
 		NewProjectile->Owner = Owner;
@@ -64,8 +65,15 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 	
 
 	//Repeat
-	TimerManager::GetInstance()->SetTimer(0.4f, std::bind(&CWeapon::Repeat, this), this);
-
+	if (CurrentProjectileBurst <= ProjectileCount)
+	{
+		TimerManager::GetInstance()->SetTimer(0.4f, std::bind(&CWeapon::Repeat, this), this);
+		CurrentProjectileBurst++;
+	}
+	else 
+	{
+		CurrentProjectileBurst = 0;
+	}
 	//Return
 	return NewProjectile;
 
@@ -73,29 +81,7 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 
 void CWeapon::Repeat()
 {
+	LastFiringSolution = (LastFiringSolution + Vector2(ENGINE->RandRangeF(-AimWobble, AimWobble))).GetNormalized();
 
-	//Calculate launch position
-	Vector2 LaunchPosition = Owner->GetEntityLocation() + Offset + LastFiringSolution * 40.f;
-
-	//Weapon switching //TODO move to subclasses
-	switch (Type)
-	{
-	case EWeaponType::Cannon:
-
-		Projectile* NewProjectile = Owner->GetWorld()->CreateEntity<Projectile>();
-		NewProjectile->SetActorLocation(LaunchPosition);
-
-
-		//NewProjectile->SetActorRotation(PI / 4);
-		NewProjectile->ProjectileSpeed = 10.f;
-		NewProjectile->Damage = 35.f;
-		NewProjectile->ProjectileBody->SetVelocity(LastFiringSolution * 10.f);
-		NewProjectile->ProjectileBody->SetGravityScale(9.8f);
-		NewProjectile->Owner = Owner;
-		Owner->GetWorld()->GetActiveCamera()->SetTarget(NewProjectile);
-
-
-		break;
-
-	}
+	Fire(LastFiringSolution);
 }

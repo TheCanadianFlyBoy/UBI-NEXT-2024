@@ -12,13 +12,18 @@ class CSprite;
 class CFireControl;
 class CRigidBody;
 class CHealth;
+struct Player;
+
 
 class Ship : public Actor
 {
+	friend class GameState;
+
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
 	inline static const char* GetStaticClassName() { return "Actor"; }
+
 
 	Ship(World* InWorld);
 
@@ -41,11 +46,15 @@ public:
 	}
 	inline void EndTurn() { ActionPoints = ActionsMax; }
 	inline void SetActionPointMax(unsigned int Actions) { ActionsMax = Actions; ActionPoints = Actions; }
+	inline int GetActionPointsRemaining() { return ActionPoints; }
+	inline int GetActionPointsMax() { return ActionsMax; }
 
 	//Toggle for Firecontol
 	void Possess();
 	void UnPossess();
 
+	inline Player* GetPlayer() { return PlayerReference; }
+	inline void SetPlayer(Player* InPlayer) { PlayerReference = InPlayer; }
 
 	//TODO query and move
 
@@ -55,6 +64,8 @@ protected: //Members
 	int ActionsMax = 1;
 
 	int MovementCost = 1;
+
+	Player* PlayerReference = nullptr;
 
 };
 
@@ -71,4 +82,5 @@ public:
 	Gunboat(World* InWorld);
 
 	virtual void Update(float DeltaTime) { Ship::Update(DeltaTime); };
+
 };

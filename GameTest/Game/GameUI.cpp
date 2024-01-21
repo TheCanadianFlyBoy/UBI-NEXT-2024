@@ -29,6 +29,24 @@ UIMainMenu::UIMainMenu() : UICanvas()
 
 };
 
+UIPauseCanvas::UIPauseCanvas() : UICanvas()
+{
+	Vector2 CentrePoint = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 2);
+
+	ResumeButton = AddWidget<UIButton>();
+	ResumeButton->SetPosition(CentrePoint);
+	ResumeButton->SetDimensions(Vector2(200.f, 50.f));
+	ResumeButton->SetText("Resume");
+
+	MenuButton = AddWidget<UIButton>();
+	MenuButton->SetPosition(CentrePoint - Vector2(0.f, 100.f));
+	MenuButton->SetDimensions(Vector2(200.f, 50.f));
+	MenuButton->SetText("Quit to Menu");
+
+	MenuButton->CallbackFunction = []()   { exit(0); };
+	ResumeButton->CallbackFunction = []() { EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>("Game")); };
+}
+
 
 /// <summary>
 /// Renders aiming information
@@ -55,8 +73,8 @@ void UIAimPoint::Render()
 		}
 		else { //Draw Ship Overview
 
-			Debug::DrawText(CentrePoint - Vector2(200.f, -80.f), "Ship: ");
-
+			Debug::DrawText(CentrePoint - Vector2(200.f, -80.f), "Select Ship:");
+			
 			//
 		}
 	}
@@ -107,9 +125,23 @@ void UIAimPoint::DrawAzumith()
 	//Get azumith
 	int AzumithAngle = int(FireControl.GetAzimuthDegrees());
 
-
+	//Draw text
 	Debug::DrawText(AzumithCentre + Vector2(-60.f, 90.f), "Azumith: " + std::to_string(AzumithAngle));
 	Debug::DrawText(AzumithCentre + Vector2(-60.f, 150.f), "Launch: Space, A");
+
+	
+	//Action Point display
+	Vector2 DisplayStart = CentrePoint + Vector2(-210.f, -Dimensions.y / 4);
+
+	Debug::DrawText(DisplayStart + Vector2(0.f, 28.f), "Action Points");
+
+	for (int i = 0; i < CurrentShip->GetActionPointsMax(); i++)
+	{
+		Color3 Color = i >= CurrentShip->GetActionPointsRemaining() ? Color3(0.7f, 0.1f, 0.1f) : Color3(0.2f, 1.f, 0.2f);
+		
+		Debug::DrawCircle(DisplayStart + Vector2(i * 20.f, 0.f), 16.f, 8, Color);
+
+	}
 	
 
 }
@@ -117,6 +149,8 @@ void UIAimPoint::DrawAzumith()
 ///Draw weapon select
 void UIAimPoint::DrawWeaponSelect()
 {
+	CWeapon* CurrentWeapon = CurrentShip->FireControlComponent->GetCurrentWeapon();
+
 	//Get Positioning
 	Vector2 CentrePoint = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 8);
 	Vector2 Dimensions = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 3);
@@ -125,7 +159,10 @@ void UIAimPoint::DrawWeaponSelect()
 	Debug::DrawText(CentrePoint + Vector2(-160.f, 100.f), "Current Weapon");
 	
 	//Get weapon
-	Debug::DrawText(CentrePoint + Vector2(-160.f, 50.f), CurrentShip->FireControlComponent->GetCurrentWeaponName());
+	Debug::DrawText(CentrePoint + Vector2(-230.f, 80.f), CurrentShip->FireControlComponent->GetCurrentWeaponName());
+	Debug::DrawText(CentrePoint + Vector2(-230.f, 60.f), "AP Cost: " + std::to_string(CurrentWeapon->GetActionCost()));
+	Debug::DrawText(CentrePoint + Vector2(-230.f, 40.f), "Burst: " + std::to_string(CurrentWeapon->GetProjectileCount()));
+	Debug::DrawText(CentrePoint + Vector2(-230.f, 20.f), "Damage: " + std::to_string(CurrentWeapon->GetProjectileDamage()));
 }
 
 //Clear for shutdown

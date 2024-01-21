@@ -72,6 +72,10 @@ public: // Methods
 	inline Vector2 GetOffset() { return Offset; }
 	//Static check for checking two collisions TODO
 	
+	//Density
+	inline void SetDensity(float InDensity) { ObjectDensity = InDensity; }
+	inline float GetDensity()				{ return ObjectDensity; }
+
 	//Mass
 	inline void SetMass(float InMass) { Mass = InMass; }
 	inline float GetMass() { return Mass; }

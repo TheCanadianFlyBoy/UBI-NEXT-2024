@@ -58,6 +58,7 @@ Destroyer::Destroyer(World* InWorld) : Ship(InWorld)
 	RigidBodyComponent->SetupBuoyancyCircles();
 
 
+
 	FireControlComponent->InsertWeaponSlot("Main Gun", WeaponSlot());
 	FireControlComponent->InsertWeaponSlot("Rear Gun", WeaponSlot());
 
@@ -78,10 +79,11 @@ Gunboat::Gunboat(World* InWorld) : Ship(InWorld)
 
 	Vector2 HullDimensions = SpriteManager::GetInstance()->GetSpriteDimensions("Gunboat");
 
-	RigidBodyComponent->MakeCollisionBox(GetActorLocation(), HullDimensions - Vector2(HullDimensions.x * 0.02f, HullDimensions.y * 0.7));
+	RigidBodyComponent->MakeCollisionBox(GetActorLocation(), HullDimensions - Vector2(HullDimensions.x * 0.02f, HullDimensions.y * 0.7f));
 	RigidBodyComponent->SetBuoyancyCircleRadius(8.f);
 	RigidBodyComponent->SetMass(1.f);
 	RigidBodyComponent->SetupBuoyancyCircles();
+	RigidBodyComponent->SetDensity(20.f);
 
 
 	FireControlComponent->InsertWeaponSlot("Main Gun", WeaponSlot());

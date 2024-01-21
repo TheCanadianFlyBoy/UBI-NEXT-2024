@@ -41,7 +41,7 @@ public: //Methods
 	//On deletion / world end
 	virtual void Shutdown() { Active = false; };
 
-	//Deactivate
+	inline void SetLifetimeMax(float InMax) { LifetimeMax = InMax; }
 
 public: // Members
 	//Active flag

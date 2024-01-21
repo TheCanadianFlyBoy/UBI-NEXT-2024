@@ -39,6 +39,11 @@ public:
 	//Handle weapon updates
 	virtual void Update(float DeltaTime) override;
 
+	inline int GetActionCost() { return ActionCost; }
+	inline int GetProjectileCount() { return ProjectileCount; }
+	inline float GetProjectileSpeed() { return ProjectileSpeed; }
+	inline float GetProjectileDamage() { return ProjectileDamage; }
+
 protected:
 
 	float CooldownTimer = 0.f;
@@ -46,12 +51,37 @@ protected:
 	
 	Vector2 LastFiringSolution = Vector2(0.f);
 
+	//Weapon Usage
 	int WeaponSize = 1;
 	int ActionCost = 1;
-	int ProjectileCount = 3;
+	//Projectile
+	int ProjectileCount = 1;
+	int CurrentProjectileBurst = 0;
+	float ProjectileDamage = 10.f;
+	float ProjectileSpeed = 10.f;
+	//Aiming
+	float AimWobble = 0.01f;
 
 	//Defaults to cannon
 	EWeaponType Type = EWeaponType::Cannon;
 
 
+};
+
+class LightFifty : public CWeapon
+{
+public:
+	LightFifty(Entity* InEntity);
+};
+
+class AutoCannon : public CWeapon
+{
+public:
+	AutoCannon(Entity* InEntity);
+};
+
+class DeckGun : public CWeapon
+{
+public:
+	DeckGun(Entity* InEntity);
 };

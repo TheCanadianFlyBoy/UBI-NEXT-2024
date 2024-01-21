@@ -13,13 +13,12 @@ WaterRenderer* Waves;
 
 
 Ship* Enemy;
-Actor* MouseActor;
 
 PlayerController* LocalController;
 AIController* EnemyController;
 
 CRigidBody* Hull;
-CRigidBody* MouseBody;
+
 
 
 GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
@@ -67,14 +66,6 @@ GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 	UIHUDCanvas* Canvas = WorldObjectManager->CreateCanvas<UIHUDCanvas>();
 	Canvas->AimPointWidget->SetPlayerController(LocalController);
 
-
-	MouseActor = CreateEntity<Actor>();
-	CRigidBody* Body = MouseActor->CreateComponent<CRigidBody>();
-	Body->MakeCollisionCircle(Vector2(0.f, 0.f), 20.f);
-	Body->SetGravityScale(0.f);
-
-	MouseBody = Body;
-
 	
 	State->RegisterShip(Enemy, 1);
 
@@ -108,11 +99,7 @@ void GameWorld::Render()
 
 	App::Print(20.f, 20.f, text.c_str());
 
-	MouseActor->SetActorLocation(ENGINE->GetMouseScreenPosition() + ActiveCamera->GetCameraOrigin());
 
-	
-
-	Debug::DrawRectangleInWorld(Enemy->GetActorLocation() + Vector2(0.f, 50.f), Vector2(Enemy->GetComponentOfClass<CHealth>()->GetHealth(), 6.f), ActiveCamera, Color3(0.f, 1.f, 0.f));
 	Debug::DrawCircleInWorld(PlayerShip->GetActorLocation() + PlayerShip->FireControlComponent->GetAimVector(), 12.f, GetActiveCamera(), 5);
 
 }

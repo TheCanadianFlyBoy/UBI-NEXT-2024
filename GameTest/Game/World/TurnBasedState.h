@@ -6,6 +6,7 @@
 */
 
 #include "../../Engine/State/GameState.h"
+#include "../Object/Ship.h"
 
 class Ship;
 
@@ -63,6 +64,8 @@ public:
 			//Create struct with ship in array
 			Players.insert(Players.begin(), PlayerID, Player(InShip));
 		}
+
+		InShip->SetPlayer(&Players[PlayerID]);
 	
 	}
 
@@ -80,6 +83,7 @@ public:
 	// Player Getter
 	inline Player& GetCurrentPlayer() { return Players[CurrentPlayerID]; }
 	inline unsigned int GetCurrentPlayerID() { return CurrentPlayerID; };
+	inline Player& GetPlayerAtID(int ID) { return Players[ID]; }
 
 	//Player Registry
 	void RegisterController(Controller* InController, int PlayerID);

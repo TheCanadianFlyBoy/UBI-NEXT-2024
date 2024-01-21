@@ -49,6 +49,7 @@ void CRigidBody::FixedUpdate()
 		if (CollisionShape)
 		{
 			CollisionShape->Position = ActorOwner->GetActorLocation() + Offset;
+			//CollisionShape->Rotation
 		}
 
 
@@ -58,8 +59,12 @@ void CRigidBody::FixedUpdate()
 		//Do gravity
 		Velocity += Vector2(0.f, -GravityScale * DeltaTime * 0.01f * Mass);
 
+		//Lerp toward
+		AngularVelocity += MathOps::FSign(Velocity.y) * DeltaTime * 0.0001f;
+
 		//Do physics 'sim'
 		ActorOwner->AddActorLocation(Velocity);
+		//ActorOwner->AddActorRotation(AngularVelocity);
 
 		ApplyBuoyancy(DeltaTime);
 
@@ -284,8 +289,7 @@ void CRigidBody::ApplyBuoyancy(float DeltaTime)
 			DisplacementVolume *= Circle->Adjustment;
 
 			//Get fluid weight
-			float Density = 5.8f;
-			float FluidWeight = DisplacementVolume * Density * GravityScale; //TODO make water body based
+			float FluidWeight = DisplacementVolume * ObjectDensity * GravityScale; //TODO make water body based
 
 			//Calculate force
 			float Force = -FluidWeight * 0.0001f;

@@ -49,6 +49,7 @@ struct CollisionPrimitive : public Object {
 
 	//Common Properties
 	Vector2 Position = Vector2(0.f);
+	float Rotation = 0.f;
 
 	virtual void DebugDraw(CCamera* InCamera, Color3 InColor = Color3(1.f)) = 0;
 

@@ -44,7 +44,11 @@ public:
 
 public: // Weapon Management
 	//Fire!
-	inline Projectile* Fire() { if (GetCurrentWeapon()) return GetCurrentWeapon()->Fire(GetAimVector()); return nullptr; }
+	inline Projectile* Fire() { 
+	if (GetCurrentWeapon()) 
+		return GetCurrentWeapon()->Fire(GetAimVector()); 
+	
+	return nullptr; }
 
 	//Weapon Slot Insertion
 	inline void InsertWeaponSlot(std::string Name, WeaponSlot Slot) { AvailableWeapons.push_back(std::pair<std::string, WeaponSlot>(Name, Slot)); }

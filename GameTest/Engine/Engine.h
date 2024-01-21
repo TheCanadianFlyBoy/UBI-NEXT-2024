@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <random>
 
 #include "World/World.h"
 
@@ -36,12 +37,12 @@ public: // Methods
 	inline World* GetCurrentWorld() { return CurrentWorld; }
 	void LoadWorld(World* InWorld);
 	void LoadWorld(std::string Name);
+	//Deletes a world
+	void DeleteWorld(World* InWorld);
 
 	//Returns Sprite Manager
 	inline SpriteManager* GetSpriteManager() { return SpriteManager::GetInstance(); }
 
-	//Deletes a world
-	void DeleteWorld(World* InWorld);
 
 	//Easy clearing of global UI
 	inline void ClearGlobalCanvases() { 
@@ -63,6 +64,10 @@ public: //Factory Constructors
 	Type* CreateGlobalCanvas();
 
 protected: // Members
+
+
+	//Creates an MT for random usage
+	std::mt19937 MersenneTwister = std::mt19937(unsigned int(time(NULL)));
 
 	float FixedUpdateTimer = 0.f;
 
@@ -91,6 +96,23 @@ public: //Helpers
 
 	//Camera getter with null check
 	inline CCamera* GetActiveWorldCamera() { return GetCurrentWorld() ? GetCurrentWorld()->GetActiveCamera() : nullptr; }
+
+	//Random
+	inline float RandRangeF(float Min, float Max)
+	{
+		std::uniform_real_distribution<> Distribution(Min, Max);
+
+		return float(Distribution(MersenneTwister));
+
+	}
+
+	inline float RandF()
+	{
+		std::uniform_real<> Generator(FLT_MIN, FLT_MAX);
+
+		return float(Generator(MersenneTwister));
+	}
+
 
 };
 

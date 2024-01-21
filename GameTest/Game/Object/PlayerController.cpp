@@ -107,6 +107,7 @@ void PlayerController::SelectUpdate(float DeltaTime)
 	//Handle selecting and moving into action phase
 	if (ENGINE->CheckButton(XINPUT_GAMEPAD_A, true))
 	{
+		Possess(State->GetCurrentFleetShip());
 		State->SetTurnState(ETurnState::Action);
 	}
 

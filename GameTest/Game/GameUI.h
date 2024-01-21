@@ -23,6 +23,16 @@ public:
 	UIButton* ExitButton;
 };
 
+class UIPauseCanvas : public UICanvas
+{
+public:
+	UIPauseCanvas();
+
+	UIButton* ResumeButton;
+	UIButton* MenuButton;
+
+};
+
 class UIHUDCanvas : public UICanvas
 {
 public:

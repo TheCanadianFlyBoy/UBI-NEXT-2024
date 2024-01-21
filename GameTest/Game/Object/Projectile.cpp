@@ -10,7 +10,14 @@ Projectile::Projectile(World* InWorld) : Actor(InWorld)
 	ProjectileBody = CreateComponent<CRigidBody>();
 	ProjectileBody->SetMass(1.f);
 	ProjectileBody->SetGravityScale(1.f);
+	ProjectileBody->SetDensity(3000.f);
 	ProjectileBody->MakeCollisionCircle(Vector2(0.f), 4.f);
+	ProjectileBody->SetupBuoyancyCircles();
+
+	AutoDeactivates = true;
+
+	SetLifetimeMax(12.f);
+
 }
 
 void Projectile::OnBegin()
@@ -31,6 +38,7 @@ void Projectile::OnActorCollision(CollisionInfo Info)
 	if (Info.ThisActor && Info.OtherActor && Info.OtherActor != Owner && Info.ThisActor != Owner)
 	{
 
+
 		CHealth* HealthComponent;
 
 		//Check health
@@ -38,9 +46,12 @@ void Projectile::OnActorCollision(CollisionInfo Info)
 		if (!HealthComponent) //Swap in case of reversed collision event
 			HealthComponent = Info.ThisActor->GetComponentOfClass<CHealth>();
 
+		//Additional nullguard
+		if (!HealthComponent) return;
+
 		//Calculate positional damage
 		float DistanceToCentreOfMass = (HealthComponent->Owner->GetEntityLocation().DistanceFrom(Info.ImpactPoint));
-		float PositionalDamage = Damage * (std::max<float>(1.f - (1.f / 10.f * sqrtf(DistanceToCentreOfMass)), 0.f)); //TODO make variable based on projectile type
+		float PositionalDamage = Damage * (std::max<float>(1.f - (1.f / 100.f * sqrtf(DistanceToCentreOfMass)), 0.f)); //TODO make variable based on projectile type
 		
 
 		//Take damage
@@ -56,6 +67,13 @@ void Projectile::OnActorCollision(CollisionInfo Info)
 		//Self deletion
 		Shutdown();
 
+		//Spawn particle
+		ParticleSprite* Particle = Owner->GetWorld()->CreateEntity<ParticleSprite>();
+		Particle->SetActorLocation(GetEntityLocation());
+		Particle->SpriteComponent->SetSprite("Explosion1");
+		Particle->SpriteComponent->SetAnimation(0, true);
+		Particle->SetLifetime(1.f);
+
 		//SetActorLocation(Vector2(0.f));
 
 	}
@@ -66,12 +84,7 @@ void Projectile::OnActorCollision(CollisionInfo Info)
 /// </summary>
 void Projectile::Shutdown()
 {
-	//Spawn particle
-	ParticleSprite* Particle = Owner->GetWorld()->CreateEntity<ParticleSprite>();
-	Particle->SetActorLocation(GetEntityLocation());
-	Particle->SpriteComponent->SetSprite("Explosion1");
-	Particle->SpriteComponent->SetAnimation(0, true);
-	Particle->SetLifetime(1.f);
+	
 
 	Actor::Shutdown();
 }

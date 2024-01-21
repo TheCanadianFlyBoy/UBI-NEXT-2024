@@ -35,7 +35,11 @@ public:
 
 	Vector2 LastInput = Vector2(-1.f, 1.f);
 	Vector2 DifferenceToTarget = Vector2(0.f);
-	float DistanceToTarget = FLT_MAX;
+	float DistanceToTarget = 0.f;
+	float AngleAdjustment = 0.f;
+	float DistanceToNearest = 0.f;
+
+	Vector2 Impact = Vector2(0.f);
 
 	float WaitLength = 0.5f;
 	float WaitTimer = 0.f;
@@ -43,6 +47,6 @@ public:
 	Ship* PossessedShip = nullptr;
 	Projectile* TrackedShot;
 
-	std::mt19937 twist{};
+
 
 };

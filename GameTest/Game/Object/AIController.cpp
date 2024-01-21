@@ -16,12 +16,18 @@ void AIController::OnBegin()
 
 	//Save state pointer (static is fine since this should only happen once, and is crucial)
 	State = static_cast<TurnBasedGameState*>(ThisWorld->GetWorldGameState());
+	if (PossessedShip)
+		PossessedShip->FireControlComponent->AddAzimuth(PI / 2.f);
 }
 
 //Main logic loop
 void AIController::Update(float DeltaTime)
 {
 
+	Debug::PrintLine(std::to_string(AngleAdjustment));
+	Debug::PrintLine(std::to_string(DistanceToTarget));
+	Debug::PrintLine(std::to_string(DistanceToNearest));
+	Debug::PrintLine(std::to_string(Impact.x));
 	//Not my turn, return
 	if (State->GetCurrentPlayerID() != PlayerID) return;
 
@@ -70,14 +76,16 @@ void AIController::Update(float DeltaTime)
 			if (PossessedShip->CanUseAction())
 			{
 				
-				std::uniform_real_distribution<> RandomGen(-0.9f, 0.9f);
+				std::uniform_real_distribution<> RandomGen(-0.2f, 0.2f);
 
 
 				//Use a point
 				PossessedShip->UseAction();
 				//Get a random firing solution
-				PossessedShip->FireControlComponent->AddAzimuth(-acosf(DifferenceToTarget.x));
+				PossessedShip->FireControlComponent->AddAzimuth(ENGINE->RandRangeF(-0.3f, 0.3f));
 				TrackedShot = PossessedShip->FireControlComponent->Fire();
+
+				
 
 				//Do trajectory calc
 				EstimateTrajectory();
@@ -132,40 +140,32 @@ void AIController::OnUnPossess()
 	PossessedShip = nullptr;
 }
 
+
+
 Vector2 AIController::EstimateTrajectory()
 {
 
-	DistanceToTarget = FLT_MAX;
+	//
+	////Get ships
+	//std::vector<Actor*> IgnoredActors;
+	////Convert
+	//for (auto& Actors : State->GetCurrentPlayer().Fleet)
+	//{
+	//	IgnoredActors.push_back(Actors);
+	//}
+	//Vector2 Origin = PossessedShip->GetActorLocation();
+	//Actor* Nearest = GetWorld()->GetNearestActor(Origin, IgnoredActors);
+	//Vector2 Target = Nearest->GetActorLocation();
+	//float InitialSpeed = 10.f;
+	//
+	//
+	//Vector2 Delta = Target - Origin;
+	//float Distance = Delta.x;
+	////Get elevation
+	//float Height = Delta.y;
+	//float EstTime = Distance / 10
+	//
+	//float DirectAngle
 
-	//Nullguard
-	if (!TrackedShot) return Vector2(-1.f);
-
-	Vector2 QueryPosition = TrackedShot->GetActorLocation();
-	Vector2 Velocity = TrackedShot->GetComponentOfClass<CRigidBody>()->GetVelocity();
-
-	for (int i = 0; i < 200; i++)
-	{
-		Velocity += 0.2f * 9.8f;
-		QueryPosition += Velocity * 0.2f;
-
-		//Get ships
-		std::vector<Actor*> IgnoredActors;
-		//Convert
-		for (auto& Actors : State->GetCurrentPlayer().Fleet)
-		{
-			IgnoredActors.push_back(Actors);
-		}
-
-		Actor* Nearest = GetWorld()->GetNearestActor(QueryPosition, IgnoredActors);
-
-		float DistanceToNearest = Nearest->GetActorLocation().DistanceFromSquared(QueryPosition);
-
-		if (DistanceToNearest < DistanceToTarget)
-		{
-			DistanceToTarget = DistanceToNearest;
-			DifferenceToTarget = QueryPosition - Nearest->GetActorLocation();
-		}
-
-	}
-
+	return Vector2(0.f);
 }

@@ -11,6 +11,9 @@
 class WaterRenderer : public Actor
 {
 public:
+	//Class Name
+	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
+	inline static const char* GetStaticClassName() { return "ParticleSprite"; }
 
 	WaterRenderer(World* InWorld = nullptr);
 
