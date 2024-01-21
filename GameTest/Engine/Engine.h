@@ -65,6 +65,17 @@ public: //Helpers
 	//Mouse Position
 	Vector2 GetMouseScreenPosition();
 	Vector2 GetMouseWorldPosition();
+	//Thumbstick helpers
+	inline Vector2 GetLeftStick() { return Vector2(App::GetController().GetLeftThumbStickX(), App::GetController().GetLeftThumbStickY()); }
+	inline Vector2 GetRightStick() { return Vector2(App::GetController().GetRightThumbStickX(), App::GetController().GetRightThumbStickY()); }
+	//DPad
+	inline Vector2 GetDPad()	{ return Vector2(
+		float(App::GetController().CheckButton((APP_PAD_EMUL_DPAD_RIGHT) - App::GetController().CheckButton(APP_PAD_EMUL_DPAD_LEFT))),
+		float(App::GetController().CheckButton((APP_PAD_EMUL_DPAD_DOWN) - App::GetController().CheckButton(APP_PAD_EMUL_DPAD_UP)))
+		); }
+	//Shorthand for buttons
+	inline bool CheckButton(int ButtonCode, bool CheckPressed = false) { return App::GetController().CheckButton(ButtonCode, CheckPressed); }
+
 	//Camera getter with null check
 	inline CCamera* GetActiveWorldCamera() { return GetCurrentWorld() ? GetCurrentWorld()->GetActiveCamera() : nullptr; }
 

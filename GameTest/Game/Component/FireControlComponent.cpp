@@ -9,49 +9,12 @@
 /// <param name="DeltaTime"></param>
 void CFireControl::Update(float DeltaTime)
 {
-	CControllerBase::Update(DeltaTime);
+	CInput::Update(DeltaTime);
 
-	//Handle controller inputs for aiming
-	//Mouse
-	if (CurrentControlScheme == EControlType::Mouse)
-	{
-		//Set target position
-		AimVector = ENGINE->GetMouseWorldPosition() - Owner->GetEntityLocation();
-		AimVector = AimVector.GetNormalized();
+	//Clamp aim
+	AzimuthRadians = MathOps::FClamp(AzimuthRadians, -PI / 2.f, PI / 2.f);
 
-	}
-	else  //Controller defaults
-	{
-		//Increment Aim
-		AzumithRadians += App::GetController().GetLeftThumbStickY() * DeltaTime * TraversalRate * 0.001f;
-		AzumithRadians = MathOps::FClamp(AzumithRadians, PI / -2.f, PI / 2.f);
-
-		AimVector.x = cosf(AzumithRadians);
-		AimVector.y = sinf(AzumithRadians);
-		AimVector = AimVector.GetNormalized();
-	}
-
-	//Handle weapon swap
-	if (App::GetController().CheckButton(APP_PAD_EMUL_DPAD_UP)) 
-		GetNextWeapon();
-	if (App::GetController().CheckButton(APP_PAD_EMUL_DPAD_DOWN)) 
-		GetPreviousWeapon();
-
-	bool g = App::GetController().CheckButton(VK_LBUTTON, true);
-	if (g)
-	{
-		g = true;
-	}
-
-	//Handle firing
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A) || App::GetController().CheckButton(XINPUT_GAMEPAD_B))
-	{
-		//Empty//nullcheck
-		if (!AvailableWeapons.empty() && GetCurrentWeapon())
-		{
-			GetCurrentWeapon()->Fire(AimVector);
-		}
-	}
+	AimVector = Vector2(cosf(AzimuthRadians), sinf(AzimuthRadians));
 
 }
 

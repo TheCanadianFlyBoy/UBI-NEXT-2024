@@ -7,14 +7,14 @@
 
 #include "Component.h"
 
-class CControllerBase : public Component
+class CInput : public Component
 {
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
-	inline static const char* GetStaticClassName() { return "CControllerBase"; }
+	inline static const char* GetStaticClassName() { return "CInput"; }
 
-	CControllerBase(Entity* InEntity) : Component(InEntity) {};
+	CInput(Entity* InEntity) : Component(InEntity) {};
 
 
 };

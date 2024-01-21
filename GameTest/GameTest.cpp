@@ -35,6 +35,9 @@ void Init()
 	//Register sprites
 	SpriteManager::GetInstance()->RegisterNewSprite("DefaultDude", ".\\TestData\\Test.bmp", 8, 4);
 	SpriteManager::GetInstance()->RegisterNewSprite("Destroyer", ".\\Game\\Resources\\Sprites\\CFB_SPR_Destroyer.png");
+	SpriteManager::GetInstance()->RegisterNewSprite("Cruiser", ".\\Game\\Resources\\Sprites\\CFB_SPR_Cruiser.png");
+	SpriteManager::GetInstance()->RegisterNewSprite("Battleship", ".\\Game\\Resources\\Sprites\\CFB_SPR_Battleship.png");
+	SpriteManager::GetInstance()->RegisterNewSprite("Gunboat", ".\\Game\\Resources\\Sprites\\CFB_SPR_Gunboat.png");
 	SpriteManager::GetInstance()->RegisterNewSprite("DestroyerHull", ".\\Game\\Resources\\Sprites\\CFB_SPR_Destroyer_CollisionArea.png");
 
 	//Register particles
@@ -75,6 +78,6 @@ void Render()
 //------------------------------------------------------------------------
 void Shutdown()
 {	
-
+	ENGINE->Shutdown();
 
 }

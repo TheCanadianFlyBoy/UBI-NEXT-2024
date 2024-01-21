@@ -55,11 +55,18 @@ void ObjectManager::OnBegin()
 //UPDATe
 void ObjectManager::Update(float DeltaTime)
 {
-	//Update controllers
-	for (auto& Controller : Components["CControllerBase"])
+	//Update controller
+	for (auto& Controller : Entities["Controller"])
 	{
-		if (Controller->Active && GetWorld()->GetWorldGameState()->CanPassControllerInputs())
+		if (Controller->Active)
 			Controller->Update(DeltaTime);
+	}
+
+	//Update Input
+	for (auto& Input : Components["CInput"])
+	{
+		if (Input->Active)
+			Input->Update(DeltaTime);
 	}
 
 	//Update Health
@@ -91,6 +98,11 @@ void ObjectManager::Update(float DeltaTime)
 		if (Sprite->Active) Sprite->Update(DeltaTime);
 	}
 
+	//Handle UI Updates
+	for (auto& Canvas : Canvases)
+	{
+		Canvas->Update(DeltaTime);
+	}
 
 	//Handle projectiles
 	for (auto& ThisProjectile : Entities["Projectile"])

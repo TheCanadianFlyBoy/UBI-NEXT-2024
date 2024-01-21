@@ -7,12 +7,15 @@
 #include "../Component/FireControlComponent.h"
 #include "../GameUI.h"
 #include "TurnBasedState.h"
+#include "../Object/PlayerController.h"
 
 WaterRenderer* Waves;
 
 
 Ship* Enemy;
 Actor* MouseActor;
+
+PlayerController* LocalController;
 
 CRigidBody* Hull;
 CRigidBody* MouseBody;
@@ -21,26 +24,40 @@ CRigidBody* MouseBody;
 GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 {
 	//Setup state
-	
+	WorldGameState = std::make_unique<TurnBasedGameState>(this);
+
+	TurnBasedGameState *State = (TurnBasedGameState*)WorldGameState.get(); //TODO cleanup
+
 
 	//Setup Player
 	PlayerShip = CreateEntity<Destroyer>();
 	PlayerShip->SetActorLocation(PlayerShipLocation);
+	State->RegisterShip(PlayerShip, 0);
 
-	//Camera
-	CCamera* Cam = PlayerShip->CreateComponent<CCamera>();
+	Gunboat* PlayerGunboat = CreateEntity<Gunboat>();
+	PlayerGunboat->SetActorLocation(PlayerShipLocation - Vector2(400.f, 0.f));
+	State->RegisterShip(PlayerGunboat, 0);
+	
+
+	//Setup player controller
+	LocalController = CreateEntity<PlayerController>();
+	LocalController->SetActorLocation(PlayerShipLocation);
+	LocalController->Possess(PlayerShip);
+	CCamera* Cam = LocalController->CreateComponent<CCamera>();
 	Cam->SetCameraLag(0.09f);
 	SetActiveCamera(Cam);
 
 	//Setup enemy
 	Enemy = CreateEntity<Destroyer>();
-	Enemy->SetActorLocation(Vector2(5000.f, 220.f));
+	Enemy->SetActorLocation(Vector2(2000.f, 220.f));
 
 	Waves = CreateEntity<WaterRenderer>();
 	Waves->SetActorLocation(Vector2(-5000.f, 0.f));
 
-	UIAimPoint* AimPoint = WorldObjectManager->CreateCanvas<UICanvas>()->AddWidget<UIAimPoint>();
-	AimPoint->SetCurrentShip(PlayerShip);
+
+	//UI SETUP
+	UIHUDCanvas* Canvas = WorldObjectManager->CreateCanvas<UIHUDCanvas>();
+	Canvas->AimPointWidget->SetPlayerController(LocalController);
 
 
 	MouseActor = CreateEntity<Actor>();
@@ -49,6 +66,9 @@ GameWorld::GameWorld(EngineCore* Engine) : World(Engine)
 	Body->SetGravityScale(0.f);
 
 	MouseBody = Body;
+
+	
+	State->RegisterShip(Enemy, 1);
 
 
 

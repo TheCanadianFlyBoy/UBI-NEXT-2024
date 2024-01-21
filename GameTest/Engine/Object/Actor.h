@@ -27,6 +27,7 @@ public:
 public: //Helper Methods
 	//Setters
 	inline void SetActorLocation(Vector2 InVector) { Transform->SetPosition(InVector); };
+	inline void SetActorLocation(Entity* InEntity) { if (InEntity) Transform->SetPosition(InEntity->GetEntityLocation()); }
 	inline void SetActorRotation(float InRotation) { Transform->SetRotation(InRotation); };
 
 	//Getters

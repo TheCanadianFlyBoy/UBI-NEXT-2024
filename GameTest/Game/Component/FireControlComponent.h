@@ -6,6 +6,7 @@
 */
 
 #include "../../Engine/Component/ControllerComponent.h"
+#include "WeaponComponent.h"
 
 class CWeapon;
 
@@ -16,30 +17,35 @@ struct WeaponSlot
 	CWeapon* Weapon = nullptr;
 };
 
-class CFireControl : public CControllerBase
+class CFireControl : public CInput
 {
 	friend class CWeapon;
 public:
-	enum class EControlType {
-		Mouse,
-		Controller
-	};
+
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
-	inline static const char* GetStaticClassName() { return "CControllerBase"; }
+	inline static const char* GetStaticClassName() { return "CInput"; }
 
-	CFireControl(Entity* InEntity) : CControllerBase(InEntity) { };
+	CFireControl(Entity* InEntity) : CInput(InEntity) { };
 
-	virtual void OnBegin() override { CControllerBase::OnBegin(); Active = false; }
+	//Overrides
+	virtual void OnBegin() override { CInput::OnBegin(); }
 	virtual void Update(float DeltaTime) override;
 
+	//Aim setters
+	inline void AddAzimuth(float InAzimuth) { AzimuthRadians += InAzimuth * TraversalRate; }
+	inline void SetAimPoint(Vector2 InVector) { AimVector = acos((InVector - GetTurretPosition()).x); }
+	//Aim Getters
 	inline Vector2 GetAimVector() { return AimVector; }
-	inline float GetAzumithRadians() { return AzumithRadians; }
-	inline float GetAzumithDegrees() { return MathOps::RadiansToDegrees(AzumithRadians); }
+	inline float GetAzimuthRadians() { return AzimuthRadians; }
+	inline float GetAzimuthDegrees() { return MathOps::RadiansToDegrees(AzimuthRadians); }
 
 public: // Weapon Management
+	//Fire!
+	inline void Fire() { if (GetCurrentWeapon()) GetCurrentWeapon()->Fire(GetAimVector()); }
 
+	//Weapon Slot Insertion
 	inline void InsertWeaponSlot(std::string Name, WeaponSlot Slot) { AvailableWeapons.push_back(std::pair<std::string, WeaponSlot>(Name, Slot)); }
 	//inline void RemoveWeaponSlot(std::string Name) { AvailableWeapons.erase() } TODO
 
@@ -57,18 +63,21 @@ public: // Weapon Management
 	/// <summary>
 	/// Shorthand for iterating the weapon list to the left
 	/// </summary>
-	inline void GetPreviousWeapon() { WeaponIndex = WeaponIndex - 1 >= 0  ? WeaponIndex - 1 : AvailableWeapons.size() - 1; }
+	inline void GetPreviousWeapon() { WeaponIndex = int(WeaponIndex - 1 >= 0  ? WeaponIndex - 1 : AvailableWeapons.size() - 1); }
 
+protected: // Methods
 
+	inline Vector2 GetTurretPosition() { 
+		if (GetCurrentWeapon()) return GetCurrentWeapon()->GetPosition();
+		return Vector2(0.f);
+	}
 
 protected: // Members
 	//Fire Control Rates of Change
 	float TraversalRate = 1.f;
 	//Fire Control Position
-	float AzumithRadians = PI / 4.f;
-	Vector2 AimVector = Vector2(cos(AzumithRadians), sin(AzumithRadians));
-	//Fire Control Type
-	EControlType CurrentControlScheme = EControlType::Controller;
+	float AzimuthRadians = PI / 4.f;
+	Vector2 AimVector = Vector2(cos(AzimuthRadians), sin(AzimuthRadians));
 	//Register of available weapons
 	std::vector<std::pair<std::string, WeaponSlot>> AvailableWeapons;
 	int WeaponIndex = 0;

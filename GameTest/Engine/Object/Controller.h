@@ -5,12 +5,11 @@
 *
 */
 
-#include "Entity.h"
+#include "Actor.h"
 
 class World;
-class Actor;
 
-class Controller : public Entity
+class Controller : public Actor
 {
 public:
 	//Class Name
@@ -18,10 +17,10 @@ public:
 	inline static const char* GetStaticClassName() { return "Controller"; }
 
 	//Default Constructor with optional args
-	Controller(World* InWorld = nullptr, Actor* InActor = nullptr) : Entity(InWorld) { if (InActor) Possess(InActor); };
+	Controller(World* InWorld = nullptr, Actor* InActor = nullptr) : Actor(InWorld) { if (InActor) Possess(InActor); };
 
 	//Update
-	virtual void Update(float DeltaTime) {};
+	virtual void Update(float DeltaTime) { Entity::Update(DeltaTime); };
 
 
 public: // Methods
@@ -32,7 +31,7 @@ public: // Methods
 	virtual void OnPossess(Actor* InActor) {};
 	//UnPossess
 	void UnPossess();
-	virtual void OnUnPossesss() {};
+	virtual void OnUnPossess() {};
 
 		//Input Data
 	//Setters

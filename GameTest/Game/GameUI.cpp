@@ -3,31 +3,58 @@
 #include "GameUI.h"
 #include "Object/Ship.h"
 #include "Component/FireControlComponent.h"
+#include "World/TurnBasedState.h"
 
 /// <summary>
 /// Renders aiming information
 /// </summary>
 void UIAimPoint::Render()
 {
+
 	//Get Positioning
 	Vector2 CentrePoint = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 8);
 	Vector2 Dimensions = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 3);
 	//Draw box
 	Debug::DrawRectangle(CentrePoint, Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 3));
 
-	CFireControl& FireControl = *CurrentShip->FireControlComponent;
+	//Nullguard
+	if (CurrentShip)
+	{
+		//If ship is active and we're on a turn
+		if (CurrentShip->Active && ENGINE->GetCurrentWorld()->GetWorldGameState()->GetCurrentState() == int(ETurnState::Action))
+		{
+			CFireControl& FireControl = *CurrentShip->FireControlComponent;
+			DrawAzumith();
+			DrawWeaponSelect();
+			//Debug::DrawLine(CentrePoint, CentrePoint + FireControl.GetAimVector() * 20.f);
+		}
+		else { //Draw Ship Overview
 
-	if (CurrentShip && CurrentShip->Active)
-	{ 
-		DrawAzumith();
-		DrawWeaponSelect();
-		//Debug::DrawLine(CentrePoint, CentrePoint + FireControl.GetAimVector() * 20.f);
+			Debug::DrawText(CentrePoint - Vector2(200.f, -80.f), "Ship: ");
+
+			//
+		}
 	}
-	else
+	else //Fail case, draw offline
 	{
 		Debug::DrawText(CentrePoint - Vector2(100.f, 0.f), "OFFLINE", Color3(1.f, 0.f, 0.f));
 	}
 
+}
+
+/// <summary>
+/// Fetch updated current ship
+/// </summary>
+/// <param name="DeltaTime"></param>
+void UIAimPoint::Update(float DeltaTime)
+{
+	if (Controller)
+	{
+		CurrentShip = Controller->PossessedShip;
+	}
+	else {
+		CurrentShip = nullptr;
+	}
 }
 
 
@@ -53,7 +80,7 @@ void UIAimPoint::DrawAzumith()
 	Debug::DrawCircle(AzumithCentre, 70.f, 24, Color3(1.f, 0.4f, 0.4f));
 
 	//Get azumith
-	int AzumithAngle = int(FireControl.GetAzumithDegrees());
+	int AzumithAngle = int(FireControl.GetAzimuthDegrees());
 
 
 	Debug::DrawText(AzumithCentre + Vector2(-60.f, 90.f), "Azumith: " + std::to_string(AzumithAngle));
@@ -80,4 +107,33 @@ void UIAimPoint::DrawWeaponSelect()
 void UIAimPoint::Shutdown()
 {
 	UIWidget::Shutdown();
+}
+
+/// <summary>
+/// Renders the current player number
+/// </summary>
+void UIPlayerDisplay::Render()
+{
+	TurnBasedGameState* State = dynamic_cast<TurnBasedGameState*>(ENGINE->GetCurrentWorld()->GetWorldGameState());
+
+	//Nullguard
+	if (State)
+	{
+		Vector2 CentrePoint = Vector2(APP_VIRTUAL_WIDTH / 2, APP_VIRTUAL_HEIGHT / 8);
+
+		//Render
+		Vector2 TextPosition = CentrePoint - Vector2(0.f, 200.f);
+
+		Debug::DrawText(TextPosition, "Current Player: ");
+	}
+
+}
+
+/// <summary>
+/// Construct basic hud
+/// </summary>
+UIHUDCanvas::UIHUDCanvas() : UICanvas()
+{
+	AimPointWidget = AddWidget<UIAimPoint>();
+	PlayerDisplayWidget = AddWidget<UIPlayerDisplay>();
 }

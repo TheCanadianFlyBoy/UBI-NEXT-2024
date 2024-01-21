@@ -56,6 +56,27 @@ namespace MathOps {
 		return std::max<float>(Min, std::min<float>(Max, Value));
 	}
 
+	static inline int IndexShift(int CurrentIndex, int Shift, int Size)
+	{
+		//Calculate new index
+		int New_Index = CurrentIndex + Shift;
+
+		//Conditional loop: outside of array scope
+		while (New_Index >= Size || New_Index < 0)
+		{
+			//Case 1: Less than 0
+			if (New_Index < 0)
+				New_Index += Size;
+			//Case 2: 
+			else if (New_Index >= Size)
+				New_Index = New_Index - Size;
+
+		}
+
+		//Return calculated index
+		return New_Index;
+	}
+
 	Vector2 VectorLerp(::Vector2 A, ::Vector2 B, float Delta);
 
 	std::vector<Vector2> CreateCirclePoints(float Radius, int SegmentCount);

@@ -21,6 +21,7 @@ Ship::Ship(World* InWorld) : Actor(InWorld)
 	//Create fire control
 	FireControlComponent = CreateComponent<CFireControl>();
 
+	//Health component for combat
 	HealthComponent = CreateComponent<CHealth>();
 
 }
@@ -28,12 +29,12 @@ Ship::Ship(World* InWorld) : Actor(InWorld)
 //Toggles the fire control system
 void Ship::Possess()
 {
-	FireControlComponent->Active = true;
+	//FireControlComponent->Active = true;
 }
 
 void Ship::UnPossess()
 {
-	FireControlComponent->Active = false;
+	//FireControlComponent->Active = false;
 }
 
 
@@ -49,14 +50,11 @@ Destroyer::Destroyer(World* InWorld) : Ship(InWorld)
 	SpriteComponent->SetSprite("Destroyer");
 	SpriteComponent->SetPosition(Vector2(5, 16.f));
 
-	Vector2 HullDimensions = SpriteManager::GetInstance()->GetSpriteDimensions("DestroyerHull");
-	RigidBodyComponent->MakeCollisionBox(
-		GetActorLocation(), HullDimensions - Vector2(0.f, HullDimensions.y / 2)
-	);
+	Vector2 HullDimensions = SpriteManager::GetInstance()->GetSpriteDimensions("Destroyer");
 
-	RigidBodyComponent->MakeCollisionBox(GetActorLocation(), HullDimensions - Vector2(0.f, HullDimensions.y / 2));
+	RigidBodyComponent->MakeCollisionBox(GetActorLocation(), HullDimensions - Vector2(HullDimensions.x * 0.1f, HullDimensions.y * .7f));
 	RigidBodyComponent->SetBuoyancyCircleRadius(8);
-	RigidBodyComponent->SetMass(1.f);
+	RigidBodyComponent->SetMass(0.5f);
 	RigidBodyComponent->SetupBuoyancyCircles();
 
 
@@ -71,6 +69,25 @@ Destroyer::Destroyer(World* InWorld) : Ship(InWorld)
 	RearGun->SetOffset(Vector2(-100.f, 20.f));
 	RearGun->MakeCollisionBox(Vector2(15.f));
 
-	UnPossess();
+}
 
+Gunboat::Gunboat(World* InWorld) : Ship(InWorld)
+{
+	SpriteComponent->SetSprite("Gunboat");
+	SpriteComponent->SetPosition(Vector2(5, 30.f));
+
+	Vector2 HullDimensions = SpriteManager::GetInstance()->GetSpriteDimensions("Gunboat");
+
+	RigidBodyComponent->MakeCollisionBox(GetActorLocation(), HullDimensions - Vector2(HullDimensions.x * 0.02f, HullDimensions.y * 0.7));
+	RigidBodyComponent->SetBuoyancyCircleRadius(8.f);
+	RigidBodyComponent->SetMass(1.f);
+	RigidBodyComponent->SetupBuoyancyCircles();
+
+
+	FireControlComponent->InsertWeaponSlot("Main Gun", WeaponSlot());
+	FireControlComponent->InsertWeaponSlot("Rear Gun", WeaponSlot());
+
+	CWeapon* MainGun = CreateComponent<CWeapon>();
+	MainGun->SetOffset(Vector2(100.f, 20.f));
+	MainGun->MakeCollisionBox(Vector2(0.f), Vector2(15.f));
 }

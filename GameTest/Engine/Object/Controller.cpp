@@ -7,7 +7,7 @@
 /// <param name="InActor"></param>
 void Controller::Possess(Actor* InActor)
 {
-	//Do checks here TODO
+	if (PossessedActor) UnPossess();
 
 	//Save reference
 	PossessedActor = InActor;
@@ -24,6 +24,6 @@ void Controller::Possess(Actor* InActor)
 void Controller::UnPossess()
 {
 	//Call OnUnPossess FIRST
-	OnUnPossesss();
+	OnUnPossess();
 
 }

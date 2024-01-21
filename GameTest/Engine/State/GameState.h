@@ -49,6 +49,8 @@ public: //Methods
 	inline bool StopControllerInputs() { bPassInputsToController = false; }
 	inline bool AllowControllerInputs() { bPassInputsToController = true; }
 
+	inline int GetCurrentState() { return CurrentState; }
+
 protected: // Members
 	EventManager* WorldEventManager = nullptr;
 	//UI pointer TODO

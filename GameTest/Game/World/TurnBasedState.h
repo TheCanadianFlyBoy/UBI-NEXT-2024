@@ -13,28 +13,64 @@ struct Player {
 	//Ships
 	std::vector<Ship*> Fleet;
 
+	Ship* ActiveShip = nullptr;
+
+	unsigned int ShipIndex = 0;
+
 	//End turn flag
 	bool EndTurn = false;
 
 };
 
+enum class ETurnState : int
+{
+	Select,
+	Action,
+	End
+};
+
 class TurnBasedGameState : public GameState
 {
+public:
+	
+
 public:
 	//Class Name
 	inline virtual const char* GetObjectClassName() override { return GetStaticClassName(); }
 	inline static const char* GetStaticClassName() { return "Ship"; }
 
+	TurnBasedGameState(World* InWorld) : GameState(InWorld) {};
 
 
 	//Custom Update
 	virtual void TurnBasedUpdate(float DeltaTime);
+	//Fleet management
+	inline void RegisterShip(Ship* InShip, unsigned int PlayerID) { 
+		if (PlayerID < Players.size())
+		{
+			Players[PlayerID].Fleet.push_back(InShip);
+		}
+		else
+		{
+			//Create struct with ship in array
+			Players.push_back({ {InShip}, nullptr, 0, false });
+		}
 	
+	}
+
+	//Fleet Access
+	inline Ship* GetCurrentFleetShip() { return GetCurrentPlayer().Fleet[GetCurrentPlayer().ShipIndex]; };
+	Ship* GetNextFleetShip();
+	Ship* GetPreviousFleetShip();
+
+	//Turn Ending
 	void EndTurn();
 
-
-	//
-	inline Player GetCurrentPlayer() { return Players[CurrentPlayerID]; }
+	//Turn State
+	inline void SetTurnState(ETurnState State) { CurrentState = int(State); }
+	inline ETurnState GetTurnState() { return ETurnState(CurrentState); }
+	// Player Getter
+	inline Player& GetCurrentPlayer() { return Players[CurrentPlayerID]; }
 protected: // Methods
 	inline void GetNextPlayer() { CurrentPlayerID = CurrentPlayerID + 1 < Players.size() ? CurrentPlayerID + 1 : 0; }
 

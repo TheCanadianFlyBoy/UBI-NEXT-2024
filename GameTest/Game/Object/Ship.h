@@ -31,7 +31,14 @@ public:
 
 	//Action
 	inline bool CanUseAction() { return ActionPoints > 0; }
-	inline void UseAction() { if (CanUseAction()) ActionPoints--; }
+	inline bool UseAction(int Points = 1) {
+		if (ActionPoints - Points >= 0) 
+		{
+			ActionPoints--; 
+			return true;
+		}
+		return false;
+	}
 	inline void EndTurn() { ActionPoints = ActionsMax; }
 	inline void SetActionPointMax(unsigned int Actions) { ActionsMax = ActionsMax; ActionPoints = ActionsMax; }
 
@@ -56,4 +63,12 @@ class Destroyer : public Ship
 {
 public:
 	Destroyer(World* InWorld);
+};
+
+class Gunboat : public Ship
+{
+public:
+	Gunboat(World* InWorld);
+
+	virtual void Update(float DeltaTime) { Ship::Update(DeltaTime); };
 };

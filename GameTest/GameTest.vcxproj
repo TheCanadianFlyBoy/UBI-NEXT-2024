@@ -222,6 +222,8 @@
     <ClInclude Include="Game\Component\WeaponComponent.h" />
     <ClInclude Include="Game\Environment\Water.h" />
     <ClInclude Include="Game\GameUI.h" />
+    <ClInclude Include="Game\Object\AIController.h" />
+    <ClInclude Include="Game\Object\PlayerController.h" />
     <ClInclude Include="Game\Object\Projectile.h" />
     <ClInclude Include="Game\Object\Ship.h" />
     <ClInclude Include="Game\World\GameObjectManager.h" />
@@ -269,6 +271,8 @@
     <ClCompile Include="Game\Component\WeaponComponent.cpp" />
     <ClCompile Include="Game\Environment\Water.cpp" />
     <ClCompile Include="Game\GameUI.cpp" />
+    <ClCompile Include="Game\Object\AIController.cpp" />
+    <ClCompile Include="Game\Object\PlayerController.cpp" />
     <ClCompile Include="Game\Object\Projectile.cpp" />
     <ClCompile Include="Game\Object\Ship.cpp" />
     <ClCompile Include="Game\World\GameWorld.cpp" />
