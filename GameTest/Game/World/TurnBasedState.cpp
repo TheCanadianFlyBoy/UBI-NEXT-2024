@@ -158,28 +158,53 @@ void TurnBasedGameState::DefaultEventHandler(std::shared_ptr<Event> InEvent, flo
 		Actor* Closest = GetWorld()->GetNearestActor(Spawn);
 		for (int i = 0; i < 3; i++)
 		{
-			Vector2 Spawn = SpawnPoints[0 + CastEvent->PlayerID * 3].second;
+			Spawn = SpawnPoints[i + CastEvent->PlayerID * 3].second;
 			Actor* Closest = GetWorld()->GetNearestActor(Spawn);
-			if (Closest->GetActorLocation().DistanceFrom(Spawn) > 400.f) break;
+			if (!Closest || Closest->GetActorLocation().DistanceFrom(Spawn) > 400.f) break;
+		}
+													 //
+																						 //Messy, done veryy last minute
+		if (CastEvent->Name == "Corvette")
+		{
+			Corvette* NewShip = GetWorld()->CreateEntity<Corvette>();
+			NewShip->OnBegin();
+			NewShip->SetActorLocation(Spawn);
+			RegisterShip(NewShip, CastEvent->PlayerID);
+			if (GetPlayerAtID(CastEvent->PlayerID).LinkedController)
+				GetPlayerAtID(CastEvent->PlayerID).LinkedController->Possess(NewShip);
+		}
+		if (CastEvent->Name == "Gunboat")
+		{
+			Gunboat* NewShip = GetWorld()->CreateEntity<Gunboat>();
+			NewShip->OnBegin();
+			NewShip->SetActorLocation(Spawn);
+			RegisterShip(NewShip, CastEvent->PlayerID);
+			if (GetPlayerAtID(CastEvent->PlayerID).LinkedController)
+				GetPlayerAtID(CastEvent->PlayerID).LinkedController->Possess(NewShip);
+		}
+		if (CastEvent->Name == "Cruiser")
+		{
+			Cruiser* NewShip = GetWorld()->CreateEntity<Cruiser>();
+			NewShip->OnBegin();
+			NewShip->SetActorLocation(Spawn);
+			RegisterShip(NewShip, CastEvent->PlayerID);
+			if (GetPlayerAtID(CastEvent->PlayerID).LinkedController)
+				GetPlayerAtID(CastEvent->PlayerID).LinkedController->Possess(NewShip);
+		}
+		if (CastEvent->Name == "Destroyer")
+		{
+			Destroyer* NewShip = GetWorld()->CreateEntity<Destroyer>();
+			NewShip->OnBegin();
+			NewShip->SetActorLocation(Spawn);
+			RegisterShip(NewShip, CastEvent->PlayerID);
+			if (GetPlayerAtID(CastEvent->PlayerID).LinkedController)
+				GetPlayerAtID(CastEvent->PlayerID).LinkedController->Possess(NewShip);
 		}
 
-		Ship* NewShip = nullptr;														 //
-																						 //Messy, done veryy last minute
-		if (CastEvent->Name == "Corvette")												 //
-			NewShip = GetWorld()->CreateEntity<Corvette>();								 //
-		if (CastEvent->Name == "Gunboat")
-			NewShip = GetWorld()->CreateEntity<Gunboat>();
-		if (CastEvent->Name == "Cruiser")
-			NewShip = GetWorld()->CreateEntity<Cruiser>();
-		if (CastEvent->Name == "Destroyer")
-			NewShip = GetWorld()->CreateEntity<Corvette>();
+		
+	
 
-		NewShip->SetActorLocation(Spawn);
-
-		RegisterShip(NewShip, CastEvent->PlayerID);
-
-		if (GetPlayerAtID(CastEvent->PlayerID).LinkedController)
-			GetPlayerAtID(CastEvent->PlayerID).LinkedController->Possess(NewShip);
+		
 
 
 	}

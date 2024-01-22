@@ -136,7 +136,9 @@
       <Filter>Engine\State</Filter>
     </ClCompile>
     <ClCompile Include="Engine\UI\UIWidget.cpp" />
-    <ClCompile Include="Game\ShipSelection.cpp" />
+    <ClCompile Include="Game\ShipSelection.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />

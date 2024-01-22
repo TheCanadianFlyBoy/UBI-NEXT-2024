@@ -3,6 +3,7 @@
 #include "../Engine/Managers/SpriteManager.h"
 #include "GameEvents.h"
 #include "../Engine/Managers/EventManager.h"
+#include "../Engine/Engine.h"
 
 UIShipSelect::UIShipSelect() : UICanvas()
 {
@@ -51,6 +52,13 @@ UIShipSelect::UIShipSelect() : UICanvas()
 void UIShipSelect::Shutdown()
 {
 	EventManager::GetInstance()->AddEvent(std::make_shared<SpawnEvent>(Ships[Index].first, 0));
+
+
+	int Enemy = ENGINE->RandRange(0, Ships.size() - 1);
+
+	//Enemy
+	EventManager::GetInstance()->AddEvent(std::make_shared<SpawnEvent>(Ships[Enemy].first, 1));
+
 }
 
 void UIShipSelect::Update(float DeltaTime)

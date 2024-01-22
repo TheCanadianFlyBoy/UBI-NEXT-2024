@@ -44,7 +44,7 @@ void Projectile::Update(float DeltaTime)
 
 
 	
-	SpriteComponent->SetRotation(acosf(ProjectileBody->GetVelocity().x));
+	//SpriteComponent->SetRotation(acosf(ProjectileBody->GetVelocity().x));
 
 	switch (Type)
 	{

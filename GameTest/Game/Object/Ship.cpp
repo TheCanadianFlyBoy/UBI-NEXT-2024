@@ -33,7 +33,7 @@ Ship::Ship(World* InWorld) : Actor(InWorld)
 /// </summary>
 void Ship::Shutdown()
 {
-	//Actor::Shutdown();
+	Actor::Shutdown();
 
 	RigidBodyComponent->ClearBuoyancyCircles();
 
@@ -46,12 +46,12 @@ void Ship::Shutdown()
 //Toggles the fire control system
 void Ship::Possess()
 {
-	//FireControlComponent->Active = true;
+	FireControlComponent->Active = true;
 }
 
 void Ship::UnPossess()
 {
-	//FireControlComponent->Active = false;
+	FireControlComponent->Active = false;
 }
 
 
@@ -132,9 +132,11 @@ Corvette::Corvette(World* InWorld) : Ship(InWorld)
 
 	ActionsMax = 4;
 
-	FireControlComponent->InsertWeaponSlot("Autocannon", WeaponSlot());
+	FireControlComponent->InsertWeaponSlot("Autocannon", WeaponSlot(2));
 
 	CWeapon* MainGun = CreateComponent<AutoCannon>();
+
+	bool g = 2;
 
 };
 

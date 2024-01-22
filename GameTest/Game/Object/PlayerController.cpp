@@ -5,8 +5,12 @@
 #include "../../Engine/Engine.h"
 #include "../World/TurnBasedState.h"
 #include "../World/GameWorld.h"
+#include "../World/MenuWorld.h"
 #include "../GameEvents.h"
 
+/// <summary>
+/// Save a pointer to state
+/// </summary>
 void PlayerController::OnBegin()
 {
 	Controller::OnBegin();
@@ -24,7 +28,7 @@ void PlayerController::Update(float DeltaTime)
 	//Super
 	Controller::Update(DeltaTime);
 
-	if (App::IsKeyPressed(VK_LCONTROL)) EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>(ENGINE->CreateWorld<GameWorld>()));
+	if (App::IsKeyPressed(VK_LCONTROL)) EventManager::GetInstance()->AddEvent(std::make_shared<LoadLevelEvent>(ENGINE->CreateWorld<MenuWorld>()));
 
 	//Case: not our turn
 	if (State->GetCurrentPlayerID() != PlayerID)

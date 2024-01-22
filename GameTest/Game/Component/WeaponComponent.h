@@ -30,6 +30,12 @@ public:
 
 	CWeapon(Entity* InEntity);
 
+	~CWeapon()
+	{
+
+		bool g;
+	}
+
 	virtual void OnBegin() override;
 
 

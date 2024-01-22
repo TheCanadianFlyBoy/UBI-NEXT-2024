@@ -9,6 +9,9 @@
 #include "TurnBasedState.h"
 #include "../Object/PlayerController.h"
 #include "../Object/AIController.h"
+
+#include "../GameEvents.h"
+
 WaterRenderer* Waves;
 
 
@@ -42,20 +45,9 @@ GameWorld::GameWorld() : World()
 	State->RegisterController(EnemyController, 1);
 
 
-
-	//Setup enemy
-	Enemy = CreateEntity<Cruiser>();
-	Enemy->SetActorLocation(Vector2(2000.f, 220.f));
-	Enemy->FireControlComponent->FlipAxis();
-
 	Waves = CreateEntity<WaterRenderer>();
 	Waves->SetActorLocation(Vector2(-5000.f, 0.f));
 
-
-	
-
-	
-	State->RegisterShip(Enemy, 1);
 
 
 

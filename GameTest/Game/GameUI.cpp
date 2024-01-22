@@ -159,6 +159,8 @@ void UIAimPoint::DrawWeaponSelect()
 	//Draw Header
 	Debug::DrawText(CentrePoint + Vector2(-160.f, 100.f), "Current Weapon");
 	
+	if (!CurrentWeapon) return;
+
 	//Get weapon
 	Debug::DrawText(CentrePoint + Vector2(-230.f, 80.f), CurrentShip->FireControlComponent->GetCurrentWeaponName());
 	Debug::DrawText(CentrePoint + Vector2(-230.f, 60.f), "AP Cost: " + std::to_string(CurrentWeapon->GetActionCost()));

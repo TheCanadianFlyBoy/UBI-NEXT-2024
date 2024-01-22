@@ -185,8 +185,9 @@ void ObjectManager::Render(CCamera* InCamera)
 	for (auto& Health : Components["CHealth"])
 	{
 		CHealth* CastHealth = static_cast<CHealth*>(Health.get());
-		if (CastHealth->Alive())
+		if (CastHealth->Alive()) {
 			Debug::DrawRectangleInWorld(CastHealth->Owner->GetEntityLocation() + Vector2(0.f, 50.f), Vector2(CastHealth->GetHealth() / CastHealth->GetMaxHealth() * 60.f, 6.f), InCamera, Color3(0.f, 1.f, 0.f));
+		}
 	}
 
 	//Draw all UI elements
