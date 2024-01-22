@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - World
+*	Engine - World
 *	The archetype for all worlds in the game, containing managers and objects.
 *
 */
@@ -11,13 +11,18 @@
 #include "../Managers/ObjectManager.h"
 #include "../Managers/QuadTree.h"
 #include "../Managers/SpriteManager.h"
+
+//Forward declaration
 class ObjectManager;
 class Entity;
 class EngineCore;
 class CCamera;
-
+//Needed for smart pointers
 #include <memory>
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Header		Start											///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 class World : public Object
 {
 public:
@@ -29,7 +34,7 @@ public:
 	World();
 	virtual ~World();
 
-	//Update
+	//Critical Gameloop Functions
 	virtual void OnBegin() override;
 	virtual void Update(float DeltaTime);
 	virtual void LateUpdate(float DeltaTime);
@@ -37,20 +42,29 @@ public:
 	virtual void Render();
 	virtual void Shutdown() override;
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Getters/Setters												///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 public: // Game State Methods
 	inline GameState* GetWorldGameState() { return WorldGameState.get(); };
+
 public: // Event Handler Methods
 	inline EventManager* GetWorldEventManager() { return EventManager::GetInstance(); };
+
 public: // Camera Methods
 	inline void SetActiveCamera(CCamera* InCamera) { ActiveCamera = InCamera; };
 	inline CCamera* GetActiveCamera() { return ActiveCamera; }
+
 public: //Quad Tree Methods
 	inline void RegisterCollisionEntity(CRigidBody* InBody) { WorldQuadTree->InsertNode(InBody->Position, InBody); }
 	inline void UnRegisterCollisionEntity(CRigidBody* InBody) { WorldQuadTree->RemoveObject(InBody); }
 
-public: // Object Managment Methods
-	//Getter
+public: // Object Manager
 	inline ObjectManager* GetWorldObjectManager() { return WorldObjectManager.get(); }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///							   Entity/Component Factory											///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Creation Wrappers
 	template <class Type>
 	Type* CreateEntity();
@@ -59,20 +73,21 @@ public: // Object Managment Methods
 	Type* CreateComponent(Entity* InEntity = nullptr);
 
 public: // Sprite Manager
-	inline void SetSpriteManager(SpriteManager* InSpriteManager) { EngineSpriteManager = InSpriteManager; }; //DEPRECATE
-	inline SpriteManager* GetEngineSpriteManager() { return EngineSpriteManager; };							//DEPRECATE
+	//inline void SetSpriteManager(SpriteManager* InSpriteManager) { EngineSpriteManager = InSpriteManager; }; //DEPRECATE
+	//inline SpriteManager* GetEngineSpriteManager() { return EngineSpriteManager; };							//DEPRECATE
 
 public: //Helpers
 	Actor* GetNearestActor(Vector2 InPoint, std::vector<Actor*> IgnoredActors);
 
-protected: // Methods / Members
-	
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Protected Members											///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+protected: 	
 	//Engine References
-	EngineCore* WorldEngine = nullptr; //DEPRECATE
+	//EngineCore* WorldEngine = nullptr; //DEPRECATED
 
 	//Camera
 	CCamera* ActiveCamera = nullptr;
-
 	//Game State
 	std::unique_ptr<GameState> WorldGameState;
 	//Object Manager
@@ -88,6 +103,10 @@ protected: // Methods / Members
 
 };
 
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Factory Implementation										///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 // TEMPLATES
 template<class Type>
 inline Type* World::CreateEntity()

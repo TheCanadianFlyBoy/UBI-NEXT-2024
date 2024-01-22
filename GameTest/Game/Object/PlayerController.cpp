@@ -30,7 +30,6 @@ void PlayerController::Update(float DeltaTime)
 	{
 		//Possessish
 		if (State->GetCurrentFleetShip()) SetActorLocation(State->GetCurrentFleetShip());
-		else SetActorLocation(State->GetCurrentPlayer().Fleet[0]);
 
 		return;
 	}

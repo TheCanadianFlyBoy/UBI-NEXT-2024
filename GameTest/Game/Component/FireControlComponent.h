@@ -39,7 +39,7 @@ public:
 	//Aim setters
 	inline void AddAzimuth(float InAzimuth) { AzimuthRadians += InAzimuth * TraversalRate; }
 	inline void SetAzimuth(float inAzimuth) { AzimuthRadians = inAzimuth; }
-	inline void SetAimPoint(Vector2 InVector) { AimVector = acos((InVector - GetTurretPosition()).x); }
+	inline void SetAimPoint(Vector2 InVector) { AimVector = InVector.GetNormalized(); }
 	//Aim Getters
 	inline Vector2 GetAimVector() { return AimVector; }
 	inline float GetAzimuthRadians() { return AzimuthRadians; }

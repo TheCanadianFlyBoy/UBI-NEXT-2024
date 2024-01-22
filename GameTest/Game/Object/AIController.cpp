@@ -82,13 +82,16 @@ void AIController::Update(float DeltaTime)
 				//Use a point
 				PossessedShip->UseAction();
 				//Get a random firing solution
-				PossessedShip->FireControlComponent->AddAzimuth(ENGINE->RandRangeF(-0.3f, 0.3f));
+				//Do trajectory calc
+				Vector2 Trajectory = EstimateTrajectory();
+
+
+				PossessedShip->FireControlComponent->SetAimPoint()
+				PossessedShip->FireControlComponent->AddAzimuth(ENGINE->FRandRange(-0.3f, 0.3f));
 				TrackedShot = PossessedShip->FireControlComponent->Fire();
 
 				
 
-				//Do trajectory calc
-				EstimateTrajectory();
 
 				//UnPossess();
 				return;
@@ -144,28 +147,20 @@ void AIController::OnUnPossess()
 
 Vector2 AIController::EstimateTrajectory()
 {
-
-	//
-	////Get ships
-	//std::vector<Actor*> IgnoredActors;
-	////Convert
-	//for (auto& Actors : State->GetCurrentPlayer().Fleet)
-	//{
-	//	IgnoredActors.push_back(Actors);
-	//}
-	//Vector2 Origin = PossessedShip->GetActorLocation();
-	//Actor* Nearest = GetWorld()->GetNearestActor(Origin, IgnoredActors);
-	//Vector2 Target = Nearest->GetActorLocation();
-	//float InitialSpeed = 10.f;
-	//
-	//
-	//Vector2 Delta = Target - Origin;
-	//float Distance = Delta.x;
-	////Get elevation
-	//float Height = Delta.y;
-	//float EstTime = Distance / 10
-	//
-	//float DirectAngle
-
-	return Vector2(0.f);
+	
+	
+	//Get ships
+	std::vector<Actor*> IgnoredActors;
+	//Convert
+	for (auto& Actors : State->GetCurrentPlayer().Fleet)
+	{
+		IgnoredActors.push_back(Actors);
+	}
+	Vector2 Origin = PossessedShip->GetActorLocation();
+	Actor* Nearest = GetWorld()->GetNearestActor(Origin, IgnoredActors);
+	Vector2 Target = Nearest->GetActorLocation() - Origin;
+	
+	
+	
+	return Origin.GetNormalized();
 }

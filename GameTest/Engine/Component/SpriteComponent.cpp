@@ -13,7 +13,7 @@
 CSprite::CSprite(Entity* InOwner, std::string InSpriteName)
 	: CTransform(InOwner)
 {
-	InOwner->GetWorld()->GetEngineSpriteManager()->GetSprite(InSpriteName);
+	SpriteManager::GetInstance()->GetSprite(InSpriteName);
 }
 
 /// <summary>

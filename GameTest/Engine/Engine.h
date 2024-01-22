@@ -1,24 +1,32 @@
 #pragma once
 /*
-*	CFB Engine 
-*	Instance of the engine, responsible for creating and managing global managers
+*	Engine - Engine Core
+*	Instance of the engine, responsible for creating and managing global managers, coordinating the game
+*	loop, and dynamically loading and allocating memory within both itself and the managers
 *
 */
 
+//Needed for data structures
 #include <memory>
 #include <vector>
 #include <random>
-
+//Needed for templated factory
 #include "World/World.h"
 
+//Constants: note, fixed update was implemented to give more consistent "buoyancy"
 #define ENGINE_DEBUG_MODE true
 #define FIXED_UPDATE_FREQUENCY 0.2f
-
-//class SpriteManager;
-class UIManager;
-
+//Shorthand getter for the engine
 #define ENGINE EngineCore::GetInstance()
 
+
+//Forward declaration
+class UIManager;
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Header	 Start											///
+//////////////////////////////////////////////////////////////////////////////////////////////////
 class EngineCore
 {
 	DECLARE_SINGLE(EngineCore); // Declare this as a singleton system (only one instance ever)
@@ -51,6 +59,9 @@ public: // Methods
 		}
 		GlobalCanvases.clear(); }
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Factory Constructors									///
+//////////////////////////////////////////////////////////////////////////////////////////////////
 public: //Factory Constructors
 
 	template <class Type>
@@ -62,9 +73,12 @@ public: //Factory Constructors
 	template <class Type>
 	Type* CreateGlobalCanvas();
 
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Protected Members											///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 protected: // Members
-
-
 	//Creates an MT for random usage
 	std::mt19937 MersenneTwister = std::mt19937(unsigned int(time(NULL)));
 
@@ -73,11 +87,12 @@ protected: // Members
 	//Active world
 	std::shared_ptr<World> CurrentWorld = nullptr;
 
-	//World Vector
-	//std::map<std::string, std::shared_ptr<World>> Worlds; // TODO MAP for saving names
 	//Persistent Canvases
 	std::vector <std::unique_ptr<UICanvas>> GlobalCanvases;
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Helper Methods											///
+//////////////////////////////////////////////////////////////////////////////////////////////////
 public: //Helpers
 	//Mouse Position
 	Vector2 GetMouseScreenPosition();
@@ -96,16 +111,24 @@ public: //Helpers
 	//Camera getter with null check
 	inline CCamera* GetActiveWorldCamera() { return GetCurrentWorld() ? GetCurrentWorld()->GetActiveCamera() : nullptr; }
 
-	//Random
-	inline float RandRangeF(float Min, float Max)
+	/// <summary>
+	/// Uses the Mersenne Twister within the Engine Core to return a random float on a given range
+	/// </summary>
+	/// <param name="Min"></param>
+	/// <param name="Max"></param>
+	/// <returns></returns>
+	inline float FRandRange(float Min, float Max)
 	{
 		std::uniform_real_distribution<> Distribution(Min, Max);
 
 		return float(Distribution(MersenneTwister));
 
 	}
-
-	inline float RandF()
+	/// <summary>
+	/// Uses the Mersenne Twister within the engine core to return a random float
+	/// </summary>
+	/// <returns></returns>
+	inline float FRand()
 	{
 		std::uniform_real<> Generator(FLT_MIN, FLT_MAX);
 
@@ -114,6 +137,12 @@ public: //Helpers
 
 
 };
+
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Factory Implementation									///
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// <summary>
 /// Constructs a new world of the given type

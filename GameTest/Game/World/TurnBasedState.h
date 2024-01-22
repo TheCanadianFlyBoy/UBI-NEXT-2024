@@ -69,7 +69,9 @@ public:
 	}
 
 	//Fleet Access
-	inline Ship* GetCurrentFleetShip() { return GetCurrentPlayer().Fleet[GetCurrentPlayer().ShipIndex]; };
+	inline Ship* GetCurrentFleetShip() { return GetCurrentPlayer().Fleet.empty() ? 
+		nullptr : 
+		GetCurrentPlayer().Fleet[GetCurrentPlayer().ShipIndex]; };
 	Ship* GetNextFleetShip();
 	Ship* GetPreviousFleetShip();
 

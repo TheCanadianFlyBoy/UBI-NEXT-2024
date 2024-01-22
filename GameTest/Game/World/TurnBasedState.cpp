@@ -26,7 +26,7 @@ void TurnBasedGameState::Update(float DeltaTime)
 		EndTurn();
 	}
 
-	if (GetCurrentPlayer().Fleet.size() < 0)
+	if (GetCurrentPlayer().Fleet.empty())
 	{
 		EventManager::GetInstance()->AddEvent(std::make_shared<NewLevelEvent>());
 	}
@@ -87,7 +87,8 @@ void TurnBasedGameState::EndTurn()
 
 	GetNextPlayer();
 
-	GetCurrentPlayer().LinkedController->Possess(GetCurrentPlayer().Fleet[0]);
+	if (!GetCurrentPlayer().Fleet.empty())
+		GetCurrentPlayer().LinkedController->Possess(GetCurrentPlayer().Fleet[0]);
 
 	CurrentState = 0;
 

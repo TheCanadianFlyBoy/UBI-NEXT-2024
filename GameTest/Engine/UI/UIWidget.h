@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - UI Widget
+*	Engine - UI Widget
 *	Archetype for all UI Widgets
 *
 */
@@ -15,6 +15,9 @@
 
 class UICanvas;
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Header Start												///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 class UIWidget : public Object
 {
 
@@ -29,11 +32,16 @@ public:
 	//Draw Call
 	virtual void Render() = 0;
 
+	//Positional details
 	inline void SetPosition(Vector2& InVector) { Position = InVector; }
 	inline Vector2 GetPosition()			   { return Position; }
 
+	//Overideable callback function for implementing interactivity
 	virtual void Callback() {};
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Protected Members											///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 protected:
 
 	//Reference to owning Canvas
@@ -43,10 +51,14 @@ protected:
 	Vector2 Position = Vector2(0.f);
 
 	//Z Order
-	unsigned int ZOrder = 0;
+	//unsigned int ZOrder = 0; UNIMPLEMENTED
 
 
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+///									Commone UI Archetypes										///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// <summary>
 /// Basic Text Draw Widget
@@ -114,6 +126,9 @@ protected:
 	Color3 BoxColor = Color3(1.f);
 };
 
+/// <summary>
+/// Extension of the text bock with clickability/callback
+/// </summary>
 class UIButton : public UITextBox
 {
 public:

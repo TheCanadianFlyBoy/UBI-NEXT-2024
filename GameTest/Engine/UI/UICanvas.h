@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - UI Canvas
+*	Engine - UI Canvas
 *	Container for UI elements, allows for passing of draw calls
 *
 */
@@ -8,10 +8,13 @@
 #include "../Object/Object.h"
 #include "UIWidget.h"
 
+//Needed for data structures
 #include <vector>
 #include <memory>
 
-
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Header Start												///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 class UICanvas : public Object
 {
     friend class ObjectManager;
@@ -29,6 +32,9 @@ public:
     virtual void Update(float DeltaTime);
     virtual void Shutdown() override;
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Widget Factory												///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 public: // Methods
     //Widget Factory
     template <class Type>
@@ -38,6 +44,9 @@ public: // Methods
     void RemoveWidget(UIWidget* InWidget);
 
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Widget Management											///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 protected: // Methods
 	
     //Gets the index of an existing widget
@@ -46,12 +55,28 @@ protected: // Methods
 	template <class Type>
 	int GetIndexOfWidgetClass();
 
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Widgets 												///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 protected: // Members
 	std::vector<std::unique_ptr<UIWidget>> Widgets; //TODO make a priority queue
 
 };
 
 
+
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///									Factory Implementation  									///
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Creates a widget and pushes it back into the canvas.
+/// </summary>
+/// <typeparam name="Type"></typeparam>
+/// <returns></returns>
 template<class Type>
 inline Type* UICanvas::AddWidget()
 {
@@ -65,6 +90,11 @@ inline Type* UICanvas::AddWidget()
     return static_cast<Type*>(Widgets.back().get());
 }
 
+/// <summary>
+/// Gets the index of a Widget by class
+/// </summary>
+/// <typeparam name="Type"></typeparam>
+/// <returns></returns>
 template<class Type>
 inline int UICanvas::GetIndexOfWidgetClass()
 {

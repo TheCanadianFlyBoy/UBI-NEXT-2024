@@ -5,18 +5,19 @@
 #include "Managers/TimerManager.h"
 
 /// <summary>
-/// Instantiates all the managers for the engine
+/// Originally here for instantiation, deprecated by singleton design
 /// </summary>
 void EngineCore::Initialize()
 {
 }
 
 /// <summary>
-/// 
+/// Handles frame by frame updates
 /// </summary>
 /// <param name="DeltaTime"></param>
 void EngineCore::Update(float DeltaTime)
 {
+	//Increment fixed update timer
 	FixedUpdateTimer += DeltaTime * 0.01f;
 
 	//Do Event Processing
@@ -34,16 +35,24 @@ void EngineCore::Update(float DeltaTime)
 	//Update world
 	if (CurrentWorld)
 	{
+		//Call update
 		CurrentWorld->Update(DeltaTime);
-
+		//If we have ticked over frequency, do fixed update
 		if (FixedUpdateTimer > FIXED_UPDATE_FREQUENCY)
 		{
+			//Primarily physics calcs
 			CurrentWorld->FixedUpdate();
+			//Reset timer
+			FixedUpdateTimer = 0.f;
 		}
 
 	}
 }
 
+/// <summary>
+/// Handle late update
+/// </summary>
+/// <param name="DeltaTime"></param>
 void EngineCore::LateUpdate(float DeltaTime)
 {
 	//Update global UI first
@@ -61,20 +70,23 @@ void EngineCore::LateUpdate(float DeltaTime)
 
 }
 
+/// <summary>
+/// Handle draw calls
+/// </summary>
 void EngineCore::Render()
 {
-	//Render global UI first
+	//Render the world
+	if (CurrentWorld)
+	{
+		CurrentWorld->Render();
+	}
+	//Render global UI
 	for (auto& Canvas : GlobalCanvases)
 	{
 		Canvas->Render();
 	}
 
-	//Now we render the world
-	if (CurrentWorld)
-	{
-		CurrentWorld->Render();
-	}
-
+	//If debug profiling is enabled, draw debug spheres/boxes
 	if (ENGINE_DEBUG_MODE)
 	{
 		EngineProfiler::GetInstance()->Render();
@@ -90,13 +102,21 @@ void EngineCore::Shutdown()
 }
 
 
+/// <summary>
+/// Load a given world as the world context and mark previous for deletion
+/// </summary>
+/// <param name="World"></param>
 void EngineCore::LoadWorld(std::shared_ptr<World> World)
 {
+	//Get current world
 	if (CurrentWorld) {
+		//Shut down the world
 		CurrentWorld->Shutdown();
+		//Mark for deletion: does not need explicit delete as it is a smart pointer
 		EventManager::GetInstance()->AddEvent(std::make_shared<ScheduledLevelDeletion>(CurrentWorld));
 	}
 
+	//Setup new world
 	CurrentWorld = World;
 	World->OnBegin();
 }

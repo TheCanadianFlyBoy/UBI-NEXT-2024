@@ -45,7 +45,7 @@ void Projectile::Update(float DeltaTime)
 	{
 		Vector2 Velocity = ProjectileBody->GetVelocity();
 		Velocity *= 1.07f;
-		Velocity += (ENGINE->RandRangeF(-0.2f, 0.2f));
+		Velocity += (ENGINE->FRandRange(-0.2f, 0.2f));
 		ProjectileBody->SetVelocity(Velocity);
 		break;
 	}

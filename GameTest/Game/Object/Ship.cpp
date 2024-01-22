@@ -33,9 +33,9 @@ Ship::Ship(World* InWorld) : Actor(InWorld)
 /// </summary>
 void Ship::Shutdown()
 {
-	if (PlayerReference)
+	if (PlayerReference && !PlayerReference->Fleet.empty())
 	{
-		PlayerReference->Fleet.erase(std::find(PlayerReference->Fleet.begin(), PlayerReference->Fleet.end(), this));
+		PlayerReference->Fleet.erase(std::remove(PlayerReference->Fleet.begin(), PlayerReference->Fleet.end() - 1, this));
 	}
 }
 
@@ -138,10 +138,10 @@ Corvette::Corvette(World* InWorld) : Ship(InWorld)
 Cruiser::Cruiser(World* InWorld) : Ship(InWorld)
 {
 	FireControlComponent->InsertWeaponSlot("Autocannon", WeaponSlot(2));
-	CreateComponent<AutoCannon>();
 	FireControlComponent->InsertWeaponSlot("Hydra Rockets", WeaponSlot(2));
-	CreateComponent<HydraRockets>();
 	FireControlComponent->InsertWeaponSlot("Light .50", WeaponSlot(2));
+	CreateComponent<AutoCannon>();
+	CreateComponent<HydraRockets>();
 	CreateComponent<LightFifty>();
 	SpriteComponent->SetSprite("Cruiser");
 	SpriteComponent->SetPosition(Vector2(5, 30.f));

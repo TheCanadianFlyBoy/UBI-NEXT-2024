@@ -4,7 +4,7 @@
 #include "../Managers/Quadtree.h"
 #include "../Engine.h"
 
-World::World() : WorldEngine(ENGINE)
+World::World() : Object()
 {
 	WorldObjectManager = std::make_unique<ObjectManager>(this);
 	WorldGameState = std::make_unique<GameState>(this);

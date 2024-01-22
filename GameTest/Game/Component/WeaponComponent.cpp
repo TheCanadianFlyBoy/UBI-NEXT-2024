@@ -82,8 +82,8 @@ Projectile* CWeapon::Fire(Vector2 FiringSolution)
 void CWeapon::Repeat()
 {
 	Vector2 Wobble = Vector2(
-		ENGINE->RandRangeF(-AimWobble, AimWobble),
-		ENGINE->RandRangeF(-AimWobble, AimWobble));
+		ENGINE->FRandRange(-AimWobble, AimWobble),
+		ENGINE->FRandRange(-AimWobble, AimWobble));
 
 	LastFiringSolution = (LastFiringSolution + Wobble);
 

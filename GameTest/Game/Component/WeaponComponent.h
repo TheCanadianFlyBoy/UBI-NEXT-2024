@@ -77,10 +77,11 @@ public:
 	LightFifty(Entity* InEntity) : CWeapon(InEntity)
 	{
 		WeaponSize = 1;
-		ProjectileDamage = 20.f;
-		ProjectileCount = 7;
+		ProjectileDamage = 5.f;
+		ProjectileCount = 12;
 		ProjectileSpeed = 40.f;
 		ProjectileMass = 4.0f;
+		AimWobble = 0.1f;
 	};
 };
 
@@ -119,6 +120,6 @@ public:
 		ProjectileCount = 6;
 		ProjectileSpeed = 40.f;
 		ProjectileMass = 1.0f;
-		AimWobble = 20.0f;
+		AimWobble = 0.7f;
 	}
 };

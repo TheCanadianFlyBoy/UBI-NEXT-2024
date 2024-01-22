@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EngineCore">
+    <Position X="1.25" Y="2.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>EAwgEAAAFAAAUQEQAAAAIUACGAQAAAAQADBAAABAICA=</HashCode>
+      <FileName>Engine\Engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="World">
+    <Position X="8.5" Y="2.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>EAQAQABAIhADAAAAAARBIQEAAACCAQQECBEQAAAABAA=</HashCode>
+      <FileName>Engine\World\World.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UICanvas">
+    <Position X="14.25" Y="3.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAACIAAAAAAAAQAIQACAAEAACBEACAAAAAA=</HashCode>
+      <FileName>Engine\UI\UICanvas.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIWidget">
+    <Position X="1.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACACAAAgAAIAAAAAAAAAAgAAABEAAAAAQAA=</HashCode>
+      <FileName>Engine\UI\UIWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIText" Collapsed="true">
+    <Position X="6.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAIAAAAAAAAAAAACAABgACAAAAAA=</HashCode>
+      <FileName>Engine\UI\UIWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UITextBox" Collapsed="true">
+    <Position X="6.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAABAAEAABAIAAAAAAAAAAFAABABAAIA=</HashCode>
+      <FileName>Engine\UI\UIWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIButton" Collapsed="true">
+    <Position X="6.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAAAAEAACCAAAAAAAAAAAAAAAABAEAAABA=</HashCode>
+      <FileName>Engine\UI\UIWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameState">
+    <Position X="7" Y="1.75" Width="6.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Typedef Name="GameState::StateRenderFunction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Engine\State\GameState.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="GameState::StateUpdateFunction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Engine\State\GameState.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="GameState::StateEventsFunction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Engine\State\GameState.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>UAQABAAAAAUAAAACIFAAgCBAAAIAAAAEABAAkAAAIAA=</HashCode>
+      <FileName>Engine\State\GameState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Object">
+    <Position X="14.75" Y="1.75" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AQQQAAAACgIQAAAgAAAAIQAAAAAQAAAgCBEgAAAAAAA=</HashCode>
+      <FileName>Engine\Object\Object.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity">
+    <Position X="0.5" Y="0.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAAAACAIAAAAAEAQQAgCAAAAAACgEJAAAABAA=</HashCode>
+      <FileName>Engine\Object\Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller">
+    <Position X="1" Y="2.75" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAAAQICAgABABCAAIAiAAABACAAJAGAIACAAAA=</HashCode>
+      <FileName>Engine\Object\Controller.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectManager">
+    <Position X="0.75" Y="0.75" Width="5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAgAKAICAAYACMQAAAAAAAQAAKBEAEAQABAA=</HashCode>
+      <FileName>Engine\Managers\ObjectManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuadTree">
+    <Position X="1" Y="1" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AgAAACAQAAAIABBAAAAAEgAABEEAAAgUAAApACCAAAg=</HashCode>
+      <FileName>Engine\Managers\Quadtree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimerManager">
+    <Position X="1.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAMBAA=</HashCode>
+      <FileName>Engine\Managers\TimerManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteManager">
+    <Position X="1.25" Y="1.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>EgCAgAAAIAAAEAQAAAAAAAAAAAAAAAAIAABAAAAQAAA=</HashCode>
+      <FileName>Engine\Managers\SpriteManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventManager">
+    <Position X="2.75" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAABAAAABAAAAAAAAAAAAAABACAAAAAA=</HashCode>
+      <FileName>Engine\Managers\EventManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Event" Collapsed="true">
+    <Position X="13.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAAAAAAAAAAAEAAAAAAAAgAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestEvent" Collapsed="true">
+    <Position X="11" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollisionEvent" Collapsed="true">
+    <Position X="17.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEBAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NewLevelEvent" Collapsed="true">
+    <Position X="6.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScheduledLevelDeletion" Collapsed="true">
+    <Position X="13.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoadLevelEvent" Collapsed="true">
+    <Position X="20" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEBAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenPauseCanvas" Collapsed="true">
+    <Position X="8.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClosePauseCanvas" Collapsed="true">
+    <Position X="15.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Engine\Event\Event.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CTransform">
+    <Position X="1.5" Y="1.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACCCAIAgAAIAABAAAAAAAggAIAEAAgAAQBA=</HashCode>
+      <FileName>Engine\Component\TransformComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CRigidBody">
+    <Position X="5.75" Y="0.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>ATQAAgKEAqhSAgwQgJAwIQQDECgAIMAICJEACACFgCA=</HashCode>
+      <FileName>Engine\Component\RigidBodyComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ship" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQEAICoBAAAAGBAQAAAEDBIAAEABGAAACAAAI=</HashCode>
+      <FileName>Game\Object\Ship.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cruiser" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Game\Object\Ship.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Destroyer" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Game\Object\Ship.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gunboat" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Object\Ship.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Corvette" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Object\Ship.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController">
+    <Position X="1.75" Y="1.75" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="PlayerController::EControlType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\Object\PlayerController.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAAgEAAAAAAAAAQAAAAAGAAAAACAAiAAABEAAAEA=</HashCode>
+      <FileName>Game\Object\PlayerController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AIController">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAEAAAQAAAAIiQAgEAACEAAABCEACAgABAQAAAA=</HashCode>
+      <FileName>Game\Object\AIController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile">
+    <Position X="10.75" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAEAACAAAAAAAAAQAAAACAAAAACQEAAAAAYAA=</HashCode>
+      <FileName>Game\Object\Projectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Timer" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAgAAFAAA=</HashCode>
+      <FileName>Engine\Managers\TimerManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="BuoyancyCircle">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Component\RigidBodyComponent.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
