@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Particle Sprite
+*	 Engine - Particle Sprite
 *	A lighweight variation of an Actor that contains a sprite, and auto deactivates
 *
 */

@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Tile Movement Component
+*	 Engine - Tile Movement Component
 *	A movement component that take in input at attempts to move on a tilemap
 *
 */

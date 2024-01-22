@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Component
+*	 Engine - Component
 *	The archetype for all components in within the ECS.
 *
 */

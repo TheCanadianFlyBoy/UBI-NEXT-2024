@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Timer Manager
+*	 Engine - Timer Manager
 *	A simple timer manager using pairs of timers with callback functions
 *
 */

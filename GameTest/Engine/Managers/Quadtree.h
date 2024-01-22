@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Quad Tree
+*	 Engine - Quad Tree
 *	Handles spatial partitioning
 *
 */

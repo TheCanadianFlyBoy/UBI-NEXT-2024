@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Sprite Manager
+*	 Engine - Sprite Manager
 *	Handles the creation and storage of sprites for usage in the game.
 * 
 *	Utilizes shared pointers to allow pooling of sprite resources. This system has one caveat

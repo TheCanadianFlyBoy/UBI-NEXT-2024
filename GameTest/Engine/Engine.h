@@ -14,7 +14,7 @@
 #include "World/World.h"
 
 //Constants: note, fixed update was implemented to give more consistent "buoyancy"
-#define ENGINE_DEBUG_MODE false
+#define ENGINE_DEBUG_MODE true
 #define FIXED_UPDATE_FREQUENCY 0.2f
 //Shorthand getter for the engine
 #define ENGINE EngineCore::GetInstance()

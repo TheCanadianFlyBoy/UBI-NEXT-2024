@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Transform Component
+*	 Engine - Transform Component
 *	Basic transform (positon, rotation) component.
 *
 *

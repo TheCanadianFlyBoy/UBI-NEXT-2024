@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Object Manager
+*	FB Engine - Object Manager
 *	Provides a reusable and robust way to manage object memory in the gamespace.
 * 
 */

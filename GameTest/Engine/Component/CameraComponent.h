@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Camera Component
+*	 Engine - Camera Component
 *	The base camera component for rendering the game through a given camera view
 *
 */

@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Controller Component
+*	 Engine - Controller Component
 *	An archetype component for all controllers in the game
 *
 */

@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Audio Component
+*	 Engine - Audio Component
 *	The base audio component for playing sounds in object context
 *
 */

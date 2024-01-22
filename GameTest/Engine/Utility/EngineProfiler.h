@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Engine Profiler
+*	 Engine - Engine Profiler
 *	Components for the engine to internally display debug info realtime
 *
 */

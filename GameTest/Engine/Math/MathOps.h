@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - MathOps
+*	 Engine - MathOps
 *	A set of helper functions in their own name space that allow for 
 *
 */

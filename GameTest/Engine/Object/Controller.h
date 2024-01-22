@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Controller
+*	 Engine - Controller
 *	The archetype for all controllers, AI and Player, in the engine
 *
 */

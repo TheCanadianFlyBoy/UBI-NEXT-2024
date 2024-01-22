@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Entity
+*	 Engine - Entity
 *	The archetype for all Entities within the ECS.
 *
 */

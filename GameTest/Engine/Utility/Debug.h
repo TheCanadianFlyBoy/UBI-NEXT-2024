@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Debug
+*	 Engine - Debug
 *	A suite of easy to use tools for debugging
 *
 */

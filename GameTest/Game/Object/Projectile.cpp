@@ -17,10 +17,10 @@ Projectile::Projectile(World* InWorld) : Actor(InWorld)
 
 	AutoDeactivates = true;
 
-	SetLifetimeMax(10.f);
+	SetLifetimeMax(16.f);
 
-	SpriteComponent = CreateComponent<CSprite>();
-	SpriteComponent->SetSprite("Shell");
+	//SpriteComponent = CreateComponent<CSprite>();
+	//SpriteComponent->SetSprite("Shell");
 
 }
 
@@ -42,9 +42,10 @@ void Projectile::Update(float DeltaTime)
 {
 	Actor::Update(DeltaTime);
 
-
+	//Since sprite isn't working, just use this
 	
-	//SpriteComponent->SetRotation(acosf(ProjectileBody->GetVelocity().x));
+	
+	//SpriteComponent->SetRotation(atan2(ProjectileBody->GetVelocity().y, ProjectileBody->GetVelocity().x));
 
 	switch (Type)
 	{
@@ -60,8 +61,6 @@ void Projectile::Update(float DeltaTime)
 
 }
 
-Vector2 Hit1 = Vector2(-1.f);
-Vector2 Hit2 = Vector2(-1.f);
 
 void Projectile::OnActorCollision(CollisionInfo Info)
 {

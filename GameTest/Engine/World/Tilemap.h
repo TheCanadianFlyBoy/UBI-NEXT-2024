@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Tilemap
+*	 Engine - Tilemap
 *	System for holding tile data for tile based collision
 *
 */

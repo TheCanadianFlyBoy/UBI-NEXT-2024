@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Easing Component
+*	 Engine - Easing Component
 *	A simple but portable component to ease an actor to a target
 *
 */

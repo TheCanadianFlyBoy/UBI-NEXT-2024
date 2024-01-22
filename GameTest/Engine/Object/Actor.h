@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Actor
+*	 Engine - Actor
 *	A common entity type that has a transform by default
 *
 */

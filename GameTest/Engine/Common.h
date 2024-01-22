@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Common
+*	Engine - Common
 *	Holds common includes for easy usage
 *
 */

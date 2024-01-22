@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Rigid Body Component
+*	 Engine - Rigid Body Component
 *	The archetype for all collision components in within the engine.
 *
 */

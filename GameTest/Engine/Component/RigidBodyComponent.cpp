@@ -92,7 +92,7 @@ void CRigidBody::Render(CCamera* InCamera)
 						DrawPosition = ThisBox->GetMin();
 					}
 
-					Debug::DrawCircle(DrawPosition + Circle->Position - InCamera->GetCameraOrigin() , Circle->Radius, 8, Color3(1.f, 1.f, 0.f));
+					//Debug::DrawCircle(DrawPosition + Circle->Position - InCamera->GetCameraOrigin() , Circle->Radius, 8, Color3(1.f, 1.f, 0.f));
 				}
 			}
 		}

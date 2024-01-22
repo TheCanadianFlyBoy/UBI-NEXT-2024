@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Event Manager
+*	 Engine - Event Manager
 *	Handles incoming events and processes them.
 *
 */

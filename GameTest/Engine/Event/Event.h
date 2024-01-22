@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Event
+*	 Engine - Event
 *   A basic archetype for all events in the event system.
 *
 */

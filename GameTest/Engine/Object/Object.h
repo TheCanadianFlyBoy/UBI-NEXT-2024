@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Object
+*	 Engine - Object
 *	The archetype for all objects within the ECS.
 *
 */

@@ -5,5 +5,5 @@
 
 void Debug::PrintLine(std::string InText)
 {
-	EngineProfiler::GetInstance()->Output.push_back(InText);
+	//EngineProfiler::GetInstance()->Output.push_back(InText);
 }

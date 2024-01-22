@@ -1,6 +1,6 @@
 #pragma once
 /*
-*	CFB Engine - Sprite Component
+*	 Engine - Sprite Component
 *	Basic sprite component for provided sprite system. Uses transform component as a base to allow for offsets.
 *	Wraps all basic API functions for ease of use.
 *
