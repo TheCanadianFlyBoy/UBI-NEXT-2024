@@ -141,6 +141,7 @@ public:
 		//Get mouse
 		float MouseX; float MouseY;
 		App::GetMousePos(MouseX, MouseY);
+		if (Debounce) Debouncer += DeltaTime * 0.01f;
 
 		//Reset box color
 		BoxColor = ButtonColor;
@@ -150,13 +151,21 @@ public:
 			//Set the color
 			BoxColor = MouseOverColor;
 			//If we click...
-			if (App::GetController().CheckButton(XINPUT_GAMEPAD_A) || App::IsKeyPressed(VK_LBUTTON))
+			if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true) || App::IsKeyPressed(VK_LBUTTON))
 			{
 				//Set color
 				BoxColor = ClickedColor;
-				Callback();
+				if (!Debounce) {
+					Debounce = true;
+					Callback();
+				}
 			}
 
+		}
+
+		if (Debouncer > 10.0f) {
+			Debounce = false;
+			Debouncer = 0.f;
 		}
 
 		UITextBox::Render();
@@ -167,10 +176,35 @@ public:
 	Color3 MouseOverColor = Color3(0.3f, 0.5f, 0.7f);
 	Color3 ClickedColor = Color3(0.2f, 0.2f, 0.2f);
 
+	bool Debounce = false;
+	float Debouncer = 0.f;
+
 	inline  CollisionBox& GetCollisionBox() { return AABB; };
 
 protected: // Members
 	CollisionBox AABB = CollisionBox(Position, Dimensions,true);
 	bool bMouseOver = false;
 	bool bClicked = false;
+};
+
+class UISprite : public UIWidget
+{
+public:
+
+	UISprite() : UIWidget() {};
+
+	virtual void Render() override {
+		if (Sprite.get())
+		{
+			Sprite->SetPosition(Position.x, Position.y);
+			Sprite->Draw();
+		}
+
+	};
+
+	void SetSprite(std::shared_ptr<CSimpleSprite> InSprite) { Sprite = InSprite; }
+
+
+	std::shared_ptr<CSimpleSprite> Sprite;
+
 };

@@ -41,17 +41,7 @@ GameWorld::GameWorld() : World()
 	State->RegisterController(LocalController, 0);
 	State->RegisterController(EnemyController, 1);
 
-	//Setup Player
-	PlayerShip = CreateEntity<Cruiser>();
-	PlayerShip->SetActorLocation(PlayerShipLocation);
-	State->RegisterShip(PlayerShip, 0);
-	LocalController->Possess(PlayerShip);
 
-
-	Gunboat* PlayerGunboat = CreateEntity<Gunboat>();
-	PlayerGunboat->SetActorLocation(PlayerShipLocation - Vector2(400.f, 0.f));
-	State->RegisterShip(PlayerGunboat, 0);
-	
 
 	//Setup enemy
 	Enemy = CreateEntity<Cruiser>();
@@ -101,13 +91,6 @@ void GameWorld::Render()
 
 	Waves->Render(ActiveCamera);
 
-	std::string text = "Player:" + std::to_string(PlayerShip->GetActorLocation().x) + "," + std::to_string(PlayerShip->GetActorLocation().y);
 
-	Debug::DrawLineInWorld(Vector2(200.f), PlayerShip->GetActorLocation(), ActiveCamera, Color3(1.f, 0.f, 1.f));
-
-	App::Print(20.f, 20.f, text.c_str());
-
-
-	Debug::DrawCircleInWorld(PlayerShip->GetActorLocation() + PlayerShip->FireControlComponent->GetAimVector(), 12.f, GetActiveCamera(), 5);
 
 }

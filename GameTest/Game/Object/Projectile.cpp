@@ -19,6 +19,9 @@ Projectile::Projectile(World* InWorld) : Actor(InWorld)
 
 	SetLifetimeMax(10.f);
 
+	SpriteComponent = CreateComponent<CSprite>();
+	SpriteComponent->SetSprite("Shell");
+
 }
 
 void Projectile::OnBegin()
@@ -38,6 +41,10 @@ void Projectile::OnBegin()
 void Projectile::Update(float DeltaTime)
 {
 	Actor::Update(DeltaTime);
+
+
+	
+	SpriteComponent->SetRotation(acosf(ProjectileBody->GetVelocity().x));
 
 	switch (Type)
 	{

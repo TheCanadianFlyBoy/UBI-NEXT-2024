@@ -93,6 +93,7 @@ public: // Methods
 	virtual void ApplyBuoyancy(float DeltaTime);
 	inline void SetBuoyancyCircleRadius(float InRadius) { BuoyancyCircleRadius = InRadius; }
 	inline float GetBuoyancyCircleRadius() { return BuoyancyCircleRadius; };
+	inline void ClearBuoyancyCircles() { BuoyancyCircles.clear(); }
 	//Physics Damping
 	virtual void Damping(float DeltaTime);
 

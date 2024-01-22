@@ -5,6 +5,7 @@
 #include "../../Engine/Engine.h"
 #include "../World/TurnBasedState.h"
 #include "../World/GameWorld.h"
+#include "../GameEvents.h"
 
 void PlayerController::OnBegin()
 {

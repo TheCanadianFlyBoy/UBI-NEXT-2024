@@ -7,9 +7,13 @@
 
 #include "../../Engine/World/World.h"
 #include "../GameUI.h"
+#include "../ShipSelection.h"
 
 class MenuWorld : public World
 {
 public:
-	MenuWorld() : World() { WorldObjectManager->CreateCanvas<UIMainMenu>(); };
+	MenuWorld() : World() { 
+		WorldObjectManager->CreateCanvas<UIShipSelect>();
+		WorldObjectManager->CreateCanvas<UIMainMenu>(); 
+	};
 };

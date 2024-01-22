@@ -10,6 +10,8 @@
 
 #include <functional>
 
+class World;
+
 class Event
 {
     friend class EventManager;
@@ -60,7 +62,7 @@ public:
     static const char* GetStaticEventType() { return "ScheduledLevelDeletion"; }
     virtual const char* GetEventType() override { return GetStaticEventType(); }
 
-    ScheduledLevelDeletion(std::shared_ptr<World> InWorld) : Event()  {};
+    ScheduledLevelDeletion(std::shared_ptr<World> InWorld = nullptr) : Event()  {};
 
     std::shared_ptr<World> WorldPointer;
 

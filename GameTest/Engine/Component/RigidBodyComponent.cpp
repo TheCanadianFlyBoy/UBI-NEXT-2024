@@ -144,7 +144,7 @@ void CRigidBody::MakeCollisionBox(Vector2 InOffset, Vector2 InBounds)
 bool CRigidBody::GetCollision(CRigidBody* Other, CollisionInfo& Info)
 {
 	//Inactive check
-	if (!Other->Active || !Active) return false;
+	if (!Other->Active || !Active ) return false;
 
 	//Ignore check
 	for (auto& ThisEntity : IgnoredEntities)

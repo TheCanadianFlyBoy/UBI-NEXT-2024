@@ -135,6 +135,8 @@
     <ClCompile Include="Engine\State\GameState.cpp">
       <Filter>Engine\State</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\UI\UIWidget.cpp" />
+    <ClCompile Include="Game\ShipSelection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -308,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="Engine\State\GameState.h">
       <Filter>Engine\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ShipSelection.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameEvents.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

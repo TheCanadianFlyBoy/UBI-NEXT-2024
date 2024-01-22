@@ -3,12 +3,14 @@
 #include "../Object/Ship.h"
 #include "../../Engine/Object/Controller.h"
 #include "../GameUI.h"
+#include "../GameEvents.h"
 
 
 TurnBasedGameState::TurnBasedGameState(World* InWorld) : GameState(InWorld) 
 {
 	PauseMenu = GetWorld()->GetWorldObjectManager()->CreateCanvas<UIPauseCanvas>();
 	PauseMenu->Active = false;
+
 };
 
 /// <summary>
@@ -30,6 +32,7 @@ void TurnBasedGameState::Update(float DeltaTime)
 	{
 		EventManager::GetInstance()->AddEvent(std::make_shared<NewLevelEvent>());
 	}
+
 
 }
 
@@ -129,15 +132,56 @@ void TurnBasedGameState::DefaultEventHandler(std::shared_ptr<Event> InEvent, flo
 	GameState::DefaultEventHandler(InEvent, DeltaTime);
 
 	//Close pause
-	if (InEvent->GetEventType() == "ClosePauseCanvas")
-	{
-		if (PauseMenu) PauseMenu->Shutdown();
-	}
+	//if (InEvent->GetEventType() == "ClosePauseCanvas")
+	//{
+	//	if (PauseMenu) PauseMenu->Shutdown();
+	//}
+	//
+	////Close pause
+	//if (InEvent->GetEventType() == "OpenPauseCanvas")
+	//{
+	//	if (PauseMenu) PauseMenu->OnBegin();
+	//}
 
-	//Close pause
-	if (InEvent->GetEventType() == "OpenPauseCanvas")
+	if (InEvent->GetEventType() == "SpawnEvent")
 	{
-		if (PauseMenu) PauseMenu->OnBegin();
+		std::shared_ptr<SpawnEvent> CastEvent = std::static_pointer_cast<SpawnEvent>(InEvent);
+
+		
+
+		//Rejected
+		if (GetPlayerAtID(CastEvent->PlayerID).Fleet.size() >= 3) return;
+
+		//Else
+
+		Vector2 Spawn = SpawnPoints[0 + CastEvent->PlayerID * 3].second;
+		Actor* Closest = GetWorld()->GetNearestActor(Spawn);
+		for (int i = 0; i < 3; i++)
+		{
+			Vector2 Spawn = SpawnPoints[0 + CastEvent->PlayerID * 3].second;
+			Actor* Closest = GetWorld()->GetNearestActor(Spawn);
+			if (Closest->GetActorLocation().DistanceFrom(Spawn) > 400.f) break;
+		}
+
+		Ship* NewShip = nullptr;														 //
+																						 //Messy, done veryy last minute
+		if (CastEvent->Name == "Corvette")												 //
+			NewShip = GetWorld()->CreateEntity<Corvette>();								 //
+		if (CastEvent->Name == "Gunboat")
+			NewShip = GetWorld()->CreateEntity<Gunboat>();
+		if (CastEvent->Name == "Cruiser")
+			NewShip = GetWorld()->CreateEntity<Cruiser>();
+		if (CastEvent->Name == "Destroyer")
+			NewShip = GetWorld()->CreateEntity<Corvette>();
+
+		NewShip->SetActorLocation(Spawn);
+
+		RegisterShip(NewShip, CastEvent->PlayerID);
+
+		if (GetPlayerAtID(CastEvent->PlayerID).LinkedController)
+			GetPlayerAtID(CastEvent->PlayerID).LinkedController->Possess(NewShip);
+
+
 	}
 	
 }

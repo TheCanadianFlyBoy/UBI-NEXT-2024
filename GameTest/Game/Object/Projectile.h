@@ -19,6 +19,8 @@ public:
 
 	CRigidBody* ProjectileBody;
 
+	CSprite* SpriteComponent;
+
 	virtual void OnBegin() override;
 
 	virtual void Update(float DeltaTime) override;
@@ -33,5 +35,6 @@ public:
 	float ProjectileSpeed = 2.f;
 
 	EWeaponType Type = EWeaponType::Cannon;
+
 
 };

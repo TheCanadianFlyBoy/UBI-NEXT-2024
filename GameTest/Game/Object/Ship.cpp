@@ -33,6 +33,10 @@ Ship::Ship(World* InWorld) : Actor(InWorld)
 /// </summary>
 void Ship::Shutdown()
 {
+	//Actor::Shutdown();
+
+	RigidBodyComponent->ClearBuoyancyCircles();
+
 	if (PlayerReference && !PlayerReference->Fleet.empty())
 	{
 		PlayerReference->Fleet.erase(std::remove(PlayerReference->Fleet.begin(), PlayerReference->Fleet.end() - 1, this));

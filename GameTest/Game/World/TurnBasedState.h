@@ -106,6 +106,7 @@ protected: // Members
 	UIPauseCanvas* PauseMenu = nullptr;
 
 	float EndTurnTimer = 0.f;
+	std::vector<std::pair<int, Vector2>> SpawnPoints = { {0,Vector2(500.f, 220.f)}, {0,Vector2(800.f, 220.f)}, {0,Vector2(1200.f, 220.f)}, {0,Vector2(2200.f, 220.f)}, {0,Vector2(2600.f, 220.f)}, {0,Vector2(3100.f, 220.f)} };
 
 
 };

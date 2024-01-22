@@ -77,7 +77,7 @@ public: // Sprite Manager
 	//inline SpriteManager* GetEngineSpriteManager() { return EngineSpriteManager; };							//DEPRECATE
 
 public: //Helpers
-	Actor* GetNearestActor(Vector2 InPoint, std::vector<Actor*> IgnoredActors);
+	Actor* GetNearestActor(Vector2 InPoint, std::vector<Actor*> IgnoredActors = std::vector<Actor*>());
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
  ///									Protected Members											///
