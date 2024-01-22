@@ -8,7 +8,7 @@
 #include <memory>
 #include "../Math/Vector2.h"
 
-#define QUAD_MAX_CHILDREN 12
+#define QUAD_MAX_CHILDREN 120
 
 class Actor; class CRigidBody;
 

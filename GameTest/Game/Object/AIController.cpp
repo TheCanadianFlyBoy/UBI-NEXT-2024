@@ -86,8 +86,13 @@ void AIController::Update(float DeltaTime)
 				Vector2 Trajectory = EstimateTrajectory();
 
 
-				PossessedShip->FireControlComponent->SetAimPoint()
-				PossessedShip->FireControlComponent->AddAzimuth(ENGINE->FRandRange(-0.3f, 0.3f));
+
+
+				float Degrees = ENGINE->FRandRange(0, 35.f) * -1.f;
+				float Radians = MathOps::DegreesToRadians(Degrees);
+				Vector2 NewTrajectory = Trajectory -= Vector2(cosf(Radians), sinf(Radians));
+
+				PossessedShip->FireControlComponent->SetAimPoint(Trajectory.GetNormalized());;
 				TrackedShot = PossessedShip->FireControlComponent->Fire();
 
 				
@@ -156,11 +161,13 @@ Vector2 AIController::EstimateTrajectory()
 	{
 		IgnoredActors.push_back(Actors);
 	}
-	Vector2 Origin = PossessedShip->GetActorLocation();
-	Actor* Nearest = GetWorld()->GetNearestActor(Origin, IgnoredActors);
-	Vector2 Target = Nearest->GetActorLocation() - Origin;
+
+	Player& LocalPlayer = State->GetPlayerAtID(0);
+	
+	Actor* TargetShip = *LocalPlayer.Fleet.begin();
+
+	Vector2 Target = TargetShip->GetActorLocation() - PossessedShip->GetActorLocation();
 	
 	
-	
-	return Origin.GetNormalized();
+	return Target.GetNormalized();
 }
